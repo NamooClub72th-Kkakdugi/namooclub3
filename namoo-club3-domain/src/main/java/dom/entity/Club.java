@@ -126,5 +126,6 @@ public class Club {
 		ClubManager manager = new ClubManager(clubNo, socialPerson);
 		this.manager = manager;
 	}
+
 	
 }

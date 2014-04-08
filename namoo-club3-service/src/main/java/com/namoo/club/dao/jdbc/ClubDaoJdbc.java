@@ -116,8 +116,8 @@ public class ClubDaoJdbc implements ClubDao {
 			pstmt.setInt(1, club.getClubNo());
 			pstmt.setInt(2, club.getComNo());
 			pstmt.setInt(3, club.getCategoryNo());
-			pstmt.setString(4, club.getClubName());
-			pstmt.setString(5, club.getClubDes());
+			pstmt.setString(4, club.getName());
+			pstmt.setString(5, club.getDescription());
 			
 			pstmt.executeUpdate();
 			
@@ -143,13 +143,12 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "UPDATE club SET club_nm =?, club_des = ?, club_date = ? WHERE club_no = ?";
+			String sql = "UPDATE club SET club_nm =?, club_des = ?, club_date = sysdate() WHERE club_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, club.getClubName());
-			pstmt.setString(2, club.getClubDes());
-			pstmt.setString(3, club.getClubDes());
-			pstmt.setInt(4, club.getClubNo());
+			pstmt.setString(1, club.getName());
+			pstmt.setString(2, club.getDescription());
+			pstmt.setInt(3, club.getClubNo());
 			
 			pstmt.executeUpdate();
 			
@@ -197,7 +196,7 @@ public class ClubDaoJdbc implements ClubDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
-			pstmt.setString(2, clubMember.getUser().getUserId());
+			pstmt.setString(2, clubMember.getUserId());
 			
 			pstmt.executeUpdate();
 			
@@ -257,7 +256,7 @@ public class ClubDaoJdbc implements ClubDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubKingManager.getClubNo());
-			pstmt.setString(2, clubKingManager.getId());
+			pstmt.setString(2, clubKingManager.getUserId());
 			
 			pstmt.executeUpdate();
 			

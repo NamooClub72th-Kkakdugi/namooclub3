@@ -29,5 +29,15 @@ public class CommunityMember {
 		return rolePerson.getUserId();
 	}
 
+	public int getCommunityNo() {
+		return communityNo;
+	}
+
+	public void setCommunityNo(int communityNo) {
+		this.communityNo = communityNo;
+	}
+	
+	
+
 
 }

@@ -26,7 +26,7 @@ public class CommunityServiceLogic implements CommunityService {
 	@Override
 	public void registCommunity(Community community) {
 		//
-		if (isExistCommunityByName(community.getComName())) {
+		if (isExistCommunityByName(community.getName())) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 게시판입니다.");
 		}
 		dao.createCommunity(community);
@@ -38,7 +38,7 @@ public class CommunityServiceLogic implements CommunityService {
 
 		if (communities != null && !communities.isEmpty()) {
 			for (Community community : communities) {
-				if (community.getComName().equals(communityName)) {
+				if (community.getName().equals(communityName)) {
 					return true;
 				}
 			}
@@ -81,7 +81,7 @@ public class CommunityServiceLogic implements CommunityService {
 		}
 		
 		for (CommunityMember member : community.getMembers()) {
-			if (member.getUser().getUserId().equals(userId)) {
+			if (member.getUserId().equals(userId)) {
 				return member;
 			}
 		}

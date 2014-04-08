@@ -32,4 +32,15 @@ public class CommunityManager {
 		return rolePerson.getUserId();
 	}
 
+	public int getCommunityNo() {
+		//
+		return 0;
+	}
+
+	public void setCommunityNo(int communityNo) {
+		this.communityNo = communityNo;
+	}
+	
+	
+
 }

@@ -110,7 +110,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			String sql = "INSERT INTO community(com_nm, com_des, com_date) VALUES (?, ?, sysdate())";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, community.getComName());
+			pstmt.setString(1, community.getName());
 			pstmt.setString(2, community.getDescription());
 
 			pstmt.executeUpdate();
@@ -173,8 +173,8 @@ public class CommunityDaoJdbc implements CommunityDao {
 			String sql = "INSERT INTO communitymember(com_no, userid, type) VALUES (?, ?, 2)";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, comMember.getComNo());
-			pstmt.setString(2, comMember.getUser().getUserId());
+			pstmt.setInt(1, comMember.getCommunityNo());
+			pstmt.setString(2, comMember.getUserId());
 
 			pstmt.executeUpdate();
 
@@ -199,7 +199,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			String sql = "UPDATE community SET com_nm=?, com_des=?, com_date=sysdate() WHERE com_no=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, community.getComName());
+			pstmt.setString(1, community.getName());
 			pstmt.setString(2, community.getDescription());
 			pstmt.setInt(3, community.getComNo());
 
