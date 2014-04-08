@@ -8,7 +8,7 @@ import dom.entity.ClubMember;
 
 public interface ClubDao {
 	//
-	List<Club> readAllClubs();
+	List<Club> readAllClubs(int comNo);
 	Club readClub(int clubNo);
 	int createClub(int comNo, Club club);
 	void updateClub(Club club);

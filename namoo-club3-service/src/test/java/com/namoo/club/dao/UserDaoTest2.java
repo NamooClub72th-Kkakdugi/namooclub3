@@ -48,10 +48,7 @@ public class UserDaoTest2 {
 		
 		databaseTester = new JdbcDatabaseTester(driver, url, username, password);
 		databaseTester.setDataSet(readDataset());
-		
-		
 	}
-	
 	
 	private IDataSet readDataset() throws DataSetException, IOException {
 		//
@@ -66,7 +63,14 @@ public class UserDaoTest2 {
 		//
 		SocialPerson person = userDao.readUser("wntjd1211@nate.com");
 		System.out.println(person.getName());
-		
+	}
+	
+	@Test
+	public void createUser() {
+		//
+//		SocialPerson user = new so
+//		SocialPerson person = userDao.createUser(user);
+//		System.out.println(person.getName());
 	}
 
 }

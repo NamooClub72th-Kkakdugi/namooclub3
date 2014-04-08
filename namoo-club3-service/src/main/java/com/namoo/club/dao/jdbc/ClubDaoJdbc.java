@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.namoo.club.dao.ClubDao;
@@ -17,7 +18,7 @@ import dom.entity.SocialPerson;
 public class ClubDaoJdbc implements ClubDao {
 
 	@Override
-	public List<Club> readAllClubs() {
+	public List<Club> readAllClubs(int comNo) {
 		// 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -32,16 +33,17 @@ public class ClubDaoJdbc implements ClubDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			resultSet = pstmt.executeQuery();
-			
 			while(resultSet.next()){
 				//
 				comNo = Integer.parseInt(resultSet.getString("com_no"));
 				String clubNm = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
+				Date date = resultSet.getDate("club_date");
 				String userId = resultSet.getString("userid");
 				
 				Club club = new Club(comNo, clubNm, clubDes, new SocialPerson(userId));
 				clubs.add(club);
+				club.setOpenDate(date);
 			}
 		}
 		 catch(SQLException e) {
