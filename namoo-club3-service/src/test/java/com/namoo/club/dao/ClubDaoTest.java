@@ -6,11 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sun.font.CreatedFontTracker;
-
 import com.namoo.club.dao.jdbc.ClubDaoJdbc;
 
 import dom.entity.Club;
+import dom.entity.ClubMember;
 import dom.entity.Community;
 import dom.entity.SocialPerson;
 
@@ -27,11 +26,16 @@ public class ClubDaoTest {
 		//
 		clubDao = new ClubDaoJdbc();
 		PrepareBuilder.createCommunity();
+		PrepareBuilder.addMember();
 	}
 	@After
 	public void tearDown() throws Exception {
 		//
+		clubDao.deleteAllClubMember(clubNo);
 		clubDao.deleteClub(clubNo);
+
+
+		PrepareBuilder.deleteMember();
 		PrepareBuilder.deleteCommunity();
 		PrepareBuilder.deleteUser();
 	}
@@ -63,9 +67,13 @@ public class ClubDaoTest {
 		
 	}
 	private void createClub() {
+
 		SocialPerson socialPerson = PrepareBuilder.readUser();
 		Club club = new Club(PrepareBuilder.createCategory(), PrepareBuilder.COM_NO, clubName, clubDes, socialPerson);
 		clubNo = clubDao.createClub(PrepareBuilder.COM_NO, club);
+		ClubMember clubMember = new ClubMember(clubNo, socialPerson, 'b');
+		
+		clubDao.addClubMember(clubMember);
 	}
 
 	@Test

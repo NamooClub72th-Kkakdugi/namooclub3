@@ -5,6 +5,7 @@ import com.namoo.club.dao.jdbc.UserDaoJdbc;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
+import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
 
@@ -55,6 +56,22 @@ public class PrepareBuilder {
 		ClubCategory category = new ClubCategory(COM_NO, "TestCategory");
 		dao.createClubCategory(COM_NO, category);
 		return category.getCategoryNo();
+	}
+	
+	public static CommunityMember addMember() {
+		//
+		CommunityDao dao = new CommunityDaoJdbc();
+		CommunityMember communityMember = new CommunityMember(COM_NO, new SocialPerson(USER_ID));
+		dao.addCommunityMember(communityMember);
+		
+		return communityMember;
+	}
+	
+	public static void deleteMember() {
+		//
+		CommunityDao dao = new CommunityDaoJdbc();
+		dao.deleteAllComMember(COM_NO);
+		
 	}
 	
 }

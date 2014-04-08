@@ -27,7 +27,7 @@ public class UserDaoTest2 {
 	public void setUp() throws Exception {
 		userDao = DaoFactory.createFactory(DbType.MariaDB).getUserDao();
 		prepareDatabaseTester();
-		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
+		databaseTester.setSetUpOperation(DatabaseOperation.REFRESH);
 		databaseTester.onSetup();
 		
 	}
