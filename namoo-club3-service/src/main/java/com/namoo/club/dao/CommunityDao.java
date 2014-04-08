@@ -2,6 +2,7 @@ package com.namoo.club.dao;
 
 import java.util.List;
 
+import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
@@ -17,5 +18,9 @@ public interface CommunityDao {
 	void deleteCommunity(int comNo);
 	void deleteAllComMember(int comNo);
 	void deleteAllComManager(int comNo);
+	
+	// 클럽 카테고리 관련
+	List<ClubCategory> readAllCategories(int comNo);
+	void createClubCategory(int comNo, ClubCategory category);
 
 }

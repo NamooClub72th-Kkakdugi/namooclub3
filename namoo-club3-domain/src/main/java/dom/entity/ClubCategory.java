@@ -7,8 +7,8 @@ public class ClubCategory {
 	private String categoryName;
 	
 	//-----------------
-	ClubCategory(int categoryNo, int communityNo, String categoryName) {
-		this.categoryNo = categoryNo;
+	public ClubCategory(int communityNo, String categoryName) {
+		//
 		this.communityNo = communityNo;
 		this.categoryName = categoryName;
 	}

@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
 
+import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
@@ -28,7 +29,8 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a INNER JOIN communitymember b on a.com_no = b.com_no";
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a"+
+			            "INNER JOIN communitymember b on a.com_no = b.com_no";
 			pstmt = conn.prepareStatement(sql);
 
 			rset = pstmt.executeQuery();
@@ -70,7 +72,6 @@ public class CommunityDaoJdbc implements CommunityDao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comNo);
-			pstmt.executeQuery();
 
 			rset = pstmt.executeQuery();
 
@@ -260,4 +261,46 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
 	}
+
+	@Override
+	public List<ClubCategory> readAllCategories(int comNo) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		List<ClubCategory> categories = new ArrayList<ClubCategory>();
+		
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT category_no, com_no, category_nm FROM clubcategory";
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int categoryNo = rset.getInt("category_no");
+				int comNo2 = rset.getInt("com_no");
+				String categoryName = rset.getString("category_nm");
+				
+				ClubCategory category = new ClubCategory(comNo2, categoryName);
+				category.setCategoryNo(categoryNo);
+				categories.add(category);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rset != null)try {rset.close();} catch (SQLException e) {}
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return categories;
+	}
+	
+	@Override
+	public void createClubCategory(int comNo, ClubCategory category) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

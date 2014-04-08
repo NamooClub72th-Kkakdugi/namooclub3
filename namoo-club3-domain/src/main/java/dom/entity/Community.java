@@ -11,8 +11,10 @@ public class Community {
 	private String description;
 	private Date openDate;
 	
+	private CommunityManager manager;
 	private List<CommunityMember> members;
 	private List<Club> clubs;
+	private List<ClubCategory> categories;
 	
 	//----------------------------------------------------------------
 	public Community(String comName, String description, SocialPerson user) {
@@ -20,11 +22,12 @@ public class Community {
 		this.comName = comName;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
+		this.categories = new ArrayList<ClubCategory>();
 		
+		setManager(user);
 		addMember(user);
 	}
 
-	
 	//-------------------------------------------------------------------
 	public int getComNo() {
 		return comNo;
@@ -73,13 +76,41 @@ public class Community {
 	public void setClubs(List<Club> clubs) {
 		this.clubs = clubs;
 	}
-//-----------------------------------------------------------------------------
 	
-	public void addMember(SocialPerson rolePerson){
+	public CommunityManager getManager() {
+		return manager;
+	}
+	
+	public void setManager(CommunityManager manager) {
+		this.manager = manager;
+	}
+	
+	public List<ClubCategory> getCategories() {
+		return categories;
+	}
+	
+	public void setCategories(List<ClubCategory> categories) {
+		this.categories = categories;
+	}
+//-----------------------------------------------------------------------------
+
+	private void setManager(SocialPerson user) {
 		//
-		CommunityMember member = new CommunityMember(comNo, rolePerson);
+		CommunityManager manager = new CommunityManager(comNo, user);
+		this.manager = manager;
+	}
+	
+	public void addMember(SocialPerson user){
+		//
+		CommunityMember member = new CommunityMember(comNo, user);
 		this.members.add(member);
 	}
-
-
+	
+	private void addCategory(ClubCategory category) {
+		//
+		if (this.categories == null) {
+			this.categories = new ArrayList<ClubCategory>();
+		}
+		this.categories.add(category);
+	}
 }
