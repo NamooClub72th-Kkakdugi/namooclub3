@@ -35,13 +35,14 @@ public class ClubDaoJdbc implements ClubDao {
 			resultSet = pstmt.executeQuery();
 			while(resultSet.next()){
 				//
-				comNo = Integer.parseInt(resultSet.getString("com_no"));
+				int categoryNo = resultSet.getInt("category_no");
+				comNo = resultSet.getInt("com_no");
 				String clubNm = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
 				Date date = resultSet.getDate("club_date");
 				String userId = resultSet.getString("userid");
 				
-				Club club = new Club(comNo, clubNm, clubDes, new SocialPerson(userId));
+				Club club = new Club(categoryNo, comNo, clubNm, clubDes, new SocialPerson(userId));
 				clubs.add(club);
 				club.setOpenDate(date);
 			}
@@ -76,12 +77,12 @@ public class ClubDaoJdbc implements ClubDao {
 			if(resultSet.next()) {
 				clubNo = resultSet.getInt("club_no");
 				int comNo = resultSet.getInt("com_no");
-///				int categoryNo = resultSet.getInt("category_no");
+				int categoryNo = resultSet.getInt("category_no");
 				String clubName = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
 				String userId = resultSet.getString("userId");
 				
-				club = new Club(comNo, clubName, clubDes, new SocialPerson(userId));
+				club = new Club(categoryNo, comNo, clubName, clubDes, new SocialPerson(userId));
 				club.setClubNo(clubNo);
 			}
 		} catch (SQLException e) {

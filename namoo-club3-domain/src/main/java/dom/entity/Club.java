@@ -16,8 +16,9 @@ public class Club {
 	private List<ClubMember> members;
 	
 	//---------------------------
-	public Club(int comNo, String clubName, String clubDes, SocialPerson user) {
+	public Club(int categoryNo, int comNo, String clubName, String clubDes, SocialPerson user) {
 		//
+		this.categoryNo = categoryNo;
 		this.comNo = comNo;
 		this.clubName = clubName;
 		this.clubDes = clubDes;

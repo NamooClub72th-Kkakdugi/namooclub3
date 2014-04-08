@@ -64,7 +64,7 @@ public class ClubDaoTest {
 	}
 	private void createClub() {
 		SocialPerson socialPerson = PrepareBuilder.readUser();
-		Club club = new Club(PrepareBuilder.COM_NO, clubName, clubDes, socialPerson);
+		Club club = new Club(PrepareBuilder.createCategory(), PrepareBuilder.COM_NO, clubName, clubDes, socialPerson);
 		clubNo = clubDao.createClub(PrepareBuilder.COM_NO, club);
 	}
 
