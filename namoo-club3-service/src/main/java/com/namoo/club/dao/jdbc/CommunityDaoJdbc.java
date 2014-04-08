@@ -231,46 +231,28 @@ public class CommunityDaoJdbc implements CommunityDao {
 		}
 	}
 
-	private void deleteAllComblabla(String sql) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DbConnection.getConnection();
-			pstmt = conn.prepareStatement(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void deleteAllComMember(int comNo) {
 		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no=? AND type='2'";
-			deleteAllComblabla(sql);
-			pstmt.setInt(1, comNo);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
+		deleteAllCommunityMembership(comNo, "2");
 	}
 
 	@Override
 	public void deleteAllComManager(int comNo) {
 		//
+		deleteAllCommunityMembership(comNo, "1");
+	}
+	
+	private void deleteAllCommunityMembership(int comNo, String type) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no=? AND type='1'";
-			deleteAllComblabla(sql);
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ?";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
+			pstmt.setString(2, type);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -10,11 +10,13 @@ import com.namoo.club.dao.jdbc.CommunityDaoJdbc;
 
 import dom.entity.Community;
 import dom.entity.CommunityManager;
+import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
 public class CommunityDaoTest {
 	//
 	private CommunityDao dao;
+	private UserDao userDao;
 	
 	int comNo;
 	String comName = "com_test";
@@ -60,7 +62,12 @@ public class CommunityDaoTest {
 		comNo = dao.createCommunity(community);
 		
 		CommunityManager comManager = new CommunityManager(comNo, user);
+		CommunityMember comMember = new CommunityMember(comNo, user);
+		if (community.getMembers().contains(user)) {
 		dao.addCommunityManager(comManager);
+		} else {
+			dao.addCommunityMember(comMember);
+		}
 	}
 
 	@Test
