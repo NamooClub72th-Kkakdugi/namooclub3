@@ -12,7 +12,6 @@ public class Club {
 	private String clubName;
 	private String clubDes;
 	private Date openDate;
-	private Character type;
 	
 	private List<ClubMember> members;
 	
@@ -23,9 +22,8 @@ public class Club {
 		this.clubName = clubName;
 		this.clubDes = clubDes;
 		this.members = new ArrayList<ClubMember>();
-		this.type = type;
-		
-		addMember(user, type);
+
+		addMember(user);
 	}
 	
 	public int getComNo() {
@@ -76,14 +74,6 @@ public class Club {
 		this.openDate = openDate;
 	}
 
-	public Character getType() {
-		return type;
-	}
-
-	public void setType(Character type) {
-		this.type = type;
-	}
-
 	public List<ClubMember> getMembers() {
 		return members;
 	}
@@ -92,9 +82,9 @@ public class Club {
 		this.members = members;
 	}
 
-	private void addMember(SocialPerson rolePerson, Character type) {
+	private void addMember(SocialPerson rolePerson) {
 		// 
-		ClubMember member = new ClubMember(clubNo, rolePerson, type);
+		ClubMember member = new ClubMember(clubNo, rolePerson, null);
 		this.members.add(member);
 		
 	}

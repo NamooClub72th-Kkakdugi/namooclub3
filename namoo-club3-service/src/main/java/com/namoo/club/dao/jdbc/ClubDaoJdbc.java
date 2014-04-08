@@ -10,6 +10,8 @@ import java.util.List;
 import com.namoo.club.dao.ClubDao;
 
 import dom.entity.Club;
+import dom.entity.ClubManager;
+import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
 
 public class ClubDaoJdbc implements ClubDao {
@@ -175,4 +177,106 @@ public class ClubDaoJdbc implements ClubDao {
 		}
 	}
 
+	@Override
+	public ClubMember addClubMember(ClubMember clubMember) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, user_id, type)"
+					+ " VALUES(?, ?, )";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubMember.getClubNo());
+			pstmt.setString(2, clubMember.getUser().getUserId());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubMember;
+	}
+
+	@Override
+	public ClubManager addClubManager(ClubManager clubManager) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, user_id, type"
+					+ " VALUES(?, ?, 1)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubManager.getClubNo());
+			pstmt.setString(2, clubManager.getUserId());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubManager;
+	}
+
+	@Override
+	public ClubMember deleteClubMember(ClubMember clubMember) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "DELETE FROM clubmember WHERE user_id= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, clubMember.getUser().getUserId());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubMember;
+	}
+
+	@Override
+	public ClubManager deleteClubManager(ClubManager clubManager) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "DELETE FROM clubmember WHERE user_id= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, clubManager.getUserId());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubManager;
+	}
 }
