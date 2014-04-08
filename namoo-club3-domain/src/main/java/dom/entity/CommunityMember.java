@@ -2,31 +2,41 @@ package dom.entity;
 
 public class CommunityMember {
 
-	private String comName;
+	private int comNo;
 	private SocialPerson user;
+	private Character type;
 	
 	//-----------------------------------------------------------------
-	public CommunityMember(String comName, SocialPerson user) {
+	public CommunityMember(int comNo, SocialPerson user, Character type) {
 		//
-		this.comName = comName;
+		this.comNo = comNo;
 		this.user = user;
+		this.type = type;
 	}
 
 	//--------------------------------------------------------------------
 
-	public String getComName() {
-		return comName;
+	public int getComNo() {
+		return comNo;
 	}
-
-	public void setComName(String comName) {
-		this.comName = comName;
+	
+	public void setComNo(int comNo) {
+		this.comNo = comNo;
 	}
 
 	public SocialPerson getUser() {
 		return user;
 	}
 
+
 	public void setUser(SocialPerson user) {
 		this.user = user;
+	}
+	public Character getType() {
+		return type;
+	}
+	
+	public void setType(Character type) {
+		this.type = type;
 	}
 }
