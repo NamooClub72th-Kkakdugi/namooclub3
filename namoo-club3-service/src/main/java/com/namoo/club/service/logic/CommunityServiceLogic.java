@@ -9,6 +9,7 @@ import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.logic.exception.NamooClubExceptionFactory;
 
+import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
@@ -167,6 +168,18 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		Community community = dao.readCommunity(communityNo);
 		community.setManager(user);
+	}
+
+	@Override
+	public List<ClubCategory> findAllCategories(int communityNo) {
+		//
+		return dao.readAllCategories(communityNo);
+	}
+
+	@Override
+	public void registCategory(int communityNo, ClubCategory category) {
+		//
+		dao.createClubCategory(communityNo, category);
 	}
 
 

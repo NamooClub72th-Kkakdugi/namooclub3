@@ -2,6 +2,7 @@ package com.namoo.club.service.facade;
 
 import java.util.List;
 
+import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
@@ -22,4 +23,7 @@ public interface CommunityService {
 	public void withdrawalCommunity(int communityNo, String userId);
 	public void commissionManagerCommunity(int communityNo, SocialPerson user);
 	
+	//클럽 카테고리
+	public List<ClubCategory> findAllCategories(int communityNo);
+	public void registCategory(int communityNo, ClubCategory category);
 }
