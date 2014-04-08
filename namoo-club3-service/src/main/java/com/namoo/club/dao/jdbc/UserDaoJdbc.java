@@ -1,5 +1,10 @@
 package com.namoo.club.dao.jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.UserDao;
@@ -11,7 +16,20 @@ public class UserDaoJdbc implements UserDao {
 	@Override
 	public List<SocialPerson> readAllUsers() {
 		//
-		return null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<SocialPerson> users = new ArrayList<SocialPerson>();
+		
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT email, name, password FROM user";
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	@Override
