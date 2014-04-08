@@ -1,5 +1,6 @@
 package dom.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,90 @@ public class Club {
 	private String clubName;
 	private String clubDes;
 	private Date openDate;
+	private Character type;
 	
 	private List<ClubMember> members;
 	
 	//---------------------------
-	public club(int comNo, int clubNo, int categoryNo, String clubName, String clubDes)
+	public Club(int comNo, String clubName, String clubDes, SocialPerson user) {
+		//
+		this.comNo = comNo;
+		this.clubName = clubName;
+		this.clubDes = clubDes;
+		this.members = new ArrayList<ClubMember>();
+		this.type = type;
+		
+		addMember(user, type);
+	}
+	
+	public int getComNo() {
+		return comNo;
+	}
 
+	public void setComNo(int comNo) {
+		this.comNo = comNo;
+	}
+
+	public int getClubNo() {
+		return clubNo;
+	}
+
+	public void setClubNo(int clubNo) {
+		this.clubNo = clubNo;
+	}
+
+	public int getCategoryNo() {
+		return categoryNo;
+	}
+
+	public void setCategoryNo(int categoryNo) {
+		this.categoryNo = categoryNo;
+	}
+
+	public String getClubName() {
+		return clubName;
+	}
+
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
+	public String getClubDes() {
+		return clubDes;
+	}
+
+	public void setClubDes(String clubDes) {
+		this.clubDes = clubDes;
+	}
+	
+	public Date getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
+
+	public Character getType() {
+		return type;
+	}
+
+	public void setType(Character type) {
+		this.type = type;
+	}
+
+	public List<ClubMember> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<ClubMember> members) {
+		this.members = members;
+	}
+
+	private void addMember(SocialPerson rolePerson, Character type) {
+		// 
+		ClubMember member = new ClubMember(clubNo, rolePerson, type);
+		this.members.add(member);
+		
+	}
 }

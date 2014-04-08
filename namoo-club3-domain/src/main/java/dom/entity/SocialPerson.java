@@ -17,7 +17,6 @@ public class SocialPerson {
 		this.password = password;
 	}
 
-	
 	//----------------------------------------------------------------
 	
 	public String getName() {
@@ -43,7 +42,4 @@ public class SocialPerson {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-
-
 }
