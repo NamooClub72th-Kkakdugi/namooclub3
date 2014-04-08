@@ -8,7 +8,7 @@ public interface ClubDao {
 	//
 	List<Club> readAllClubs(int comNo);
 	Club readClub(int clubNo);
-	void createClub(int comNo, Club club);
+	int createClub(int comNo, Club club);
 	void updateClub(Club club);
 	void deleteClub(int clubNo);
 

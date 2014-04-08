@@ -39,6 +39,11 @@ public class PrepareBuilder {
 		return community;
 	}
 	
+	public static Community readCommunity() {
+		CommunityDao communityDao = new CommunityDaoJdbc();
+		return communityDao.readCommunity(COM_NO);
+	}
+	
 	public static void deleteCommunity() {
 		CommunityDao dao = new CommunityDaoJdbc();
 		dao.deleteCommunity(COM_NO);
