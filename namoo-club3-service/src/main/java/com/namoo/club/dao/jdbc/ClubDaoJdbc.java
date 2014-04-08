@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.ClubDao;
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import dom.entity.Club;
 import dom.entity.SocialPerson;
@@ -46,8 +45,8 @@ public class ClubDaoJdbc implements ClubDao {
 			 e.printStackTrace();
 		 } finally {
 			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
-			 if ( pstmt != null) try { resultSet.close(); } catch (SQLException e) { }
-			 if ( conn != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		 }
 		return clubs;
 	}
@@ -71,22 +70,22 @@ public class ClubDaoJdbc implements ClubDao {
 			if(resultSet.next()) {
 				clubNo = resultSet.getInt("club_no");
 				int comNo = resultSet.getInt("com_no");
-				int categoryNO = resultSet.getInt("category_no");
-				String clubNm = resultSet.getString("club_nm");
+//				int categoryNo = resultSet.getInt("category_no");
+				String clubName = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
 				
-				club = new Club(comNo, clubNm, clubDes, new SocialPerson());
+				club = new Club(comNo, clubName, clubDes, new SocialPerson());
 				club.setClubNo(clubNo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
-			 if ( pstmt != null) try { resultSet.close(); } catch (SQLException e) { }
-			 if ( conn != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
-		
-		
+
+		return club;
 	}
 
 	@Override
@@ -99,22 +98,76 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "SELECT club_no, com_no, category_no, club_nm, club_des, club_date FROM club_tb club_no = ?";
+			String sql = "INSERT INTO club_tb(club_no, com_no, category_no, club_nm, club_des, club_date) VALUES(?, ?, ?, ?, ?, sysdate())";
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, club.getClubNo());
+			pstmt.setInt(2, club.getComNo());
+			pstmt.setInt(3, club.getCategoryNo());
+			pstmt.setString(4, club.getClubName());
+			pstmt.setString(5, club.getClubDes());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+			if(resultSet.next()) {
+				comNo = resultSet.getInt("com_no");
+			} 
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+	}
+
+	@Override
+	public void updateClub(Club club) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "UPDATE club_tb  SET club_nm =? club_des = ? club_date = ? WHERE club_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, club.getClubName());
+			pstmt.setString(2, club.getClubDes());
+			pstmt.setString(3, club.getClubDes());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
 
 	}
 
 	@Override
-	public void updateClub(Club club) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void deleteClub(int clubNo) {
-		// TODO Auto-generated method stub
-
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "DELETE FROM club_tb WHERE club_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, clubNo);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) try { conn.close(); } catch (SQLException e) { }
+			if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+		}
 	}
 
 }
