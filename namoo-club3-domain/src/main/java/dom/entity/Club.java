@@ -85,7 +85,7 @@ public class Club {
 
 	private void addMember(SocialPerson rolePerson) {
 		// 
-		ClubMember member = new ClubMember(clubNo, rolePerson, null);
+		ClubMember member = new ClubMember(clubNo, rolePerson);
 		this.members.add(member);
 		
 	}

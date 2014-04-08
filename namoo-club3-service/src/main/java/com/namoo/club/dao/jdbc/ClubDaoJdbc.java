@@ -191,7 +191,7 @@ public class ClubDaoJdbc implements ClubDao {
 			conn = DbConnection.getConnection();
 			
 			String sql = "INSERT INTO clubmember(club_no, user_id, type)"
-					+ " VALUES(?, ?, ?)";
+					+ " VALUES(?, ?, b)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
@@ -221,11 +221,11 @@ public class ClubDaoJdbc implements ClubDao {
 			conn = DbConnection.getConnection();
 			
 			String sql = "INSERT INTO clubmember(club_no, user_id, type"
-					+ " VALUES(?, ?, 1)";
+					+ " VALUES(?, ?, a)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubManager.getClubNo());
-			pstmt.setString(2, clubManager.getUserId());
+			pstmt.setString(2, clubManager.getId());
 			
 			pstmt.executeUpdate();
 			
@@ -243,14 +243,15 @@ public class ClubDaoJdbc implements ClubDao {
 	@Override
 	public void deleteAllClubMember(int clubNo) {
 		// 
-		deleteAllClubMembership(clubNo, "2");
+		deleteAllClubMembership(clubNo, "b");
 	}
 
 	@Override
 	public void deleteAllClubManager(int clubNo) {
 		// 
-		deleteAllClubMembership(clubNo, "1");
+		deleteAllClubMembership(clubNo, "a");
 	}
+	
 	private void deleteAllClubMembership(int clubNo, String type) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

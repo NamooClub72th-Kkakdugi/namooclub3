@@ -5,14 +5,12 @@ public class ClubManager  {
 
 	private int clubNo;
 	private SocialPerson rolePerson;
-	private String userId;
 	
 	//----------------------------------------------------------------
-	public ClubManager(SocialPerson rolePerson) {
+	public ClubManager(int clubNo, SocialPerson rolePerson) {
 		//
 		this.rolePerson = rolePerson;
 		this.clubNo = clubNo;
-		this.userId = userId;
 	}
 
 	//--------------------------------------------------
@@ -24,13 +22,6 @@ public class ClubManager  {
 		return clubNo;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public void setClubNo(int clubNo) {
 		this.clubNo = clubNo;

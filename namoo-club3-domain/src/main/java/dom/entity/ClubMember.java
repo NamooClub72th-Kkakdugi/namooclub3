@@ -6,7 +6,7 @@ public class ClubMember {
 	private SocialPerson user;
 	
 	//-----------------------------------------------------------------
-	public ClubMember(int clubNo, SocialPerson user, Character type) {
+	public ClubMember(int clubNo, SocialPerson user) {
 		//
 		this.clubNo = clubNo;
 		this.user = user;

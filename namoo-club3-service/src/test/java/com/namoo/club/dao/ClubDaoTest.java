@@ -18,6 +18,7 @@ public class ClubDaoTest {
 	private ClubDao clubDao;
 
 	int clubNo;
+	int categoryNo;
 	String clubName = "test club";
 	String clubDes = "test club's description";
 	
@@ -26,6 +27,7 @@ public class ClubDaoTest {
 		//
 		clubDao = new ClubDaoJdbc();
 		PrepareBuilder.createCommunity();
+		categoryNo = PrepareBuilder.createCategory();
 		PrepareBuilder.addMember();
 	}
 	@After
@@ -60,6 +62,7 @@ public class ClubDaoTest {
 		createClub();
 		// 검증
 		Club club = clubDao.readClub(clubNo);
+		assertEquals(categoryNo, club.getCategoryNo());
 		assertEquals(PrepareBuilder.COM_NO, club.getComNo());
 		assertEquals(clubDes, club.getClubDes());
 		assertEquals(clubName, club.getClubName());
@@ -69,9 +72,9 @@ public class ClubDaoTest {
 	private void createClub() {
 
 		SocialPerson socialPerson = PrepareBuilder.readUser();
-		Club club = new Club(PrepareBuilder.createCategory(), PrepareBuilder.COM_NO, clubName, clubDes, socialPerson);
+		Club club = new Club(categoryNo, PrepareBuilder.COM_NO, clubName, clubDes, socialPerson);
 		clubNo = clubDao.createClub(PrepareBuilder.COM_NO, club);
-		ClubMember clubMember = new ClubMember(clubNo, socialPerson, 'b');
+		ClubMember clubMember = new ClubMember(clubNo, socialPerson);
 		
 		clubDao.addClubMember(clubMember);
 	}
