@@ -16,9 +16,8 @@ public class Community {
 	private List<Club> clubs;
 	
 	//----------------------------------------------------------------
-	public Community(int comNo, String comName, String description, SocialPerson user) {
+	public Community(String comName, String description, SocialPerson user) {
 		//
-		this.comNo = comNo;
 		this.comName = comName;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
