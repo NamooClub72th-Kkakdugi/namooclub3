@@ -1,11 +1,11 @@
 package dom.entity;
 
-public class ClubManager  {
+public class ClubKingManager {
 
 	private int clubNo;
 	private SocialPerson rolePerson;
 	//----------------------------------------------------------------
-	public ClubManager(int clubNo, SocialPerson rolePerson) {
+	public ClubKingManager(int clubNo, SocialPerson rolePerson) {
 		//
 		this.rolePerson = rolePerson;
 		this.clubNo = clubNo;

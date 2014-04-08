@@ -11,6 +11,7 @@ import java.util.List;
 import com.namoo.club.dao.ClubDao;
 
 import dom.entity.Club;
+import dom.entity.ClubKingManager;
 import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
@@ -239,7 +240,37 @@ public class ClubDaoJdbc implements ClubDao {
 		}
 		return clubManager;
 	}
-
+	
+	@Override
+	public ClubKingManager addKingManager(ClubKingManager clubKingManager) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, userid, type"
+					+ " VALUES(?, ?, 'c')";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubKingManager.getClubNo());
+			pstmt.setString(2, clubKingManager.getId());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubKingManager;
+	}
+	
 	@Override
 	public void deleteAllClubMember(int clubNo) {
 		// 
@@ -252,6 +283,12 @@ public class ClubDaoJdbc implements ClubDao {
 		deleteAllClubMembership(clubNo, "a");
 	}
 	
+	@Override
+	public void deleteAllClubKingManger(int clubNo) {
+		// 
+		deleteAllClubMembership(clubNo, "c");
+		
+	}
 	private void deleteAllClubMembership(int clubNo, String type) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -269,6 +306,5 @@ public class ClubDaoJdbc implements ClubDao {
 			if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
 			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
-		
 	}
 }

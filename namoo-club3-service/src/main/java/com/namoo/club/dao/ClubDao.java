@@ -3,6 +3,7 @@ package com.namoo.club.dao;
 import java.util.List;
 
 import dom.entity.Club;
+import dom.entity.ClubKingManager;
 import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 
@@ -17,7 +18,9 @@ public interface ClubDao {
 	// for INNER JOIN
 	ClubMember addClubMember(ClubMember clubMember);
 	ClubManager addClubManager(ClubManager clubManager);
+	ClubKingManager addKingManager(ClubKingManager clubKingManager);
+	
 	void deleteAllClubMember(int clubNo);
 	void deleteAllClubManager(int clubNo);
-
+	void deleteAllClubKingManger(int clubNo);
 }
