@@ -17,7 +17,7 @@ import dom.entity.SocialPerson;
 public class ClubDaoJdbc implements ClubDao {
 
 	@Override
-	public List<Club> readAllClubs(int comNo) {
+	public List<Club> readAllClubs() {
 		// 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -176,7 +176,8 @@ public class ClubDaoJdbc implements ClubDao {
 			if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
 		}
 	}
-
+	
+	//----------------------------------------------
 	@Override
 	public ClubMember addClubMember(ClubMember clubMember) {
 		// 
@@ -187,7 +188,7 @@ public class ClubDaoJdbc implements ClubDao {
 			conn = DbConnection.getConnection();
 			
 			String sql = "INSERT INTO clubmember(club_no, user_id, type)"
-					+ " VALUES(?, ?, )";
+					+ " VALUES(?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
@@ -237,46 +238,33 @@ public class ClubDaoJdbc implements ClubDao {
 	}
 
 	@Override
-	public ClubMember deleteClubMember(ClubMember clubMember) {
+	public void deleteAllClubMember(int clubNo) {
 		// 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DbConnection.getConnection();
-			
-			String sql = "DELETE FROM clubmember WHERE user_id= ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, clubMember.getUser().getUserId());
-			
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-				e.printStackTrace();
-		} finally {
-			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
-			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
-		}
-		return clubMember;
+		deleteAllClubMembership(clubNo, "2");
 	}
 
 	@Override
-	public ClubManager deleteClubManager(ClubManager clubManager) {
+	public void deleteAllClubManager(int clubNo) {
 		// 
+		deleteAllClubMembership(clubNo, "1");
+	}
+	private void deleteAllClubMembership(int clubNo, String type) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "DELETE FROM clubmember WHERE user_id= ?";
+			String sql = "DELETE FROM clubmember WHERE club_no = ? AND type = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, clubManager.getUserId());
-			
+			pstmt.setInt(1, clubNo);
+			pstmt.setString(2, type);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		} finally {
-			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
-			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+			if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
-		return clubManager;
+		
 	}
 }

@@ -8,7 +8,7 @@ public class ClubManager  {
 	private String userId;
 	
 	//----------------------------------------------------------------
-	public ClubManager( SocialPerson rolePerson) {
+	public ClubManager(SocialPerson rolePerson) {
 		//
 		this.rolePerson = rolePerson;
 		this.clubNo = clubNo;

@@ -25,8 +25,8 @@ public class ClubDaoTest {
 	@Before
 	public void setUp() throws Exception{
 		//
-		PrepareBuilder.createCommunity();
 		clubDao = new ClubDaoJdbc();
+		PrepareBuilder.createCommunity();
 	}
 	@After
 	public void tearDown() throws Exception {

@@ -8,14 +8,16 @@ import dom.entity.ClubMember;
 
 public interface ClubDao {
 	//
-	List<Club> readAllClubs(int comNo);
-	ClubMember addClubMember(ClubMember clubMember);
-	ClubManager addClubManager(ClubManager clubManager);
-	ClubMember deleteClubMember(ClubMember clubMember);
-	ClubManager deleteClubManager(ClubManager clubManager);
+	List<Club> readAllClubs();
 	Club readClub(int clubNo);
 	int createClub(int comNo, Club club);
 	void updateClub(Club club);
 	void deleteClub(int clubNo);
+
+	// for INNER JOIN
+	ClubMember addClubMember(ClubMember clubMember);
+	ClubManager addClubManager(ClubManager clubManager);
+	void deleteAllClubMember(int clubNo);
+	void deleteAllClubManager(int clubNo);
 
 }
