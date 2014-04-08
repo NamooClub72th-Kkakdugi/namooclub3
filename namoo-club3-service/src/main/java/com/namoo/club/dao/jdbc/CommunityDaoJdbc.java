@@ -195,7 +195,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "UPDATE community SET com_nm=? com_des=? com_date=sysdate() WHERE com_no=?";
+			String sql = "UPDATE community SET com_nm=?, com_des=?, com_date=sysdate() WHERE com_no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, community.getComName());

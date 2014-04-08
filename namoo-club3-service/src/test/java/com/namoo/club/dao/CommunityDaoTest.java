@@ -16,7 +16,6 @@ import dom.entity.SocialPerson;
 public class CommunityDaoTest {
 	//
 	private CommunityDao dao;
-	private UserDao userDao;
 	
 	int comNo;
 	String comName = "com_test";
@@ -40,7 +39,12 @@ public class CommunityDaoTest {
 	
 	@Test
 	public void testReadAllCommunities() {
-		fail("Not yet implemented");
+		//
+		int before = dao.readAllCommunities().size();
+		createCommunity();
+		int after = dao.readAllCommunities().size();
+		
+		assertEquals(before+1, after);
 	}
 
 	@Test
@@ -72,9 +76,16 @@ public class CommunityDaoTest {
 
 	@Test
 	public void testUpdateCommunity() {
-		fail("Not yet implemented");
+		//
+		createCommunity();
+		Community community = dao.readCommunity(comNo);
+		community.setComName("after Community");
+		community.setDescription("after Community Description");
+		
+		dao.updateCommunity(community);
+		
+		community = dao.readCommunity(comNo);
+		assertEquals("after Community", community.getComName());
+		assertEquals("after Community Description", community.getDescription());
 	}
-	
-	
-
 }
