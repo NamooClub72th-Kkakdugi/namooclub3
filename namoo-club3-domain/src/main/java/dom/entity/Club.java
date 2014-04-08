@@ -12,6 +12,7 @@ public class Club {
 	private String clubName;
 	private String clubDes;
 	private Date openDate;
+	private ClubManager manager;
 	
 	private List<ClubMember> members;
 	
@@ -82,11 +83,48 @@ public class Club {
 	public void setMembers(List<ClubMember> members) {
 		this.members = members;
 	}
+	
+	public ClubManager getManager() {
+		return manager;
+	}
+	
+	public void setManager(ClubManager manager) {
+		this.manager = manager;
+	}
+	//---------------------------------
 
-	private void addMember(SocialPerson rolePerson) {
+	public void addMember(SocialPerson rolePerson) {
 		// 
 		ClubMember member = new ClubMember(clubNo, rolePerson);
 		this.members.add(member);
-		
 	}
+	
+	public ClubMember findMember(String userId) {
+		//
+		for (ClubMember member : members) {
+			if(member.getUser().getUserId().equals(userId)) {
+				return member;
+			}
+		}
+		return null;
+	}
+	
+	public void removeMember(String userId) {
+		//
+		ClubMember found = null;
+		for (ClubMember member : members) {
+			if(member.getUser().getUserId().equals(userId)) {
+				found = member;
+			}
+		}
+		if (found != null) {
+			members.remove(found);
+		}
+	}
+	
+	public void setManager(SocialPerson socialPerson) {
+		ClubManager manager = new ClubManager(clubNo, socialPerson);
+		this.manager = manager;
+	}
+	
 }
