@@ -10,7 +10,6 @@ public class Community {
 	private String comName;
 	private String description;
 	private Date openDate;
-	private Character type;
 	
 	private List<CommunityMember> members;
 	private List<Club> clubs;
@@ -21,9 +20,8 @@ public class Community {
 		this.comName = comName;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
-		this.type = type;
 		
-		addMember(user, type);
+		addMember(user);
 	}
 
 	
@@ -77,9 +75,9 @@ public class Community {
 	}
 //-----------------------------------------------------------------------------
 	
-	public void addMember(SocialPerson rolePerson, Character type){
+	public void addMember(SocialPerson rolePerson){
 		//
-		CommunityMember member = new CommunityMember(comNo, rolePerson, type);
+		CommunityMember member = new CommunityMember(comNo, rolePerson);
 		this.members.add(member);
 	}
 

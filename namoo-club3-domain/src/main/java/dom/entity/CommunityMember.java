@@ -4,14 +4,12 @@ public class CommunityMember {
 
 	private int comNo;
 	private SocialPerson user;
-	private Character type;
 	
 	//-----------------------------------------------------------------
-	public CommunityMember(int comNo, SocialPerson user, Character type) {
+	public CommunityMember(int comNo, SocialPerson user) {
 		//
 		this.comNo = comNo;
 		this.user = user;
-		this.type = type;
 	}
 
 	//--------------------------------------------------------------------
@@ -32,11 +30,5 @@ public class CommunityMember {
 	public void setUser(SocialPerson user) {
 		this.user = user;
 	}
-	public Character getType() {
-		return type;
-	}
-	
-	public void setType(Character type) {
-		this.type = type;
-	}
+
 }

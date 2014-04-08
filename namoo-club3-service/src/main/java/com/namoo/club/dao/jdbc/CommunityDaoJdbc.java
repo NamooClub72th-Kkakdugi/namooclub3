@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
+import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 
 import dom.entity.Community;
+import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
 public class CommunityDaoJdbc implements CommunityDao {
@@ -26,7 +28,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date b.userid FROM community a INNER JOIN communitymember b on a.com_no = b.com_no";
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a INNER JOIN communitymember b on a.com_no = b.com_no";
 			pstmt = conn.prepareStatement(sql);
 			
 			rset = pstmt.executeQuery();
@@ -63,19 +65,24 @@ public class CommunityDaoJdbc implements CommunityDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date b.userid FROM community a INNER JOIN communitymember b on a.com_no = b.com_no WHERE com_no=?";
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a " + 
+						"INNER JOIN communitymember b ON a.com_no = b.com_no WHERE a.com_no=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, comNo);
 			pstmt.executeQuery();
+			
+			rset = pstmt.executeQuery();
 			
 			if (rset.next()) {
 				String userId = rset.getString("userid");
 				String comName = rset.getString("com_nm");
 				String description = rset.getString("com_des");
 				Date date = rset.getDate("com_date");
+				int comNo2 = rset.getInt("com_no");
 				
 				community = new Community(comName, description, new SocialPerson(userId));
+				community.setComNo(comNo2);
 				community.setOpenDate(date);
 			}
 		} catch (SQLException e) {
@@ -95,7 +102,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		int comNo = 0;
+		int comNo = 1;
 		
 		try {
 			conn = DbConnection.getConnection();
@@ -121,6 +128,40 @@ public class CommunityDaoJdbc implements CommunityDao {
 		return comNo;
 
 	}
+	
+//	@Override
+//	public CommunityMember addCommunityMember(Membership member) {
+//		//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		
+//		CommunityMember member = null;
+//		
+//		try {
+//			conn = DbConnection.getConnection();
+//			String sql = "INSERT INTO communitymember com_no=?, userid=?, type=? VALUES (?, ?, ?)";
+//			pstmt = conn.prepareStatement(sql);
+//			
+//			pstmt.setInt(1, comMember.getComNo());
+//			pstmt.setString(2, comMember.getUser().getUserId());
+//			
+//			if (member instanceof Com)
+//			
+//			pstmt.setCharacterStream(3, comMember.getType());
+//			
+//			
+//			pstmt.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (rset != null) try { rset.close(); } catch (SQLException e) { }
+//			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
+//			if (conn != null) try { conn.close(); } catch (SQLException e) { }
+//		}
+//		return member;
+//	}
 
 	@Override
 	public void updateCommunity(Community community) {
