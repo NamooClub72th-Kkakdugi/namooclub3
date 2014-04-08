@@ -29,7 +29,7 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date FROM club a"
+			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.userid FROM club a"
 					+ " INNER JOIN clubmember b ON a.club_no = b.club_no";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -143,12 +143,13 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "UPDATE club SET club_nm =? club_des = ? club_date = ? WHERE club_no = ?";
+			String sql = "UPDATE club SET club_nm =?, club_des = ?, club_date = ? WHERE club_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, club.getClubName());
 			pstmt.setString(2, club.getClubDes());
 			pstmt.setString(3, club.getClubDes());
+			pstmt.setInt(4, club.getClubNo());
 			
 			pstmt.executeUpdate();
 			

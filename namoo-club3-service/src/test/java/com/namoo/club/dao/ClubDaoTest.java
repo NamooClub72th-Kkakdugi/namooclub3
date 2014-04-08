@@ -81,7 +81,18 @@ public class ClubDaoTest {
 
 	@Test
 	public void testUpdateClub() {
-		fail("Not yet implemented");
+		//
+		createClub();
+		
+		Club club = clubDao.readClub(clubNo);
+		club.setClubName("Test Club2");
+		club.setClubDes("Test Club2's description");
+		
+		clubDao.updateClub(club);
+		
+		club = clubDao.readClub(clubNo);
+		assertEquals("Test Club2", club.getClubName());
+		assertEquals("Test Club2's description", club.getClubDes());
 	}
 
 	@Test

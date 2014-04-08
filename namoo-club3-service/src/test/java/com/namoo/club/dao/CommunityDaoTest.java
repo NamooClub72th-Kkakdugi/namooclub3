@@ -36,7 +36,7 @@ public class CommunityDaoTest {
 		dao.deleteCommunity(comNo);
 		PrepareBuilder.deleteUser();
 	}
-	
+	//-------------------------------------------
 	@Test
 	public void testReadAllCommunities() {
 		//
@@ -46,7 +46,6 @@ public class CommunityDaoTest {
 		
 		assertEquals(before+1, after);
 	}
-
 	@Test
 	public void testCreateCommunity() {
 		//
