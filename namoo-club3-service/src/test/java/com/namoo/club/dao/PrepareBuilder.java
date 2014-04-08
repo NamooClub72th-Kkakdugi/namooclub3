@@ -30,18 +30,18 @@ public class PrepareBuilder {
 		return user;
 	}
 	
-//	public static Community createCommunity() {
-//		CommunityDao dao = new CommunityDaoJdbc();
-//		SocialPerson author = createUser();
-//		Community community = new Community("com_test", "com_test_description", author);
-//		BOARD_NO = dao.createBoard(board);
-//		board.setBoardNo(BOARD_NO);
-//		return board;
-//	}
-//	
-//	public static void deleteBoard() {
-//		BoardDao dao = new BoardDaoJdbc();
-//		dao.deleteBoard(BOARD_NO);
-//	}
+	public static Community createCommunity() {
+		CommunityDao dao = new CommunityDaoJdbc();
+		SocialPerson author = createUser();
+		Community community = new Community("com_test", "com_test_description", author);
+		COM_NO = dao.createCommunity(community);
+		community.setComNo(COM_NO);;
+		return community;
+	}
+	
+	public static void deleteBoard() {
+		CommunityDao dao = new CommunityDaoJdbc();
+		dao.deleteCommunity(COM_NO);
+	}
 	
 }

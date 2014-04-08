@@ -7,8 +7,9 @@ public class SocialPerson {
 	private String email;
 	private String password;
 	
-	public SocialPerson() {
+	public SocialPerson(String userId) {
 		//
+		this.userId = userId;
 	}
 	
 	public SocialPerson(String userId, String name, String email, String password) {

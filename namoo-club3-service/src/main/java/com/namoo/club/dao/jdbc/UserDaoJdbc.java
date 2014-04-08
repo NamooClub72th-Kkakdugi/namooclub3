@@ -39,21 +39,9 @@ public class UserDaoJdbc implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rset != null)
-				try {
-					rset.close();
-				} catch (SQLException e) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-				}
+			if (rset != null) try { rset.close(); } catch (SQLException e) { }
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
+			if (conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
 		return users;
 	}
