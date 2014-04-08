@@ -21,7 +21,6 @@ public class Community {
 		this.comName = comName;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
-		this.openDate = new Date();
 		this.type = type;
 		
 		addMember(user, type);
