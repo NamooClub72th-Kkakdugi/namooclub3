@@ -1,5 +1,6 @@
 package com.namoo.club.service.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
@@ -71,56 +72,101 @@ public class CommunityServiceLogic implements CommunityService {
 
 	@Override
 	public CommunityMember findCommunityMember(int communityNo, String userId) {
-		// TODO Auto-generated method stub
+		//
+		Community community = dao.readCommunity(communityNo);
+		
+		if (community == null) {
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
+		}
+		
+		for (CommunityMember member : community.getMembers()) {
+			if (member.getUser().getUserId().equals(userId)) {
+				return member;
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
 	public List<CommunityMember> findAllCommunityMember(int communityNo) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		Community community = dao.readCommunity(communityNo);
+		
+		if (community == null) {
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
+		}
+		return community.getMembers();
 	}
 
 	@Override
 	public int countMembers(int communityNo) {
-		// TODO Auto-generated method stub
+		//
+		Community community = dao.readCommunity(communityNo);
+		if (community != null) {
+			return community.getMembers().size();
+		}
 		return 0;
 	}
 
 	@Override
 	public void modifyCommunity(Community community) {
-		// TODO Auto-generated method stub
-		
+		//
+		dao.updateCommunity(community);
 	}
 
 	@Override
 	public void removeCommunity(int communityNo) {
-		// TODO Auto-generated method stub
-		
+		//
+		dao.deleteCommunity(communityNo);
 	}
 
 	@Override
 	public List<Community> findBelongCommunities(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		List<Community> commnities = dao.readAllCommunities();
+		if (commnities == null) return null;
+		
+		List<Community> belongs = new ArrayList<>();
+		for (Community community : commnities) {
+			if (community.findMember(userId) != null) {
+				belongs.add(community);
+			}
+		}
+		return belongs;
 	}
 
 	@Override
 	public List<Community> findManagedCommunities(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		List<Community> commnities = dao.readAllCommunities();
+		if (commnities == null) return null;
+		
+		List<Community> manages = new ArrayList<>();
+		for (Community community : commnities) {
+			if (community.getManager().getUserId().equals(userId)) {
+				manages.add(community);
+			}
+		}
+		return manages;
 	}
 
 	@Override
 	public void withdrawalCommunity(int communityNo, String userId) {
-		// TODO Auto-generated method stub
+		//
+		Community community = dao.readCommunity(communityNo);
+		if (community == null) {
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
+		}
 		
+		community.removeMember(userId);
 	}
 
 	@Override
 	public void commissionManagerCommunity(int communityNo, SocialPerson user) {
-		// TODO Auto-generated method stub
-		
+		//
+		Community community = dao.readCommunity(communityNo);
+		community.setManager(user);
 	}
 
 

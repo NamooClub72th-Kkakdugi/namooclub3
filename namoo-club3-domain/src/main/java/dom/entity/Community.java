@@ -23,6 +23,7 @@ public class Community {
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
 		this.categories = new ArrayList<ClubCategory>();
+		this.clubs = new ArrayList<Club>();
 		
 		setManager(user);
 		addMember(user);
@@ -92,9 +93,11 @@ public class Community {
 	public void setCategories(List<ClubCategory> categories) {
 		this.categories = categories;
 	}
+	
+	
 //-----------------------------------------------------------------------------
 
-	private void setManager(SocialPerson user) {
+	public void setManager(SocialPerson user) {
 		//
 		CommunityManager manager = new CommunityManager(comNo, user);
 		this.manager = manager;
@@ -112,5 +115,41 @@ public class Community {
 			this.categories = new ArrayList<ClubCategory>();
 		}
 		this.categories.add(category);
+	}
+	
+	public CommunityMember findMember(String userId) {
+		//
+		for (CommunityMember member : members) {
+			if(member.getUser().getUserId().equals(userId)) {
+				return member;
+			};
+		}
+		return null;
+	}
+	
+	public void removeMember(String userId) {
+		// 
+		CommunityMember found = null;
+		for (CommunityMember member : members) {
+			if (member.getUser().getUserId().equals(userId)) {
+				found = member;
+			}
+		}
+		if (found != null) {
+			members.remove(found);
+		}
+	}
+	
+	public void removeClub(int clubNo) {
+		//
+		Club found = null;
+		for (Club club : clubs) {
+			if (club.getClubNo() == clubNo) {
+				found = club;
+			}
+		}
+		if (found != null) {
+			clubs.remove(found);
+		}
 	}
 }
