@@ -39,7 +39,7 @@ public class PrepareBuilder {
 		return community;
 	}
 	
-	public static void deleteBoard() {
+	public static void deleteCommunity() {
 		CommunityDao dao = new CommunityDaoJdbc();
 		dao.deleteCommunity(COM_NO);
 	}
