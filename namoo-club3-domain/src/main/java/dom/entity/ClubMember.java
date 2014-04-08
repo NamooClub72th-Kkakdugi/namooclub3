@@ -5,6 +5,7 @@ public class ClubMember {
 	private int clubNo;
 	private SocialPerson user;
 	private Character type;
+	
 	//-----------------------------------------------------------------
 	public ClubMember(int clubNo, SocialPerson user, Character type) {
 		//
