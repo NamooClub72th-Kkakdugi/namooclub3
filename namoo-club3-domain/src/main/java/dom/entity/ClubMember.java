@@ -3,26 +3,22 @@ package dom.entity;
 public class ClubMember {
 	
 	private int clubNo;
-	private SocialPerson user;
+	private SocialPerson rolePerson;
 	
-	//-----------------------------------------------------------------
-	public ClubMember(int clubNo, SocialPerson user) {
+	//--------------------------------------------------------------------
+	
+	public ClubMember(int clubNo, SocialPerson rolePerson) {
 		//
 		this.clubNo = clubNo;
-		this.user = user;
+		this.rolePerson = rolePerson;
 	}
-	//-----------------------------------------------------------------
-	public int getClubNo() {
-		return clubNo;
+	//---------------------------------------------------------------------------
+	
+	public String getName() {
+		return rolePerson.getName();
 	}
-	public void setClubNo(int clubNo) {
-		this.clubNo = clubNo;
+	
+	public String getUserId() {
+		return rolePerson.getUserId();
 	}
-	public SocialPerson getUser() {
-		return user;
-	}
-	public void setUser(SocialPerson user) {
-		this.user = user;
-	}
-
 }

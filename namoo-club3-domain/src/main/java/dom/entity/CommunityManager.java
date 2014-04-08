@@ -22,8 +22,9 @@ public class CommunityManager {
 	//--------------------------------------------------------------------------
 	// getter/setter
 	
-	public int getCommunityNo() {
-		return communityNo;
+	public String getName() {
+		//
+		return rolePerson.getName();
 	}
 
 	public String getUserId() {

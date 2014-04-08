@@ -7,7 +7,7 @@ import java.util.List;
 public class Community {
 	
 	private int comNo;
-	private String comName;
+	private String name;
 	private String description;
 	private Date openDate;
 	
@@ -17,9 +17,9 @@ public class Community {
 	private List<ClubCategory> categories;
 	
 	//----------------------------------------------------------------
-	public Community(String comName, String description, SocialPerson user) {
+	public Community(String name, String description, SocialPerson user) {
 		//
-		this.comName = comName;
+		this.name = name;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
 		this.categories = new ArrayList<ClubCategory>();
@@ -38,12 +38,12 @@ public class Community {
 		this.comNo = comNo;
 	}
 	
-	public String getComName() {
-		return comName;
+	public String getName() {
+		return name;
 	}
 	
-	public void setComName(String comName) {
-		this.comName = comName;
+	public void setName(String comName) {
+		this.name = name;
 	}
 	
 	public String getDescription() {
@@ -120,7 +120,7 @@ public class Community {
 	public CommunityMember findMember(String userId) {
 		//
 		for (CommunityMember member : members) {
-			if(member.getUser().getUserId().equals(userId)) {
+			if(member.getUserId().equals(userId)) {
 				return member;
 			};
 		}
@@ -131,7 +131,7 @@ public class Community {
 		// 
 		CommunityMember found = null;
 		for (CommunityMember member : members) {
-			if (member.getUser().getUserId().equals(userId)) {
+			if (member.getUserId().equals(userId)) {
 				found = member;
 			}
 		}

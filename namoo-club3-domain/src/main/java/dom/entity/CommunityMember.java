@@ -2,33 +2,32 @@ package dom.entity;
 
 public class CommunityMember {
 
-	private int comNo;
-	private SocialPerson user;
+	private int communityNo;
+	private SocialPerson rolePerson;
+
+	//--------------------------------------------------------------------------
+	// constructor
 	
-	//-----------------------------------------------------------------
-	public CommunityMember(int comNo, SocialPerson user) {
+	/**
+	 * 
+	 * @param rolePerson
+	 */
+	public CommunityMember(int communityNo, SocialPerson rolePerson){
 		//
-		this.comNo = comNo;
-		this.user = user;
-	}
-
-	//--------------------------------------------------------------------
-
-	public int getComNo() {
-		return comNo;
+		this.communityNo = communityNo;
+		this.rolePerson = rolePerson;
 	}
 	
-	public void setComNo(int comNo) {
-		this.comNo = comNo;
+	//--------------------------------------------------------------------------
+	// getter/setter
+	
+	public String getName() {
+		return rolePerson.getName();
+	}
+	
+	public String getUserId() {
+		return rolePerson.getUserId();
 	}
 
-	public SocialPerson getUser() {
-		return user;
-	}
-
-
-	public void setUser(SocialPerson user) {
-		this.user = user;
-	}
 
 }
