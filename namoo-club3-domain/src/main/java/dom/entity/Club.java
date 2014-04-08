@@ -9,8 +9,8 @@ public class Club {
 	private int comNo;
 	private int clubNo;
 	private int categoryNo;
-	private String clubName;
-	private String clubDes;
+	private String name;
+	private String description;
 	private Date openDate;
 	private ClubManager manager;
 	
@@ -21,8 +21,8 @@ public class Club {
 		//
 		this.categoryNo = categoryNo;
 		this.comNo = comNo;
-		this.clubName = clubName;
-		this.clubDes = clubDes;
+		this.name = name;
+		this.description = description;
 		this.members = new ArrayList<ClubMember>();
 
 		addMember(user);
@@ -52,20 +52,20 @@ public class Club {
 		this.categoryNo = categoryNo;
 	}
 
-	public String getClubName() {
-		return clubName;
+	public String getName() {
+		return name;
 	}
 
-	public void setClubName(String clubName) {
-		this.clubName = clubName;
+	public void setName(String clubName) {
+		this.name = name;
 	}
 
-	public String getClubDes() {
-		return clubDes;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setClubDes(String clubDes) {
-		this.clubDes = clubDes;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public Date getOpenDate() {
@@ -102,7 +102,7 @@ public class Club {
 	public ClubMember findMember(String userId) {
 		//
 		for (ClubMember member : members) {
-			if(member.getUser().getUserId().equals(userId)) {
+			if(member.getUserId().equals(userId)) {
 				return member;
 			}
 		}
@@ -113,7 +113,7 @@ public class Club {
 		//
 		ClubMember found = null;
 		for (ClubMember member : members) {
-			if(member.getUser().getUserId().equals(userId)) {
+			if(member.getUserId().equals(userId)) {
 				found = member;
 			}
 		}
