@@ -299,8 +299,28 @@ public class CommunityDaoJdbc implements CommunityDao {
 	
 	@Override
 	public void createClubCategory(int comNo, ClubCategory category) {
-		// TODO Auto-generated method stub
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "INSERT INTO clubcategory(category_no, com_no, category_nm) VALUES (?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, category.getCategoryNo());
+			pstmt.setInt(2, comNo);
+			pstmt.setString(3, category.getCategoryName());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rset != null)try {rset.close();} catch (SQLException e) {}
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
 	}
 
 }
