@@ -3,7 +3,7 @@ package dom.entity;
 
 public class CommunityManager {
 	
-	private String communityName;
+	private int communityNo;
 	private SocialPerson rolePerson;
 
 	//--------------------------------------------------------------------------
@@ -13,22 +13,22 @@ public class CommunityManager {
 	 * 
 	 * @param rolePerson
 	 */
-	public CommunityManager(String communityName, SocialPerson rolePerson){
+	public CommunityManager(int communityNo, SocialPerson rolePerson){
 		//
-		this.communityName = communityName;
+		this.communityNo = communityNo;
 		this.rolePerson = rolePerson;
 	}
 	
 	//--------------------------------------------------------------------------
 	// getter/setter
 	
-	public String getName() {
-		//
-		return rolePerson.getName();
+	public int getCommunityNo() {
+		return communityNo;
 	}
 
-	public String getEmail() {
+	public String getUserId() {
 		// 
-		return rolePerson.getEmail();
+		return rolePerson.getUserId();
 	}
+
 }

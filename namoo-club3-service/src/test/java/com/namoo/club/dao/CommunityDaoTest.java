@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.namoo.club.dao.jdbc.CommunityDaoJdbc;
-import com.namoo.club.dao.jdbc.UserDaoJdbc;
 
 import dom.entity.Community;
+import dom.entity.CommunityManager;
 import dom.entity.SocialPerson;
 
 public class CommunityDaoTest {
@@ -30,8 +30,10 @@ public class CommunityDaoTest {
 	@After
 	public void tearDown() throws Exception {
 		//
-		PrepareBuilder.deleteUser();
+		dao.deleteAllComManager(comNo);
+		dao.deleteAllComMember(comNo);
 		dao.deleteCommunity(comNo);
+		PrepareBuilder.deleteUser();
 	}
 	
 	@Test
@@ -56,11 +58,16 @@ public class CommunityDaoTest {
 		SocialPerson user = PrepareBuilder.readUser();
 		Community community = new Community(comName, comDescription, user);
 		comNo = dao.createCommunity(community);
+		
+		CommunityManager comManager = new CommunityManager(comNo, user);
+		dao.addCommunityManager(comManager);
 	}
 
 	@Test
 	public void testUpdateCommunity() {
 		fail("Not yet implemented");
 	}
+	
+	
 
 }
