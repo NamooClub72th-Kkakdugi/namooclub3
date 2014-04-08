@@ -67,7 +67,7 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date FROM club a"
+			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.userid FROM club a"
 					+ " INNER JOIN clubmember b ON a.club_no = b.club_no WHERE a.club_no = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
@@ -190,8 +190,8 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, user_id, type)"
-					+ " VALUES(?, ?, b)";
+			String sql = "INSERT INTO clubmember(club_no, userid, type)"
+					+ " VALUES(?, ?, 'b')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
@@ -220,8 +220,8 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, user_id, type"
-					+ " VALUES(?, ?, a)";
+			String sql = "INSERT INTO clubmember(club_no, userid, type"
+					+ " VALUES(?, ?, 'a')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubManager.getClubNo());
