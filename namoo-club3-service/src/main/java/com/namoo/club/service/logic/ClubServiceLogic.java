@@ -10,8 +10,6 @@ import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.ClubService;
 import com.namoo.club.service.logic.exception.NamooClubExceptionFactory;
-import com.namoo.ns1.service.logic.exception.NamooExceptionFactory;
-import com.namoo.ns1.service.util.SequenceGenerator;
 
 import dom.entity.Club;
 import dom.entity.ClubMember;
