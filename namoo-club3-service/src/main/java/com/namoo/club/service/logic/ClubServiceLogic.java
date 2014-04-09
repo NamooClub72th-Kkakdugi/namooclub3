@@ -31,12 +31,13 @@ public class ClubServiceLogic implements ClubService {
 	//------------------------------------------------------------------------
 
 	@Override
-	public void registClub(int categoryNo, int communityNo, String clubName, String description, String userId) {
+	public void registClub(int categoryNo, int communityNo, String clubName, String description, String email) {
 		// 
 		if (isExistClubByName(communityNo, clubName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 클럽입니다.");
 		}
-		Club club = new Club(categoryNo, communityNo, clubName, description, new SocialPerson(userId));
+		
+		Club club = new Club(categoryNo, communityNo, clubName, description, new SocialPerson(email));
 		clubDao.createClub(communityNo, club);
 	}
 	private boolean isExistClubByName(int communityNo, String clubName) {
@@ -61,7 +62,7 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void joinAsMember(int clubNo, String userId, String name, String email, String password) {
+	public void joinAsMember(int clubNo, String email, String name, String password) {
 		// 
 		Club club = clubDao.readClub(clubNo);
 		
@@ -69,28 +70,28 @@ public class ClubServiceLogic implements ClubService {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
 		// 	 email로 유저를 찾는게 맞는건가?
-		if(userDao.readUser(userId) != null){
+		if(userDao.readUser(email) != null){
 			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
 		}
 		
-		SocialPerson user = new SocialPerson(userId, name, email, password);
+		SocialPerson user = new SocialPerson(email, name, password);
 		userDao.createUser(user);
 		club.addMember(user);
 	}
 
 	@Override
-	public void joinAsMember(int clubNo, String userId) {
+	public void joinAsMember(int clubNo, String email) {
 		// 
 		Club club = clubDao.readClub(clubNo);
 		if(club == null) {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
 		// 	 email로 유저를 찾는게 맞는건가?
-		if (userDao.readUser(userId) != null){
+		if (userDao.readUser(email) != null){
 			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
 		}
 
-		club.addMember(new SocialPerson(userId));
+		club.addMember(new SocialPerson(email));
 	}
 
 	@Override
@@ -100,12 +101,16 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public ClubMember findClubMember(int clubNo, String userId) {
+	public ClubMember findClubMember(int clubNo, String email) {
 		//
 		Club club = clubDao.readClub(clubNo);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
+		
 		List<ClubMember> clubMembers = club.getMembers();
 		for(ClubMember clubMember : clubMembers) {
-			if(clubMember.getUserId().equals(userId)) {
+			if(clubMember.getEmail().equals(email)) {
 				return clubMember;
 			}
 		}
@@ -116,6 +121,9 @@ public class ClubServiceLogic implements ClubService {
 	public List<ClubMember> findAllClubMember(int clubNo) {
 		// 
 		Club club = clubDao.readClub(clubNo);
+		if (club ==null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
 		return club.getMembers();
 	}
 
@@ -123,6 +131,9 @@ public class ClubServiceLogic implements ClubService {
 	public int countMembers(int clubNo) {
 		// 
 		Club club = clubDao.readClub(clubNo);
+		if (club ==null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
 		return club.getMembers().size();
 	}
 
@@ -133,14 +144,14 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public List<Club> findBelongClubs(String userId, int comNo) {
+	public List<Club> findBelongClubs(String email, int comNo) {
 		// 
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
 		
 		List<Club> belongs = new ArrayList<>();
 		for(Club club : clubs) {
-			if(club.findMember(userId) != null) {
+			if(club.findMember(email) != null) {
 				belongs.add(club);
 			}
 		}
@@ -148,14 +159,14 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public List<Club> findManagedClubs(String userId, int comNo) {
+	public List<Club> findManagedClubs(String email, int comNo) {
 		// 
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
 		
 		List<Club> manages = new ArrayList<>();
 		for (Club club : clubs) {
-			if (club.getManager().getId().equals(userId)) {
+			if (club.getManager().getEamil().equals(email)) {
 				manages.add(club);
 			}
 		}
@@ -163,16 +174,22 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void withdrawalClub(int clubNo, String userId) {
+	public void withdrawalClub(int clubNo, String email) {
 		//
 		Club club = clubDao.readClub(clubNo);
-		club.removeMember(userId);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
+		club.removeMember(email);
 	}
 
 	@Override
 	public void commissionManagerCommunity(int clubNo, SocialPerson rolePerson) {
 		//
 		Club club = clubDao.readClub(clubNo);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
 		club.setManager(rolePerson);
 	}
 }

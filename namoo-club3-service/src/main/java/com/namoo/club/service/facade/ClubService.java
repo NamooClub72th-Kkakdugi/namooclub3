@@ -20,7 +20,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void registClub(int categoryNo, int communityNo, String clubName, String description, String userId);
+	public void registClub(int categoryNo, int communityNo, String clubName, String description, String email);
 
 	/**
 	 * 
@@ -41,7 +41,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void joinAsMember(int clubNo, String userId, String name, String email, String password);
+	public void joinAsMember(int clubNo, String email, String name, String password);
 	
 	/**
 	 * [주민으로 등록된 경우] 클럽 가입
@@ -54,7 +54,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void joinAsMember(int clubNo, String userId);
+	public void joinAsMember(int clubNo, String email);
 
 	/**
 	 * @return
@@ -96,7 +96,7 @@ public interface ClubService {
 	 * @param email
 	 * @return
 	 */
-	public List<Club> findBelongClubs(String userId, int comNo);
+	public List<Club> findBelongClubs(String email, int comNo);
 	
 	/**
 	 * 해당 커뮤니티에
@@ -105,7 +105,7 @@ public interface ClubService {
 	 * @param email
 	 * @return
 	 */
-	public List<Club> findManagedClubs(String userId, int comNo);
+	public List<Club> findManagedClubs(String email, int comNo);
 
 	/**
 	 * 클럽에서 탈퇴하기
@@ -113,7 +113,7 @@ public interface ClubService {
 	 * @param clubName
 	 * @param email
 	 */
-	public void withdrawalClub(int clubNo, String userId);
+	public void withdrawalClub(int clubNo, String email);
 	
 	public void commissionManagerCommunity(int clubNo, SocialPerson rolePerson);
 

@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>성공!
-</h1>
+
+<h1>테스트 페이지</h1>
+
 </body>
 </html>
