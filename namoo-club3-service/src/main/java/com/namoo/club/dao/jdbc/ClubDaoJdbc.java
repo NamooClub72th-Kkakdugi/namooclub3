@@ -309,4 +309,28 @@ public class ClubDaoJdbc implements ClubDao {
 			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
 	}
+
+	@Override
+	public List<ClubMember> readAllClubMembers(int clubNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Club> readBelongClubs(String email, int comNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Club> readManagedClubs(String email, int comNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ClubMember readClubMember(int clubNo, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

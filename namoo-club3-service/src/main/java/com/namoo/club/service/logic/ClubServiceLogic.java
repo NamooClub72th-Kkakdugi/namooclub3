@@ -167,7 +167,7 @@ public class ClubServiceLogic implements ClubService {
 		if (club == null) {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
-		club.removeMember(email);
+		//TODO deleteManager
 	}
 
 	@Override

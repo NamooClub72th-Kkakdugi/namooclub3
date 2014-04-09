@@ -28,8 +28,6 @@ public class Club {
 		this.comNo = comNo;
 		this.name = name;
 		this.description = description;
-
-		addMember(user);
 	}
 	
 	public int getComNo() {
