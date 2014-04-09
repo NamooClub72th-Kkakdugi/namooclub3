@@ -7,10 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.SocialPerson;
 
@@ -25,17 +25,17 @@ public class ClubJoinController extends DefaultController {
 		//
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
-		String clId =req.getParameter("clId") ;
-		String cmId = req.getParameter("cmId");
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		String name = person.getName();
 		String email = person.getEmail();
 		
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", cmId);
-		req.setAttribute("clId", clId);
+		req.setAttribute("comNo", comNo);
+		req.setAttribute("clubNo", clubNo);
 		
-		service.joinAsMember(clId, email);
+		service.joinAsMember(clubNo, email);
 		
-		redirect(req, resp, "/club/clubList.do?name="+name+"&cmId="+cmId);
+		redirect(req, resp, "/club/clubList.do?name="+name+"&comNo="+comNo);
 	}
 }

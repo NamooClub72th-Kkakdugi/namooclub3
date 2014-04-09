@@ -30,14 +30,14 @@ public class ClubCreateController extends DefaultController{
 		int cmId = Integer.parseInt(req.getParameter("cmId"));
 		String name = person.getName();
 		
-		String clubCategory = req.getParameter("clubCategory");
+		int categoryNo = Integer.parseInt(req.getParameter("clubCategory"));
 		String clubName = req.getParameter("clubName");
 		String clubDescription = req.getParameter("clubDescription");
 		
 		req.setAttribute("name", name);
 		req.setAttribute("cmId", cmId);
 		
-		service.registClub(clubCategory, cmId, clubName, clubDescription, email);
+		service.registClub(categoryNo, cmId, clubName, clubDescription, email);
 		
 		redirect(req, resp, "/club/clubList.do?cmId="+cmId+"&name="+name);
 	}

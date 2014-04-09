@@ -9,10 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
@@ -29,14 +29,14 @@ public class ClubSelectMemController extends DefaultController{
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
-		String clId = req.getParameter("clId");
-		String clubName = service.findClub(clId).getName();
-		List<ClubMember> members = service.findAllClubMember(clId);
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
+		String clubName = service.findClub(clubNo).getName();
+		List<ClubMember> members = service.findAllClubMember(clubNo);
 		
 		req.setAttribute("members", members);
 		req.setAttribute("name", name);
 		req.setAttribute("club", clubName);
-		req.setAttribute("clId", clId);
+		req.setAttribute("clubNo", clubNo);
 		req.setAttribute("cmId", req.getParameter("cmId"));
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/commission/clubSelectMem.jsp");

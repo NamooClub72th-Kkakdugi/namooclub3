@@ -8,11 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.facade.CommunityService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.facade.CommunityService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.Club;
 import dom.entity.Community;
@@ -26,12 +26,10 @@ public class ClubWithdrawlCheckController extends DefaultController {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
-		String cmId = req.getParameter("cmId");
-		String clId = req.getParameter("clId");
+		int cmId = Integer.parseInt(req.getParameter("cmId"));
+		int clId = Integer.parseInt(req.getParameter("clId"));
 		req.setAttribute("cmId", cmId);
 		req.setAttribute("clId", clId);
-		
-//		System.out.println(cmId);
 		
 		req.setAttribute("name", req.getParameter("name"));
 		

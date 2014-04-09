@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
+
 
 
 @WebServlet("/inform/clubRemoveCheck.do")
@@ -24,7 +25,7 @@ public class ClubRemoveCheckController extends DefaultController {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
 		String cmId = req.getParameter("cmId");
-		String clId = req.getParameter("clId");
+		int clId = Integer.parseInt(req.getParameter("clId"));
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		
 		String name = req.getParameter("name");

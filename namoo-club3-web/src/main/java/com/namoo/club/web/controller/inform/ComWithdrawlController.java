@@ -7,10 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.CommunityService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.CommunityService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.SocialPerson;
 
@@ -26,12 +26,12 @@ public class ComWithdrawlController extends DefaultController{
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
-		String id = req.getParameter("id");
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
 		req.setAttribute("name", name);
-		req.setAttribute("id", id);
+		req.setAttribute("comNo", comNo);
 		
-		service.removeCommunity(id);
+		service.removeCommunity(comNo);
 		
 		redirect(req, resp, "/community/comList.do");
 		

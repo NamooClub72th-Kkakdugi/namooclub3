@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.DefaultController;
 
 @WebServlet("/user/logout.do")
 public class LogoutController extends DefaultController {

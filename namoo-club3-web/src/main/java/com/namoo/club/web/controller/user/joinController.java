@@ -23,8 +23,8 @@ public class joinController extends DefaultController{
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		
-		UserService service =  NamooClubServiceFactory.getInstance().getTownerService();
-		service.registUser(name, email, password);
+		UserService service =  NamooClubServiceFactory.getInstance().getUserService();
+		service.registTowner(name, email, password);
 		
 		redirect(req, resp, "/user/main.xhtml");
 		

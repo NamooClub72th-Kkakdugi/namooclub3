@@ -8,10 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.CommunityService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.CommunityService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.Community;
 import dom.entity.SocialPerson;
@@ -30,9 +30,9 @@ public class ComRemoveCheckController extends DefaultController {
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
 		
-		String id = req.getParameter("id");
-		req.setAttribute("id", id);
-		Community community = service.findCommunity(id);
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		req.setAttribute("comNo", comNo);
+		Community community = service.findCommunity(comNo);
 		String communityName = community.getName();
 		req.setAttribute("communityName", communityName);
 		req.setAttribute("name", name);

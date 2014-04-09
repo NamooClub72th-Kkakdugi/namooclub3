@@ -7,11 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.facade.TownerService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.facade.UserService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.SocialPerson;
 
@@ -25,19 +25,19 @@ public class ClubCommissionController extends DefaultController {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
-		TownerService townService = NamooClubServiceFactory.getInstance().getTownerService();
+		UserService userService = NamooClubServiceFactory.getInstance().getUserService();
 		SocialPerson originPerson = (SocialPerson) req.getSession().getAttribute("loginUser");
 		
-		String clId = req.getParameter("clId");
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
 		String email = req.getParameter("email");
-		String cmId = req.getParameter("cmId");
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
-		SocialPerson person = townService.findTowner(email);
-		service.commissionManagerCommunity(clId, person);
+		SocialPerson person = userService.findTowner(email);
+		service.commissionManagerCommunity(clubNo, person);
 		
-		req.setAttribute("cmId", cmId); 
+		req.setAttribute("comNo", comNo); 
 		req.setAttribute("name", originPerson.getName());
-		redirect(req, resp, "/club/clubList.do?cmId="+cmId);
+		redirect(req, resp, "/club/clubList.do?comNo="+comNo);
 	}
 
 }

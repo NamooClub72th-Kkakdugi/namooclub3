@@ -21,7 +21,7 @@ public interface CommunityService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void registCommunity(int communityNo, String communityName, String description, String email);
+	public void registCommunity(String communityName, String description, String email);
 
 	/**
 	 * 

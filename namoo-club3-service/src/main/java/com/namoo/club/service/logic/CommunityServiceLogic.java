@@ -28,13 +28,14 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 	
 	@Override
-	public void registCommunity(int communityNo, String communityName, String description, String email) {
+	public void registCommunity(String communityName, String description, String email) {
 		//
 		if (isExistCommunityByName(communityName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 게시판입니다.");
 		}
 		Community community = new Community(communityName, description, new SocialPerson(email));
-		dao.createCommunity(community);
+		int communityNo = dao.createCommunity(community);
+		
 		CommunityManager comManager = new CommunityManager(communityNo, new SocialPerson(email));
 		dao.addCommunityManager(comManager);
 	}

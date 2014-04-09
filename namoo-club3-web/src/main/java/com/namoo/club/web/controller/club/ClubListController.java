@@ -10,11 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.ClubService;
-import com.namoo.ns1.service.facade.CommunityService;
-import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.web.controller.shared.DefaultController;
-import com.namoo.ns1.web.controller.shared.LoginRequired;
+import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.facade.CommunityService;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.shared.DefaultController;
+import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.Club;
 import dom.entity.Community;
@@ -34,23 +34,23 @@ public class ClubListController extends DefaultController {
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 
 		String name = person.getName();
-		String cmId = req.getParameter("cmId");
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		String email = person.getEmail();
 
-		Community community = comService.findCommunity(cmId);
+		Community community = comService.findCommunity(comNo);
 		String communityName = community.getName();
 		String description = community.getDescription();
 		req.setAttribute("communityName", communityName);
 		req.setAttribute("description", description);
 
-		List<Club> allClubs = service.findAllClubs(cmId);
-		List<Club> joinClubs = service.findBelongclubs(email, cmId);
+		List<Club> allClubs = service.findAllClubs(comNo);
+		List<Club> joinClubs = service.findBelongClubs(email, comNo);
 		List<Club> unjoinClubs = filterList(allClubs, joinClubs);
 
 		req.setAttribute("joinClubs", joinClubs);
 		req.setAttribute("unJoinClubs", unjoinClubs);
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", cmId);
+		req.setAttribute("comNo", comNo);
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubList.jsp");
 		dispatcher.forward(req, resp);
@@ -62,7 +62,7 @@ public class ClubListController extends DefaultController {
 		List<Club> remove = new ArrayList<Club>();
 		for (Club joinClub : joinClubs) {
 			for (Club club : allClubs) {
-				if (club.getId().equals(joinClub.getId())) {
+				if (club.getClubNo() == (joinClub.getClubNo())) {
 					remove.add(club);
 					break;
 				}
