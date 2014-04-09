@@ -2,8 +2,6 @@ package com.namoo.club.service.facade;
 
 import java.util.List;
 
-import com.namoo.club.service.logic.StirString;
-
 import dom.entity.Club;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
