@@ -1,4 +1,4 @@
-package com.namoo.club.service.logic.exception;
+package com.namoo.club.shared.exception;
 
 public class NamooClubException extends RuntimeException {
 

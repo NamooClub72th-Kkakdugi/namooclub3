@@ -87,12 +87,12 @@ public class UserDaoJdbc implements UserDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO user(email, name, password) VALUES(?, ?, ?, ?)";
+			String sql = "INSERT INTO user(email, name, password) VALUES(?, ?,  ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(2, user.getEmail());
-			pstmt.setString(3, user.getName());
-			pstmt.setString(4, user.getPassword());
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getPassword());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

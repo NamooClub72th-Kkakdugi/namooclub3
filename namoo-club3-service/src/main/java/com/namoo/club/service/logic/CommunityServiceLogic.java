@@ -8,7 +8,7 @@ import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.CommunityService;
-import com.namoo.club.service.logic.exception.NamooClubExceptionFactory;
+import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;

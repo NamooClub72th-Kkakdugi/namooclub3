@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
+import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
@@ -49,6 +50,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티목록을 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}

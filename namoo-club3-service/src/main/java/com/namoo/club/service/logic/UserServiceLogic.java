@@ -7,7 +7,7 @@ import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.UserService;
-import com.namoo.club.service.logic.exception.NamooClubException;
+import com.namoo.club.shared.exception.NamooClubException;
 
 import dom.entity.Community;
 import dom.entity.SocialPerson;

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.namoo.club.dao.ClubDao;
+import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.Club;
 import dom.entity.ClubKingManager;
@@ -50,6 +52,7 @@ public class ClubDaoJdbc implements ClubDao {
 		}
 		 catch(SQLException e) {
 			 e.printStackTrace();
+			 NamooClubExceptionFactory.createRuntime("클럽목록조회중 오류발생");
 		 } finally {
 			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
 			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
