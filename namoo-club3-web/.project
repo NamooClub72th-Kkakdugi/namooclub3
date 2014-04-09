@@ -3,6 +3,8 @@
 	<name>namoo-club3-web</name>
 	<comment></comment>
 	<projects>
+		<project>namoo-club3-domain</project>
+		<project>namoo-club3-service</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

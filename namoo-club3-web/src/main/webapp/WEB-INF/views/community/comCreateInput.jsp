@@ -51,6 +51,19 @@
 										입력하신 문구가 출력됩니다.</span>
 								</div>
 							</div>
+								
+							<div class="form-group">
+                           		<label class="col-lg-2 control-label">클럽 카테고리</label>
+
+                            	<div class="col-lg-10">
+                              	 	 <input type="text" class="form-control" placeholder="카테고리 1" name="ctgr1">
+	                             	<input type="text" class="form-control" placeholder="카테고리 2" name="ctgr2">
+	                                <input type="text" class="form-control" placeholder="카테고리 3" name="ctgr3">
+	                                <input type="text" class="form-control" placeholder="카테고리 4" name="ctgr4">
+	                                <input type="text" class="form-control" placeholder="카테고리 5" name="ctgr5">
+	                                <input type="text" class="form-control" placeholder="카테고리 6" name="ctgr6">
+	                            </div>
+	                        </div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
 									<button class="btn btn-primary" type="submit">확인</button>

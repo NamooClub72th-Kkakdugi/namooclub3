@@ -1,6 +1,8 @@
 package com.namoo.club.web.controller.community;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.ClubCategory;
+import dom.entity.Community;
 import dom.entity.SocialPerson;
 
 @WebServlet("/community/comCreateCheck.do")
@@ -26,9 +30,17 @@ public class ComCreateCheckController extends DefaultController{
 		String name = person.getName();
 		String communityName = req.getParameter("communityName");
 		String description = req.getParameter("description");
-		req.setAttribute("name", name);
-		req.setAttribute("communityName", communityName);
-		req.setAttribute("description", description);
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		
+		Community community = new Community(communityName, description, person);
+		List<ClubCategory> categories = new ArrayList<>();
+		for (int i = 1; i < 7; i++) {
+			ClubCategory category = new ClubCategory(comNo, req.getParameter("ctgr"+i));
+			categories.add(category);
+			community.addCategory(category);
+		}
+		
+		req.setAttribute("community", community);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comCreateCheck.jsp");
 		dispatcher.forward(req, resp);

@@ -109,7 +109,7 @@ public class Community {
 		this.members.add(member);
 	}
 	
-	private void addCategory(ClubCategory category) {
+	public void addCategory(ClubCategory category) {
 		//
 		if (this.categories == null) {
 			this.categories = new ArrayList<ClubCategory>();
