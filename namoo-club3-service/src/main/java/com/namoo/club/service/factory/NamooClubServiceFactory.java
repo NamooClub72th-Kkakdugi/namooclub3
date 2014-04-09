@@ -5,7 +5,7 @@ import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.facade.UserService;
 import com.namoo.club.service.logic.ClubServiceLogic;
 import com.namoo.club.service.logic.CommunityServiceLogic;
-import com.namoo.club.service.logic.UserServiceLogic2;
+import com.namoo.club.service.logic.UserServiceLogic;
 
 
 public class NamooClubServiceFactory {
@@ -23,7 +23,7 @@ public class NamooClubServiceFactory {
 	
 	public UserService getUserService() {
 		//
-		return new UserServiceLogic2();
+		return new UserServiceLogic();
 	}
 	
 	public CommunityService getCommunityService() {

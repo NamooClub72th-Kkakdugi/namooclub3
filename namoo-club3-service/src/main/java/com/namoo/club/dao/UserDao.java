@@ -7,9 +7,9 @@ import dom.entity.SocialPerson;
 public interface UserDao {
 	//
 	List<SocialPerson> readAllUsers();
-	SocialPerson readUser(String userId);
+	SocialPerson readUser(String email);
 	void createUser(SocialPerson user);
 	void updateUser(SocialPerson user);
-	void deleteUser(String userId);
+	void deleteUser(String email);
 
 }

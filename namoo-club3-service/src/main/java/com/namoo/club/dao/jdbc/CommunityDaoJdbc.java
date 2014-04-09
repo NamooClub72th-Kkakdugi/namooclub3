@@ -29,7 +29,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a " +
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a " +
 					"INNER JOIN communitymember b on a.com_no = b.com_no";
 			pstmt = conn.prepareStatement(sql);
 
@@ -40,9 +40,9 @@ public class CommunityDaoJdbc implements CommunityDao {
 				String comName = rset.getString("com_nm");
 				String comDescription = rset.getString("com_des");
 				Date date = rset.getDate("com_date");
-				String userId = rset.getString("userid");
+				String email = rset.getString("email");
 
-				Community community = new Community(comName, comDescription, new SocialPerson(userId));
+				Community community = new Community(comName, comDescription, new SocialPerson(email));
 				community.setComNo(comNo);
 				community.setOpenDate(date);
 				communities.add(community);
@@ -67,7 +67,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a "
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a "
 					+ "INNER JOIN communitymember b ON a.com_no = b.com_no WHERE a.com_no=?";
 			pstmt = conn.prepareStatement(sql);
 
@@ -76,13 +76,13 @@ public class CommunityDaoJdbc implements CommunityDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				String userId = rset.getString("userid");
+				String email = rset.getString("email");
 				String comName = rset.getString("com_nm");
 				String description = rset.getString("com_des");
 				Date date = rset.getDate("com_date");
 				int comNo2 = rset.getInt("com_no");
 
-				community = new Community(comName, description, new SocialPerson(userId));
+				community = new Community(comName, description, new SocialPerson(email));
 				community.setComNo(comNo2);
 				community.setOpenDate(date);
 			}
@@ -141,11 +141,11 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, userid, type) VALUES (?, ?, 1)";
+			String sql = "INSERT INTO communitymember(com_no, email, type) VALUES (?, ?, 1)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comManager.getCommunityNo());
-			pstmt.setString(2, comManager.getUserId());
+			pstmt.setString(2, comManager.getEmail());
 
 			pstmt.executeUpdate();
 
@@ -170,11 +170,11 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, userid, type) VALUES (?, ?, 2)";
+			String sql = "INSERT INTO communitymember(com_no, email, type) VALUES (?, ?, 2)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comMember.getCommunityNo());
-			pstmt.setString(2, comMember.getUserId());
+			pstmt.setString(2, comMember.getEmail());
 
 			pstmt.executeUpdate();
 
@@ -264,28 +264,28 @@ public class CommunityDaoJdbc implements CommunityDao {
 	}
 
 	@Override
-	public void deleteCommuninyMember(int comNo, String userId) {
+	public void deleteCommuninyMember(int comNo, String email) {
 		//
-		deleteCommunityMembership(comNo, userId, "2");
+		deleteCommunityMembership(comNo, email, "2");
 	}
 
 	@Override
-	public void deleteCommunityManager(int comNo, String userId) {
+	public void deleteCommunityManager(int comNo, String email) {
 		//
-		deleteCommunityMembership(comNo, userId, "1");
+		deleteCommunityMembership(comNo, email, "1");
 	}
 	
-	private void deleteCommunityMembership(int comNo, String userId, String type) {
+	private void deleteCommunityMembership(int comNo, String email, String type) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ? AND userid=?";
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ? AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			pstmt.setString(2, type);
-			pstmt.setString(3, userId);
+			pstmt.setString(3, email);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -357,7 +357,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	}
 
 	@Override
-	public CommunityMember readCommunityMember(int comNo, String userId) {
+	public CommunityMember readCommunityMember(int comNo, String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}

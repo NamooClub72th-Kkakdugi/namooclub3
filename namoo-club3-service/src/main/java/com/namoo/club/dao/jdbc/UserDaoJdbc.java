@@ -23,17 +23,16 @@ public class UserDaoJdbc implements UserDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT userId, email, name, password FROM user";
+			String sql = "SELECT email, name, password FROM user";
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
-				String userId = rset.getString("userId");
 				String email = rset.getString("email");
 				String name = rset.getString("name");
 				String password = rset.getString("password");
 
-				SocialPerson user = new SocialPerson(userId, name, email, password);
+				SocialPerson user = new SocialPerson(name, email, password);
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -47,7 +46,7 @@ public class UserDaoJdbc implements UserDao {
 	}
 
 	@Override
-	public SocialPerson readUser(String userId) {
+	public SocialPerson readUser(String email) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -56,20 +55,19 @@ public class UserDaoJdbc implements UserDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT userid, email, name, password FROM user WHERE userid=?";
+			String sql = "SELECT email, name, password FROM user WHERE email=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, userId);
+			pstmt.setString(1, email);
 			
 			rset = pstmt.executeQuery();
 			
 
 			if (rset.next()) {
-				String userId2 = rset.getString("userid");
 				String name = rset.getString("name");
-				String email = rset.getString("email");
+				String email2 = rset.getString("email");
 				String password = rset.getString("password");
-				user = new SocialPerson(userId2, name, email, password);
+				user = new SocialPerson(name, email2, password);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,10 +87,9 @@ public class UserDaoJdbc implements UserDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO user(userid, email, name, password) VALUES(?, ?, ?, ?)";
+			String sql = "INSERT INTO user(email, name, password) VALUES(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getEmail());
 			pstmt.setString(3, user.getName());
 			pstmt.setString(4, user.getPassword());
@@ -114,12 +111,11 @@ public class UserDaoJdbc implements UserDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "UPDATE user SET email=?, password=? WHERE userid=?";
+			String sql = "UPDATE user SET password=? WHERE email=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, user.getEmail());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getUserId());
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getEmail());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -131,17 +127,17 @@ public class UserDaoJdbc implements UserDao {
 	}
 
 	@Override
-	public void deleteUser(String userId) {
+	public void deleteUser(String email) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM user WHERE userid =?";
+			String sql = "DELETE FROM user WHERE email =?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, userId);
+			pstmt.setString(1, email);
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

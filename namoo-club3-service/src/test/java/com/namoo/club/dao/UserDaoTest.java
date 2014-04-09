@@ -44,14 +44,14 @@ public class UserDaoTest {
 		
 		//검증
 		SocialPerson user = dao.readUser(userId);
-		assertEquals(userId, user.getUserId());
+		assertEquals(userId, user.getEmail());
 		assertEquals(password, user.getPassword());
 		assertEquals(name, user.getName());
 		assertEquals(email, user.getEmail());
 	}
 
 	private void createUser() {
-		SocialPerson user = new SocialPerson(userId, name, email, password);
+		SocialPerson user = new SocialPerson(name, email, password);
 		dao.createUser(user);
 	}
 

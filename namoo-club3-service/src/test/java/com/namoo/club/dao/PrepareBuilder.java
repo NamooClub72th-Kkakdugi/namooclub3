@@ -11,24 +11,24 @@ import dom.entity.SocialPerson;
 
 public class PrepareBuilder {
 	//
-	static final String USER_ID = "_a_a_test";
+	static final String EMAIL = "abcd";
 	static int COM_NO;
 	
 	public static SocialPerson createUser() {
 		UserDao dao = new UserDaoJdbc();
-		SocialPerson user = new SocialPerson(USER_ID, "abcd", "password", "abcd@abcd.abcd");
+		SocialPerson user = new SocialPerson("abcd", "password", "abcd@abcd.abcd");
 		dao.createUser(user);
 		return user;
 	}
 	
 	public static void deleteUser() {
 		UserDao dao = new UserDaoJdbc();
-		dao.deleteUser(USER_ID);
+		dao.deleteUser(EMAIL);
 	}
 	
 	public static SocialPerson readUser() {
 		UserDao dao = new UserDaoJdbc();
-		SocialPerson user = dao.readUser(USER_ID);
+		SocialPerson user = dao.readUser(EMAIL);
 		return user;
 	}
 	
@@ -61,7 +61,7 @@ public class PrepareBuilder {
 	public static CommunityMember addMember() {
 		//
 		CommunityDao dao = new CommunityDaoJdbc();
-		CommunityMember communityMember = new CommunityMember(COM_NO, new SocialPerson(USER_ID));
+		CommunityMember communityMember = new CommunityMember(COM_NO, new SocialPerson(EMAIL));
 		dao.addCommunityMember(communityMember);
 		
 		return communityMember;

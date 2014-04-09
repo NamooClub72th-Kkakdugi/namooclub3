@@ -29,7 +29,7 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.userid FROM club a"
+			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.email FROM club a"
 					+ " INNER JOIN clubmember b ON a.club_no = b.club_no";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -41,9 +41,9 @@ public class ClubDaoJdbc implements ClubDao {
 				String clubNm = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
 				Date date = resultSet.getDate("club_date");
-				String userId = resultSet.getString("userid");
+				String email = resultSet.getString("email");
 				
-				Club club = new Club(categoryNo, comNo, clubNm, clubDes, new SocialPerson(userId));
+				Club club = new Club(categoryNo, comNo, clubNm, clubDes, new SocialPerson(email));
 				clubs.add(club);
 				club.setOpenDate(date);
 			}
@@ -68,7 +68,7 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.userid FROM club a"
+			String sql = "SELECT a.club_no, a.com_no, a.category_no, a.club_nm, a.club_des, a.club_date, b.email FROM club a"
 					+ " INNER JOIN clubmember b ON a.club_no = b.club_no WHERE a.club_no = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
@@ -81,9 +81,9 @@ public class ClubDaoJdbc implements ClubDao {
 				int categoryNo = resultSet.getInt("category_no");
 				String clubName = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
-				String userId = resultSet.getString("userId");
+				String email = resultSet.getString("email");
 				
-				club = new Club(categoryNo, comNo, clubName, clubDes, new SocialPerson(userId));
+				club = new Club(categoryNo, comNo, clubName, clubDes, new SocialPerson(email));
 				club.setClubNo(clubNo);
 			}
 		} catch (SQLException e) {
@@ -191,12 +191,12 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, userid, type)"
+			String sql = "INSERT INTO clubmember(club_no, email, type)"
 					+ " VALUES(?, ?, 'b')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
-			pstmt.setString(2, clubMember.getUserId());
+			pstmt.setString(2, clubMember.getEmail());
 			
 			pstmt.executeUpdate();
 			
@@ -221,12 +221,12 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, userid, type"
+			String sql = "INSERT INTO clubmember(club_no, email, type"
 					+ " VALUES(?, ?, 'a')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubManager.getClubNo());
-			pstmt.setString(2, clubManager.getId());
+			pstmt.setString(2, clubManager.getEamil());
 			
 			pstmt.executeUpdate();
 			
@@ -251,12 +251,12 @@ public class ClubDaoJdbc implements ClubDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, userid, type"
+			String sql = "INSERT INTO clubmember(club_no, email, type"
 					+ " VALUES(?, ?, 'c')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubKingManager.getClubNo());
-			pstmt.setString(2, clubKingManager.getUserId());
+			pstmt.setString(2, clubKingManager.getEmail());
 			
 			pstmt.executeUpdate();
 			
