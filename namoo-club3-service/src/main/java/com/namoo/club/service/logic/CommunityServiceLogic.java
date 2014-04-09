@@ -28,7 +28,7 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 	
 	@Override
-	public void registCommunity(String communityName, String description, String email) {
+	public Community registCommunity(String communityName, String description, String email, List<ClubCategory> categories) {
 		//
 		if (isExistCommunityByName(communityName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 게시판입니다.");
@@ -38,6 +38,11 @@ public class CommunityServiceLogic implements CommunityService {
 		
 		CommunityManager comManager = new CommunityManager(communityNo, new SocialPerson(email));
 		dao.addCommunityManager(comManager);
+		
+		// 카테고리 추가
+		registCategory(communityNo, categories);
+		
+		return community;
 	}
 
 	private boolean isExistCommunityByName(String communityName) {

@@ -105,8 +105,6 @@ public class CommunityDaoJdbc implements CommunityDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
-		int comNo = 1;
-
 		try {
 			conn = DbConnection.getConnection();
 			String sql = "INSERT INTO community(com_nm, com_des, com_date) VALUES (?, ?, sysdate())";
@@ -119,7 +117,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 			rset = pstmt.getGeneratedKeys();
 			if (rset.next()) {
-				comNo = rset.getInt("com_no");
+				community.setComNo(rset.getInt("com_no"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,7 +126,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
-		return comNo;
+		return community.getComNo();
 
 	}
 

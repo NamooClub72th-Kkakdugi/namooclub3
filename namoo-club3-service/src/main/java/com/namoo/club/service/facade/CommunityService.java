@@ -18,10 +18,12 @@ public interface CommunityService {
 	 * @param communityName
 	 * @param description
 	 * @param email
+	 * @param categories
 	 * 
+	 * @return
 	 * @throws NamooRuntimeException
 	 */
-	public void registCommunity(String communityName, String description, String email);
+	public Community registCommunity(String communityName, String description, String email, List<ClubCategory> categories);
 
 	/**
 	 * 
@@ -121,5 +123,4 @@ public interface CommunityService {
 	//카테고리
 	public List<ClubCategory> findAllCategories(int communityNo);
 	public void registCategory(int communityNo, List<ClubCategory> categories);
-
 }

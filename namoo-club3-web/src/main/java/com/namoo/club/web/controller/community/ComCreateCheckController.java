@@ -40,6 +40,7 @@ public class ComCreateCheckController extends DefaultController{
 			community.addCategory(category);
 		}
 		
+		req.setAttribute("name", name);
 		req.setAttribute("community", community);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comCreateCheck.jsp");

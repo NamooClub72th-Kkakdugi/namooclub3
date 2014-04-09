@@ -1,6 +1,8 @@
 package com.namoo.club.web.controller.community;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,8 @@ import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.ClubCategory;
+import dom.entity.Community;
 import dom.entity.SocialPerson;
 
 @WebServlet("/community/comCreate.do")
@@ -29,9 +33,17 @@ public class ComCreateController extends DefaultController {
 		String email = person.getEmail();
 		String communityName = req.getParameter("communityName");
 		String description = req.getParameter("description");
+		
+		// 1. 커뮤니티 기본정보 및 카테고리 생성
+		Community community = new Community(communityName, description, person);
+		List<ClubCategory> categories = new ArrayList<>();
+		for (int i = 1; i < 7; i++) {
+			ClubCategory category = new ClubCategory(community.getComNo(), req.getParameter("ctgr"+i));
+			categories.add(category);
+		}
 		req.setAttribute("name", name);
-
-		service.registCommunity(communityName, description, email);
+		community = service.registCommunity(communityName, description, email, categories);
+		
 		redirect(req, resp, "/community/comList.do");
 		
 	}
