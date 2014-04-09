@@ -19,7 +19,7 @@ public class NamooClubServiceFactory {
 	public static NamooClubServiceFactory getInstance() {
 		//
 		return instance;
-	}
+	} 
 	
 	public UserService getUserService() {
 		//

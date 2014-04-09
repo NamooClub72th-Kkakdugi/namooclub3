@@ -32,8 +32,8 @@ public class ComJoinController extends DefaultController {
 
 		service.joinAsMember(comNo, email);
 		req.setAttribute("name", name);
+		
 		redirect(req, resp, "/community/comList.do");
-
 	}
 
 }

@@ -42,7 +42,7 @@ public class ComCreateController extends DefaultController {
 		for (int i = 1; i < 7; i++) {
 			String categoryName = req.getParameter("ctgr" + i);
 			if (!StringUtil.isEmpty(categoryName)) {
-				ClubCategory category = new ClubCategory(community.getComNo(), categoryNo, categoryName);
+				ClubCategory category = new ClubCategory(categoryNo, community.getComNo(), categoryName);
 				categories.add(category);
 				categoryNo++;
 			}

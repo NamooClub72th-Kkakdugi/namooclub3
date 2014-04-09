@@ -226,6 +226,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
