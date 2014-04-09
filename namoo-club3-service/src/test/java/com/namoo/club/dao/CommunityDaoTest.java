@@ -54,7 +54,7 @@ public class CommunityDaoTest {
 		//검증
 		Community community = dao.readCommunity(comNo);
 		assertEquals(comNo, community.getComNo());
-		assertEquals(comName, community.getComName());
+		assertEquals(comName, community.getName());
 		assertEquals(comDescription, community.getDescription());
 	}
 
@@ -78,13 +78,13 @@ public class CommunityDaoTest {
 		//
 		createCommunity();
 		Community community = dao.readCommunity(comNo);
-		community.setComName("after Community");
+		community.setName("after Community");
 		community.setDescription("after Community Description");
 		
 		dao.updateCommunity(community);
 		
 		community = dao.readCommunity(comNo);
-		assertEquals("after Community", community.getComName());
+		assertEquals("after Community", community.getName());
 		assertEquals("after Community Description", community.getDescription());
 	}
 }

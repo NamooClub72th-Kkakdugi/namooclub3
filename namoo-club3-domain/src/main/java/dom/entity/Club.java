@@ -17,7 +17,7 @@ public class Club {
 	private List<ClubMember> members;
 	
 	//---------------------------
-	public Club(int categoryNo, int comNo, String clubName, String clubDes, SocialPerson user) {
+	public Club(int categoryNo, int comNo, String name, String description, SocialPerson user) {
 		//
 		this.categoryNo = categoryNo;
 		this.comNo = comNo;
@@ -56,7 +56,7 @@ public class Club {
 		return name;
 	}
 
-	public void setName(String clubName) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

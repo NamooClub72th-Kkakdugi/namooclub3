@@ -29,8 +29,8 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a"+
-			            "INNER JOIN communitymember b on a.com_no = b.com_no";
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.userid FROM community a " +
+					"INNER JOIN communitymember b on a.com_no = b.com_no";
 			pstmt = conn.prepareStatement(sql);
 
 			rset = pstmt.executeQuery();

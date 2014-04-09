@@ -64,8 +64,8 @@ public class ClubDaoTest {
 		Club club = clubDao.readClub(clubNo);
 		assertEquals(categoryNo, club.getCategoryNo());
 		assertEquals(PrepareBuilder.COM_NO, club.getComNo());
-		assertEquals(clubDes, club.getClubDes());
-		assertEquals(clubName, club.getClubName());
+		assertEquals(clubDes, club.getDescription());
+		assertEquals(clubName, club.getName());
 		assertEquals(clubNo, club.getClubNo());
 		
 	}
@@ -85,14 +85,14 @@ public class ClubDaoTest {
 		createClub();
 		
 		Club club = clubDao.readClub(clubNo);
-		club.setClubName("Test Club2");
-		club.setClubDes("Test Club2's description");
+		club.setName("Test Club2");
+		club.setDescription("Test Club2's description");
 		
 		clubDao.updateClub(club);
 		
 		club = clubDao.readClub(clubNo);
-		assertEquals("Test Club2", club.getClubName());
-		assertEquals("Test Club2's description", club.getClubDes());
+		assertEquals("Test Club2", club.getName());
+		assertEquals("Test Club2's description", club.getDescription());
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
+import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.CommunityService;
@@ -17,21 +18,24 @@ import dom.entity.SocialPerson;
 public class CommunityServiceLogic implements CommunityService {
 	//
 	private CommunityDao dao;
+	private UserDao userDao;
 	
 	public CommunityServiceLogic() {
 		DaoFactory daoFactory = DaoFactory.createFactory(DbType.MariaDB);
 		this.dao = daoFactory.getCommunityDao();
+		this.userDao = daoFactory.getUserDao();
 	}
 	
 	@Override
-	public void registCommunity(Community community) {
+	public void registCommunity(int communityNo, String communityName, String description, String userId) {
 		//
-		if (isExistCommunityByName(community.getName())) {
+		if (isExistCommunityByName(communityName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 게시판입니다.");
 		}
+		Community community = new Community(communityName, description, new SocialPerson(userId));
 		dao.createCommunity(community);
 	}
-	
+
 	private boolean isExistCommunityByName(String communityName) {
 		//
 		List<Community> communities = dao.readAllCommunities();
@@ -53,7 +57,7 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public void joinAsMember(int communityNo, String userId) {
+	public void joinAsMember(int communityNo, String name, String userId, String password) {
 		//
 		Community community = dao.readCommunity(communityNo);
 		
@@ -61,8 +65,25 @@ public class CommunityServiceLogic implements CommunityService {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
 		
+		// TODO
+		// if (communityDao.readCommunityMember(comId, email) != null) {
+//		throws /....
+//			}
+		
 		SocialPerson user = new SocialPerson(userId);
+		userDao.createUser(user);
 		community.addMember(user);
+	}
+
+	@Override
+	public void joinAsMember(int communityNo, String userId) {
+		//
+		Community community = dao.readCommunity(communityNo);
+		
+		if (community == null) {
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
+		}
+		community.addMember(new SocialPerson(userId));
 	}
 
 	@Override
@@ -73,7 +94,7 @@ public class CommunityServiceLogic implements CommunityService {
 
 	@Override
 	public CommunityMember findCommunityMember(int communityNo, String userId) {
-		//
+		// 
 		Community community = dao.readCommunity(communityNo);
 		
 		if (community == null) {
@@ -111,12 +132,6 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public void modifyCommunity(Community community) {
-		//
-		dao.updateCommunity(community);
-	}
-
-	@Override
 	public void removeCommunity(int communityNo) {
 		//
 		dao.deleteCommunity(communityNo);
@@ -138,18 +153,18 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public List<Community> findManagedCommunities(String userId) {
+	public List<Community> findManagedCommnities(String userId) {
 		//
 		List<Community> commnities = dao.readAllCommunities();
 		if (commnities == null) return null;
 		
-		List<Community> manages = new ArrayList<>();
+		List<Community> managers = new ArrayList<>();
 		for (Community community : commnities) {
 			if (community.getManager().getUserId().equals(userId)) {
-				manages.add(community);
+				managers.add(community);
 			}
 		}
-		return manages;
+		return managers;
 	}
 
 	@Override
@@ -164,10 +179,13 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public void commissionManagerCommunity(int communityNo, SocialPerson user) {
+	public void commissionManagerCommunity(int communityNo, SocialPerson rolePerson) {
 		//
 		Community community = dao.readCommunity(communityNo);
-		community.setManager(user);
+		community.setManager(rolePerson);
+		//TODO : communityDao.deleteCommunityManager
+		CommunityMember comMember = new CommunityMember(communityNo, rolePerson);
+		dao.addCommunityMember(comMember);
 	}
 
 	@Override
@@ -179,8 +197,7 @@ public class CommunityServiceLogic implements CommunityService {
 	@Override
 	public void registCategory(int communityNo, ClubCategory category) {
 		//
-		dao.createClubCategory(communityNo, category);
+		
 	}
-
 
 }

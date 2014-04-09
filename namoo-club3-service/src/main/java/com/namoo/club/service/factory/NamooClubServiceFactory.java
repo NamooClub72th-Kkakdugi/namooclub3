@@ -8,15 +8,15 @@ import com.namoo.club.service.logic.CommunityServiceLogic;
 import com.namoo.club.service.logic.UserServiceLogic;
 
 
-public class NamooBoardServiceFactory {
+public class NamooClubServiceFactory {
 	
-	private static NamooBoardServiceFactory instance = new NamooBoardServiceFactory();
+	private static NamooClubServiceFactory instance = new NamooClubServiceFactory();
 	
-	private NamooBoardServiceFactory() {
+	private NamooClubServiceFactory() {
 		//
 	}
 	
-	public static NamooBoardServiceFactory getInstance() {
+	public static NamooClubServiceFactory getInstance() {
 		//
 		return instance;
 	}
