@@ -30,14 +30,11 @@ public class ComCreateCheckController extends DefaultController{
 		String name = person.getName();
 		String communityName = req.getParameter("communityName");
 		String description = req.getParameter("description");
-		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
 		Community community = new Community(communityName, description, person);
-		List<ClubCategory> categories = new ArrayList<>();
+		
 		for (int i = 1; i < 7; i++) {
-			ClubCategory category = new ClubCategory(comNo, req.getParameter("ctgr"+i));
-			categories.add(category);
-			community.addCategory(category);
+			req.setAttribute("category"+i, req.getParameter("ctgr"+i));
 		}
 		
 		req.setAttribute("name", name);

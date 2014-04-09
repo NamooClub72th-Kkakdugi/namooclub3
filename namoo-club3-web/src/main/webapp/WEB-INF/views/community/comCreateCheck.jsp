@@ -58,12 +58,12 @@
                            		<label class="col-lg-2 control-label">클럽 카테고리</label>
 
                             	<div class="col-lg-10">
-                              	 	 <input type="text" class="form-control" placeholder="카테고리 1" name="ctgr1" value="${community.categories[0]}">
-	                             	<input type="text" class="form-control" placeholder="카테고리 2" name="ctgr2"  value="${community.categories[1]}">
-	                                <input type="text" class="form-control" placeholder="카테고리 3" name="ctgr3"  value="${community.categories[2]}">
-	                                <input type="text" class="form-control" placeholder="카테고리 4" name="ctgr4"  value="${community.categories[3]}">
-	                                <input type="text" class="form-control" placeholder="카테고리 5" name="ctgr5"  value="${community.categories[4]}">
-	                                <input type="text" class="form-control" placeholder="카테고리 6" name="ctgr6"  value="${community.categories[5]}">
+                              	 	 <input type="text" class="form-control" placeholder="카테고리 1" name="ctgr1" value="${category1}" readonly="readonly">
+	                             	<input type="text" class="form-control" placeholder="카테고리 2" name="ctgr2"  value="${category2}" readonly="readonly">
+	                                <input type="text" class="form-control" placeholder="카테고리 3" name="ctgr3"  value="${category3}" readonly="readonly">
+	                                <input type="text" class="form-control" placeholder="카테고리 4" name="ctgr4"  value="${category4}" readonly="readonly">
+	                                <input type="text" class="form-control" placeholder="카테고리 5" name="ctgr5"  value="${category5}" readonly="readonly">
+	                                <input type="text" class="form-control" placeholder="카테고리 6" name="ctgr6"  value="${category6}" readonly="readonly">
 	                            </div>
 	                        </div>
 							<div class="form-group">
