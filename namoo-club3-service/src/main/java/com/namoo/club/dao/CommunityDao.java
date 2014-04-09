@@ -24,6 +24,6 @@ public interface CommunityDao {
 	
 	// 클럽 카테고리 관련
 	List<ClubCategory> readAllCategories(int comNo);
-	void createClubCategory(int comNo, ClubCategory category);
+	int createClubCategory(int comNo, ClubCategory category);
 
 }

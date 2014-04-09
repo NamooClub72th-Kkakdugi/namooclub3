@@ -205,7 +205,7 @@ public class CommunityServiceLogic implements CommunityService {
 	public void registCategory(int communityNo, List<ClubCategory> categories) {
 		//
 		for (ClubCategory category : categories) {
-			dao.createClubCategory(communityNo, category);
+			category.setCategoryNo(dao.createClubCategory(communityNo, category));
 		}
 	}
 

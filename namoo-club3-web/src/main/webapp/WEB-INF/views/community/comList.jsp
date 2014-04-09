@@ -58,14 +58,14 @@
 										</h4>
 										<p>${community.description}</p>
 										<span class="badge">개설 날짜 : <fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
-										<input type="hidden" name="id" value="${community.id}" />
+										<input type="hidden" name="comNo" value="${community.comNo}" />
 										<c:choose>
 										<c:when test="${community.manager.name == name}">
-										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/inform/comRemoveCheck.do?id=${community.id}'; return false;">삭제하기</button>
-										<button class="label label-info" onclick="location.href='${ctx}/commission/comSelectMem.xhtml?comNo=${community.id}'; return false;">권한 위임하기</button>
+										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/inform/comRemoveCheck.do?comNo=${community.comNo}'; return false;">삭제하기</button>
+										<button class="label label-info" onclick="location.href='${ctx}/commission/comSelectMem.xhtml?comNo=${community.comNo}'; return false;">권한 위임하기</button>
 										</c:when>
 										<c:otherwise>
-										<button class="btn btn-default btn-sm" disabled="disabled" onclick="location.href='${ctx}/inform/comWithdrawlCheck.do?id=${community.id}'; return false;">삭제하기</button>
+										<button class="btn btn-default btn-sm" disabled="disabled" onclick="location.href='${ctx}/inform/comWithdrawlCheck.do?comNo=${community.comNo}'; return false;">삭제하기</button>
 										<input type="submit" value="멤버탈퇴" class="btn btn-default btn-sm" />
 										</c:otherwise>
 										</c:choose>

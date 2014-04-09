@@ -141,7 +141,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, email, type) VALUES (?, ?, 1)";
+			String sql = "INSERT INTO communitymember(com_no, email, is_manager) VALUES (?, ?, 1)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comManager.getCommunityNo());
@@ -170,7 +170,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, email, type) VALUES (?, ?, 2)";
+			String sql = "INSERT INTO communitymember(com_no, email, is_manager) VALUES (?, ?, 2)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comMember.getCommunityNo());
@@ -244,16 +244,16 @@ public class CommunityDaoJdbc implements CommunityDao {
 		deleteAllCommunityMembership(comNo, "1");
 	}
 	
-	private void deleteAllCommunityMembership(int comNo, String type) {
+	private void deleteAllCommunityMembership(int comNo, String is_manager) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ?";
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
-			pstmt.setString(2, type);
+			pstmt.setString(2, is_manager);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -275,16 +275,16 @@ public class CommunityDaoJdbc implements CommunityDao {
 		deleteCommunityMembership(comNo, email, "1");
 	}
 	
-	private void deleteCommunityMembership(int comNo, String email, String type) {
+	private void deleteCommunityMembership(int comNo, String email, String is_manager) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ? AND email=?";
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ? AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
-			pstmt.setString(2, type);
+			pstmt.setString(2, is_manager);
 			pstmt.setString(3, email);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -331,7 +331,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	}
 	
 	@Override
-	public void createClubCategory(int comNo, ClubCategory category) {
+	public int createClubCategory(int comNo, ClubCategory category) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -339,14 +339,17 @@ public class CommunityDaoJdbc implements CommunityDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO clubcategory(category_no, com_no, category_nm) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO clubcategory(com_no, category_nm) VALUES (?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, category.getCategoryNo());
-			pstmt.setInt(2, comNo);
-			pstmt.setString(3, category.getCategoryName());
+			pstmt.setInt(1, comNo);
+			pstmt.setString(2, category.getCategoryName());
 			
 			pstmt.executeUpdate();
+			rset = pstmt.getGeneratedKeys();
+			if (rset.next()) {
+				category.setCategoryNo(rset.getInt("category_no"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -354,6 +357,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
+		return category.getCategoryNo();
 	}
 
 	@Override
