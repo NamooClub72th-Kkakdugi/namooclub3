@@ -66,7 +66,7 @@ public class CommunityDaoTest {
 		
 		CommunityManager comManager = new CommunityManager(comNo, user);
 		CommunityMember comMember = new CommunityMember(comNo, user);
-		if (community.getMembers().contains(user)) {
+		if (dao.readAllCommunityMember(comNo).contains(user)) {
 			dao.addCommunityManager(comManager);
 		} else {
 			dao.addCommunityMember(comMember);

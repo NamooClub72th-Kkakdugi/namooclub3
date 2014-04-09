@@ -108,7 +108,7 @@ public interface CommunityService {
 	 * @param email
 	 * @return
 	 */
-	public List<Community> findManagedCommnities(String email);
+	public List<Community> findManagedCommunities(String email);
 
 	/**
 	 * 커뮤니티에서 탈퇴하기
@@ -119,6 +119,8 @@ public interface CommunityService {
 	public void withdrawalCommunity(int communityNo, String email);
 	
 	public void commissionManagerCommunity(int communityNo, SocialPerson rolePerson);
+	
+	public void commissionMemberCommunity(int communityNo, SocialPerson rolePerson);
 	
 	//카테고리
 	public List<ClubCategory> findAllCategories(int communityNo);

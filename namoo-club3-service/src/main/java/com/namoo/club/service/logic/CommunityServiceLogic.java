@@ -80,7 +80,7 @@ public class CommunityServiceLogic implements CommunityService {
 		
 		SocialPerson user = new SocialPerson(email);
 		userDao.createUser(user);
-		community.addMember(user);
+		dao.addCommunityMember(new CommunityMember(communityNo, user));
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class CommunityServiceLogic implements CommunityService {
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
-		community.addMember(new SocialPerson(email));
+		dao.addCommunityMember(new CommunityMember(communityNo, new SocialPerson(email)));
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class CommunityServiceLogic implements CommunityService {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
 		
-		for (CommunityMember member : community.getMembers()) {
+		for (CommunityMember member : dao.readAllCommunityMember(communityNo)) {
 			if (member.getEmail().equals(email)) {
 				return member;
 			}
@@ -122,11 +122,10 @@ public class CommunityServiceLogic implements CommunityService {
 	public List<CommunityMember> findAllCommunityMember(int communityNo) {
 		//
 		Community community = dao.readCommunity(communityNo);
-		
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
-		return community.getMembers();
+		return dao.readAllCommunityMember(communityNo);
 	}
 
 	@Override
@@ -134,7 +133,7 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		Community community = dao.readCommunity(communityNo);
 		if (community != null) {
-			return community.getMembers().size();
+			return dao.readAllCommunityMember(communityNo).size();
 		}
 		return 0;
 	}
@@ -153,7 +152,7 @@ public class CommunityServiceLogic implements CommunityService {
 		
 		List<Community> belongs = new ArrayList<>();
 		for (Community community : commnities) {
-			if (community.findMember(email) != null) {
+			if (dao.readCommunityMember(community.getComNo(), email) != null) {
 				belongs.add(community);
 			}
 		}
@@ -161,14 +160,14 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public List<Community> findManagedCommnities(String email) {
+	public List<Community> findManagedCommunities(String email) {
 		//
 		List<Community> commnities = dao.readAllCommunities();
 		if (commnities == null) return null;
 		
 		List<Community> managers = new ArrayList<>();
 		for (Community community : commnities) {
-			if (community.getManager().getEmail().equals(email)) {
+			if (!dao.readAllManagedCommunities(email).isEmpty()) {
 				managers.add(community);
 			}
 		}
@@ -182,17 +181,20 @@ public class CommunityServiceLogic implements CommunityService {
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
-		
-		community.removeMember(email);
+		dao.deleteCommuninyMember(communityNo, email);
 	}
 
 	@Override
 	public void commissionManagerCommunity(int communityNo, SocialPerson rolePerson) {
 		//
-		Community community = dao.readCommunity(communityNo);
-		community.setManager(rolePerson);
 		dao.deleteCommunityManager(communityNo, rolePerson.getEmail());
 		dao.addCommunityMember(new CommunityMember(communityNo, rolePerson));
+	}
+	
+	@Override
+	public void commissionMemberCommunity(int communityNo, SocialPerson rolePerson) {
+		//
+		dao.addCommunityManager(new CommunityManager(communityNo, rolePerson));
 	}
 
 	@Override

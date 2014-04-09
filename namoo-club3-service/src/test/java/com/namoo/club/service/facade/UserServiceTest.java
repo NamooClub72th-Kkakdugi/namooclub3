@@ -31,7 +31,9 @@ public class UserServiceTest {
 	
 	@Test
 	public void testLoginAsTowner() {
-		fail("Not yet implemented");
+		boolean login = service.loginAsTowner(email, password);
+		
+		assertEquals(true, login);
 	}
 
 	@Test
@@ -54,5 +56,4 @@ public class UserServiceTest {
 		
 		assertEquals(before+1, after);
 	}
-
 }

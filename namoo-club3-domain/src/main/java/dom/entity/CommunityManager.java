@@ -13,6 +13,11 @@ public class CommunityManager {
 	 * 
 	 * @param rolePerson
 	 */
+	public CommunityManager(int communityNo){
+		//
+		this.communityNo = communityNo;
+	}
+	
 	public CommunityManager(int communityNo, SocialPerson rolePerson){
 		//
 		this.communityNo = communityNo;

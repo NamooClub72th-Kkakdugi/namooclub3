@@ -15,13 +15,14 @@ public interface CommunityDao {
 	int createCommunity(Community community);
 	void updateCommunity(Community community);
 	void deleteCommunity(int comNo);
+	List<Community> readAllManagedCommunities(String email);
 	
 	//Member, Manager
 	CommunityMember addCommunityMember(CommunityMember comMember);
 	CommunityManager addCommunityManager(CommunityManager comManager);
 	CommunityMember readCommunityMember(int comNo, String email);
 	List<CommunityMember> readAllCommunityMember(int comNo);
-	CommunityManager readCommunityManager(int comNo, String email);
+	CommunityManager readCommunityManager(int comNo);
 	void deleteAllComMember(int comNo);
 	void deleteAllComManager(int comNo);
 	void deleteCommuninyMember(int comNo, String email);

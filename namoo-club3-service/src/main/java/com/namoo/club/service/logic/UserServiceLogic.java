@@ -50,12 +50,12 @@ public class UserServiceLogic implements UserService {
 		List<Community> communities = comDao.readAllCommunities();
 		if (communities != null) {
 			for (Community community : communities) {
-				if (email.equals(community.getManager().getEmail())) {
+				if (email.equals(comDao.readCommunityManager(community.getComNo()))) {
 					throw new NamooClubException("게시판 관리자는 탈퇴할 수 없습니다.");
 				}
-				userDao.deleteUser(email);
 			}
 		}
+		userDao.deleteUser(email);
 	}
 
 	@Override

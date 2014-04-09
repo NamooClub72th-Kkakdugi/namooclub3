@@ -367,7 +367,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	    CommunityMember comMember = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
+			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			pstmt.setString(2, email);
@@ -391,7 +391,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 
 	@Override
-	public CommunityManager readCommunityManager(int comNo, String email) {
+	public CommunityManager readCommunityManager(int comNo) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -399,18 +399,15 @@ public class CommunityDaoJdbc implements CommunityDao {
 		CommunityManager comManager = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='1' AND email=?";
+			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='1'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
-			pstmt.setString(2, email);
 			
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
 				int comNo2 = rset.getInt("com_no");
-				String email2 = rset.getString("email");
-				
-				comManager = new CommunityManager(comNo2, new SocialPerson(email2));
+				comManager = new CommunityManager(comNo2);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -431,7 +428,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	    
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='2'";
+			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			
@@ -451,6 +448,42 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
 		return members;
+	}
+
+	@Override
+	public List<Community> readAllManagedCommunities(String email) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	    List<Community> communities = new ArrayList<Community>();
+	    
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a " +
+					"INNER JOIN communitymember b ON a.com_no = b.com_no AND b.is_manager='1'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int comNo = rset.getInt("com_no");
+				String name = rset.getString("com_nm");
+				String description = rset.getString("com_des");
+				Date date = rset.getDate("com_date");
+				Community community = new Community(name, description);
+				community.setComNo(comNo);
+				community.setOpenDate(date);
+				communities.add(community);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return communities;
 	}
 
 }
