@@ -65,7 +65,7 @@ public class CommunityServiceLogic implements CommunityService {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
 		
-		// TODO
+		// TODO :
 		// if (communityDao.readCommunityMember(comId, email) != null) {
 //		throws /....
 //			}
