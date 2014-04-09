@@ -96,7 +96,7 @@ public interface ClubService {
 	 * @param email
 	 * @return
 	 */
-	public List<Club> findBelongclubs(int comNo, String cmId);
+	public List<Club> findBelongclubs(String userId, int comNo);
 	
 	/**
 	 * 해당 커뮤니티에
@@ -105,7 +105,7 @@ public interface ClubService {
 	 * @param email
 	 * @return
 	 */
-	public List<Club> findManagedClubs(String email, String cmId);
+	public List<Club> findManagedClubs(String userId, int comNo);
 
 	/**
 	 * 클럽에서 탈퇴하기
@@ -113,8 +113,8 @@ public interface ClubService {
 	 * @param clubName
 	 * @param email
 	 */
-	public void withdrawalClub(String clubName, String email);
+	public void withdrawalClub(int clubNo, String userId);
 	
-	public void commissionManagerCommunity(String clId, SocialPerson rolePerson);
+	public void commissionManagerCommunity(int clubNo, SocialPerson rolePerson);
 
 }
