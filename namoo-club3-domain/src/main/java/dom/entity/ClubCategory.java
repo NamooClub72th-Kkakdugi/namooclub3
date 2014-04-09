@@ -7,9 +7,10 @@ public class ClubCategory {
 	private String categoryName;
 	
 	//-----------------
-	public ClubCategory(int communityNo, String categoryName) {
+	public ClubCategory(int categoryNo, int communityNo, String categoryName) {
 		//
 		this.communityNo = communityNo;
+		this.categoryNo = categoryNo;
 		this.categoryName = categoryName;
 	}
 	//------------------------------

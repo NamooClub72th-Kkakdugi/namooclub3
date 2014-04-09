@@ -2,13 +2,48 @@ package com.namoo.club.service.facade;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CommunityServiceTest {
+import com.namoo.club.service.logic.CommunityServiceLogic;
 
+import dom.entity.ClubCategory;
+import dom.entity.SocialPerson;
+
+public class CommunityServiceTest {
+	//
+	private CommunityService service; 
+	
+	int communityNo;
+	String communityName = "CommunityServiceTest";
+	String description = "CommunityServiceTestDescription";
+	List<ClubCategory> categories = new ArrayList<ClubCategory>();
+	
+	@Before
+	public void setUp() throws Exception {
+		service = new CommunityServiceLogic();
+		PrepareBuilder.createUser();
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		SocialPerson user = PrepareBuilder.readUser();
+		service.commissionManagerCommunity(communityNo, user);
+		service.removeCommunity(communityNo);
+		PrepareBuilder.deleteUser();
+	}
+	
 	@Test
 	public void testRegistCommunity() {
-		fail("Not yet implemented");
+		ClubCategory clubCategory1 = new ClubCategory(1, communityNo, "category1");
+		ClubCategory clubCategory2 = new ClubCategory(2, communityNo, "category2");
+		categories.add(clubCategory1);
+		categories.add(clubCategory2);
+		service.registCommunity(communityName, description, PrepareBuilder.EMAIL, categories);
 	}
 
 	@Test

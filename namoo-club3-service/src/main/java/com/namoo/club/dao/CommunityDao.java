@@ -4,8 +4,6 @@ import java.util.List;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
-import dom.entity.CommunityManager;
-import dom.entity.CommunityMember;
 
 public interface CommunityDao {
 	//
@@ -17,19 +15,8 @@ public interface CommunityDao {
 	void deleteCommunity(int comNo);
 	List<Community> readAllManagedCommunities(String email);
 	
-	//Member, Manager
-	CommunityMember addCommunityMember(CommunityMember comMember);
-	CommunityManager addCommunityManager(CommunityManager comManager);
-	CommunityMember readCommunityMember(int comNo, String email);
-	List<CommunityMember> readAllCommunityMember(int comNo);
-	CommunityManager readCommunityManager(int comNo);
-	void deleteAllComMember(int comNo);
-	void deleteAllComManager(int comNo);
-	void deleteCommuninyMember(int comNo, String email);
-	void deleteCommunityManager(int comNo, String email);
-	
 	// ClubCategory
 	List<ClubCategory> readAllCategories(int comNo);
-	int createClubCategory(int comNo, ClubCategory category);
+	void createClubCategory(int comNo, ClubCategory category);
 
 }

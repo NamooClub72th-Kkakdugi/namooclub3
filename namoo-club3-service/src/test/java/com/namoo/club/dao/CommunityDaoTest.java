@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.namoo.club.dao.jdbc.CommunityDaoJdbc;
+import com.namoo.club.dao.jdbc.MemberDaoJdbc;
 
 import dom.entity.Community;
 import dom.entity.CommunityManager;
@@ -16,6 +17,7 @@ import dom.entity.SocialPerson;
 public class CommunityDaoTest {
 	//
 	private CommunityDao dao;
+	private MemberDao memberDao;
 	
 	int comNo;
 	String comName = "com_test";
@@ -24,6 +26,7 @@ public class CommunityDaoTest {
 	@Before
 	public void setUp() throws Exception {
 		//
+		memberDao = new MemberDaoJdbc();
 		dao = new CommunityDaoJdbc();
 		PrepareBuilder.createUser();
 	}
@@ -31,8 +34,8 @@ public class CommunityDaoTest {
 	@After
 	public void tearDown() throws Exception {
 		//
-		dao.deleteAllComManager(comNo);
-		dao.deleteAllComMember(comNo);
+		memberDao.deleteAllComManager(comNo);
+		memberDao.deleteAllComMember(comNo);
 		dao.deleteCommunity(comNo);
 		PrepareBuilder.deleteUser();
 	}
@@ -66,10 +69,10 @@ public class CommunityDaoTest {
 		
 		CommunityManager comManager = new CommunityManager(comNo, user);
 		CommunityMember comMember = new CommunityMember(comNo, user);
-		if (dao.readAllCommunityMember(comNo).contains(user)) {
-			dao.addCommunityManager(comManager);
+		if (memberDao.readAllCommunityMember(comNo).contains(user)) {
+			memberDao.addCommunityManager(comNo, comManager);
 		} else {
-			dao.addCommunityMember(comMember);
+			memberDao.addCommunityMember(comNo, comMember);
 		}
 	}
 

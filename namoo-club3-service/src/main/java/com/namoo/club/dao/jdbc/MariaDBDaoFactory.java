@@ -2,6 +2,7 @@ package com.namoo.club.dao.jdbc;
 
 import com.namoo.club.dao.ClubDao;
 import com.namoo.club.dao.CommunityDao;
+import com.namoo.club.dao.MemberDao;
 import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 
@@ -24,6 +25,12 @@ public class MariaDBDaoFactory extends DaoFactory {
 	public ClubDao getClubDao() {
 		//
 		return new ClubDaoJdbc();
+	}
+
+	@Override
+	public MemberDao getMemberDao() {
+		//
+		return new MemberDaoJdbc();
 	}
 
 

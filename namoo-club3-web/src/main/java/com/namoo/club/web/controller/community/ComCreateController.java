@@ -13,6 +13,7 @@ import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
+import com.namoo.club.web.shared.util.StringUtil;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
@@ -37,9 +38,14 @@ public class ComCreateController extends DefaultController {
 		// 1. 커뮤니티 기본정보 및 카테고리 생성
 		Community community = new Community(communityName, description, person);
 		List<ClubCategory> categories = new ArrayList<>();
+		int categoryNo = 1;
 		for (int i = 1; i < 7; i++) {
-			ClubCategory category = new ClubCategory(community.getComNo(), req.getParameter("ctgr"+i));
-			categories.add(category);
+			String categoryName = req.getParameter("ctgr" + i);
+			if (!StringUtil.isEmpty(categoryName)) {
+				ClubCategory category = new ClubCategory(community.getComNo(), categoryNo, categoryName);
+				categories.add(category);
+				categoryNo++;
+			}
 		}
 		req.setAttribute("name", name);
 		community = service.registCommunity(communityName, description, email, categories);

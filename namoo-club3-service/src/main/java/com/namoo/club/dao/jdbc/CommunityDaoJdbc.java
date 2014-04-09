@@ -13,8 +13,6 @@ import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
-import dom.entity.CommunityManager;
-import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
 public class CommunityDaoJdbc implements CommunityDao {
@@ -128,63 +126,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 	}
 
-	@Override
-	public CommunityManager addCommunityManager(CommunityManager comManager) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-
-		CommunityManager manager = null;
-
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, email, is_manager) VALUES (?, ?, 1)";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, comManager.getCommunityNo());
-			pstmt.setString(2, comManager.getEmail());
-
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (rset != null)try {rset.close();} catch (SQLException e) {}
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return manager;
-	}
-
-	@Override
-	public CommunityMember addCommunityMember(CommunityMember comMember) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-
-		CommunityMember member = null;
-
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO communitymember(com_no, email, is_manager) VALUES (?, ?, 2)";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, comMember.getCommunityNo());
-			pstmt.setString(2, comMember.getEmail());
-
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (rset != null)try {rset.close();} catch (SQLException e) {}
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return member;
-	}
+	
 
 	@Override
 	public void updateCommunity(Community community) {
@@ -230,68 +172,6 @@ public class CommunityDaoJdbc implements CommunityDao {
 		}
 	}
 
-	@Override
-	public void deleteAllComMember(int comNo) {
-		//
-		deleteAllCommunityMembership(comNo, "2");
-	}
-
-	@Override
-	public void deleteAllComManager(int comNo) {
-		//
-		deleteAllCommunityMembership(comNo, "1");
-	}
-	
-	private void deleteAllCommunityMembership(int comNo, String is_manager) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comNo);
-			pstmt.setString(2, is_manager);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-	}
-
-	@Override
-	public void deleteCommuninyMember(int comNo, String email) {
-		//
-		deleteCommunityMembership(comNo, email, "2");
-	}
-
-	@Override
-	public void deleteCommunityManager(int comNo, String email) {
-		//
-		deleteCommunityMembership(comNo, email, "1");
-	}
-	
-	private void deleteCommunityMembership(int comNo, String email, String is_manager) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ? AND email=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comNo);
-			pstmt.setString(2, is_manager);
-			pstmt.setString(3, email);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-	}
 	
 	@Override
 	public List<ClubCategory> readAllCategories(int comNo) {
@@ -314,8 +194,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 				int comNo2 = rset.getInt("com_no");
 				String categoryName = rset.getString("category_nm");
 				
-				ClubCategory category = new ClubCategory(comNo2, categoryName);
-				category.setCategoryNo(categoryNo);
+				ClubCategory category = new ClubCategory(categoryNo, comNo2, categoryName);
 				categories.add(category);
 			}
 		} catch (SQLException e) {
@@ -329,7 +208,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	}
 	
 	@Override
-	public int createClubCategory(int comNo, ClubCategory category) {
+	public void createClubCategory(int comNo, ClubCategory category) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -337,17 +216,14 @@ public class CommunityDaoJdbc implements CommunityDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "INSERT INTO clubcategory(com_no, category_nm) VALUES (?, ?)";
+			String sql = "INSERT INTO clubcategory(category_no, com_no, category_nm) VALUES (?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, comNo);
-			pstmt.setString(2, category.getCategoryName());
+			pstmt.setInt(1, category.getCategoryNo());
+			pstmt.setInt(2, comNo);
+			pstmt.setString(3, category.getCategoryName());
 			
 			pstmt.executeUpdate();
-			rset = pstmt.getGeneratedKeys();
-			if (rset.next()) {
-				category.setCategoryNo(rset.getInt("category_no"));
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -355,100 +231,9 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
-		return category.getCategoryNo();
-	}
-
-	@Override
-	public CommunityMember readCommunityMember(int comNo, String email) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-	    CommunityMember comMember = null;
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comNo);
-			pstmt.setString(2, email);
-			
-			rset = pstmt.executeQuery();
-			
-			while (rset.next()) {
-				int comNo2 = rset.getInt("com_no");
-				String email2 = rset.getString("email");
-				
-				comMember = new CommunityMember(comNo2, new SocialPerson(email2));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return comMember;
 	}
 
 
-	@Override
-	public CommunityManager readCommunityManager(int comNo) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		CommunityManager comManager = null;
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='1'";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comNo);
-			
-			rset = pstmt.executeQuery();
-			
-			while (rset.next()) {
-				int comNo2 = rset.getInt("com_no");
-				comManager = new CommunityManager(comNo2);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return comManager;
-	}
-
-	@Override
-	public List<CommunityMember> readAllCommunityMember(int comNo) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-	    List<CommunityMember> members = new ArrayList<CommunityMember>();
-	    
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2'";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comNo);
-			
-			rset = pstmt.executeQuery();
-			
-			while (rset.next()) {
-				int comNo2 = rset.getInt("com_no");
-				String email2 = rset.getString("email");
-				
-				CommunityMember comMember = new CommunityMember(comNo2, new SocialPerson(email2));
-				members.add(comMember);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return members;
-	}
 
 	@Override
 	public List<Community> readAllManagedCommunities(String email) {

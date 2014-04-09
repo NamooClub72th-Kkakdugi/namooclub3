@@ -3,6 +3,7 @@ package com.namoo.club.service.logic;
 import java.util.List;
 
 import com.namoo.club.dao.CommunityDao;
+import com.namoo.club.dao.MemberDao;
 import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
@@ -16,12 +17,14 @@ public class UserServiceLogic implements UserService {
 	//
 	private UserDao userDao;
 	private CommunityDao comDao;
+	private MemberDao memberDao;
 	
 	public UserServiceLogic() {
 		//
 		DaoFactory daoFactory = DaoFactory.createFactory(DbType.MariaDB);
 		this.userDao = daoFactory.getUserDao();
 		this.comDao = daoFactory.getCommunityDao();
+		this.memberDao = daoFactory.getMemberDao();
 	}
 	
 	@Override
@@ -50,7 +53,7 @@ public class UserServiceLogic implements UserService {
 		List<Community> communities = comDao.readAllCommunities();
 		if (communities != null) {
 			for (Community community : communities) {
-				if (email.equals(comDao.readCommunityManager(community.getComNo()))) {
+				if (email.equals(memberDao.readCommunityManager(community.getComNo()))) {
 					throw new NamooClubException("게시판 관리자는 탈퇴할 수 없습니다.");
 				}
 			}
