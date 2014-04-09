@@ -245,6 +245,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 	}
 	
 	private void deleteAllCommunityMembership(int comNo, String type) {
+		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -262,6 +263,38 @@ public class CommunityDaoJdbc implements CommunityDao {
 		}
 	}
 
+	@Override
+	public void deleteCommuninyMember(int comNo, String userId) {
+		//
+		deleteCommunityMembership(comNo, userId, "2");
+	}
+
+	@Override
+	public void deleteCommunityManager(int comNo, String userId) {
+		//
+		deleteCommunityMembership(comNo, userId, "1");
+	}
+	
+	private void deleteCommunityMembership(int comNo, String userId, String type) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND type = ? AND userid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comNo);
+			pstmt.setString(2, type);
+			pstmt.setString(3, userId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+	}
+	
 	@Override
 	public List<ClubCategory> readAllCategories(int comNo) {
 		//
@@ -323,4 +356,9 @@ public class CommunityDaoJdbc implements CommunityDao {
 		}
 	}
 
+	@Override
+	public CommunityMember readCommunityMember(int comNo, String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
