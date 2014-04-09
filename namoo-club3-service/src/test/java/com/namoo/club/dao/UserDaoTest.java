@@ -15,10 +15,9 @@ public class UserDaoTest {
 	//
 	private UserDao dao;
 	
-	String userId = "ekdgml";
+	String email = "ekdgml";
 	String password = "abcd";
 	String name = "박상희";
-	String email = "ekdgml@naver.com";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -43,8 +42,7 @@ public class UserDaoTest {
 		createUser();
 		
 		//검증
-		SocialPerson user = dao.readUser(userId);
-		assertEquals(userId, user.getEmail());
+		SocialPerson user = dao.readUser(email);
 		assertEquals(password, user.getPassword());
 		assertEquals(name, user.getName());
 		assertEquals(email, user.getEmail());
@@ -58,14 +56,13 @@ public class UserDaoTest {
 	@Test
 	public void testUpdateUser() {
 		createUser();
-		SocialPerson user = dao.readUser(userId);
-		user.setEmail("a@a.com");
-		user.setPassword(user.getPassword());
+		SocialPerson user = dao.readUser(email);
+		user.setPassword("aaaa");
 		
 		dao.updateUser(user);
 		
-		user = dao.readUser(userId);
-		assertEquals("a@a.com", user.getEmail());
+		user = dao.readUser(email);
+		assertEquals("aaaa", user.getPassword());
 	}
 
 }

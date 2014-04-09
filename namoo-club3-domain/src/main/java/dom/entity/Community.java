@@ -17,6 +17,15 @@ public class Community {
 	private List<ClubCategory> categories;
 	
 	//----------------------------------------------------------------
+	public Community(String name, String description) {
+		//
+		this.name = name;
+		this.description = description;
+		this.members = new ArrayList<CommunityMember>();
+		this.categories = new ArrayList<ClubCategory>();
+		this.clubs = new ArrayList<Club>();
+	}
+	
 	public Community(String name, String description, SocialPerson user) {
 		//
 		this.name = name;

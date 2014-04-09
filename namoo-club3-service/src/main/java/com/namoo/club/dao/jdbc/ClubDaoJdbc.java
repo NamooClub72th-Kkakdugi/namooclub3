@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.namoo.club.dao.ClubDao;
-import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.Club;

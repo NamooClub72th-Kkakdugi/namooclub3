@@ -17,6 +17,15 @@ public class Club {
 	private List<ClubMember> members;
 	
 	//---------------------------
+	public Club(int categoryNo, int comNo, String name, String description) {
+		//
+		this.categoryNo = categoryNo;
+		this.comNo = comNo;
+		this.name = name;
+		this.description = description;
+		this.members = new ArrayList<ClubMember>();
+	}
+	
 	public Club(int categoryNo, int comNo, String name, String description, SocialPerson user) {
 		//
 		this.categoryNo = categoryNo;

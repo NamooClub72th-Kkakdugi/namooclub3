@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.namoo.club.dao.CommunityDao;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
@@ -31,7 +33,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 		try {
 			conn = DbConnection.getConnection();
 			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a " +
-					"INNER JOIN communitymember b on a.com_no = b.com_no";
+					"INNER JOIN communitymember b ON a.com_no = b.com_no AND b.is_manager='1' ";
 			pstmt = conn.prepareStatement(sql);
 
 			rset = pstmt.executeQuery();
