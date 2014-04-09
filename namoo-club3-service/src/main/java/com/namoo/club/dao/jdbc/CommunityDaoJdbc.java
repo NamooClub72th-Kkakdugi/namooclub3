@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.namoo.club.dao.CommunityDao;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
@@ -71,8 +69,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a "
-					+ "INNER JOIN communitymember b ON a.com_no = b.com_no WHERE a.com_no=?";
+			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comNo);
@@ -80,13 +77,12 @@ public class CommunityDaoJdbc implements CommunityDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				String email = rset.getString("email");
 				String comName = rset.getString("com_nm");
 				String description = rset.getString("com_des");
 				Date date = rset.getDate("com_date");
 				int comNo2 = rset.getInt("com_no");
 
-				community = new Community(comName, description, new SocialPerson(email));
+				community = new Community(comName, description);
 				community.setComNo(comNo2);
 				community.setOpenDate(date);
 			}
@@ -364,7 +360,97 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 	@Override
 	public CommunityMember readCommunityMember(int comNo, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	    CommunityMember comMember = null;
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comNo);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int comNo2 = rset.getInt("com_no");
+				String email2 = rset.getString("email");
+				
+				comMember = new CommunityMember(comNo2, new SocialPerson(email2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return comMember;
 	}
+
+
+	@Override
+	public CommunityManager readCommunityManager(int comNo, String email) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CommunityManager comManager = null;
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='1' AND email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comNo);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int comNo2 = rset.getInt("com_no");
+				String email2 = rset.getString("email");
+				
+				comManager = new CommunityManager(comNo2, new SocialPerson(email2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return comManager;
+	}
+
+	@Override
+	public List<CommunityMember> readAllCommunityMember(int comNo) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	    List<CommunityMember> members = new ArrayList<CommunityMember>();
+	    
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT FROM communitymember WHERE com_no = ? AND is_manager ='2'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int comNo2 = rset.getInt("com_no");
+				String email2 = rset.getString("email");
+				
+				CommunityMember comMember = new CommunityMember(comNo2, new SocialPerson(email2));
+				members.add(comMember);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return members;
+	}
+
 }
