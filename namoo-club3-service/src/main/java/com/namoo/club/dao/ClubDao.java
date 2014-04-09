@@ -15,12 +15,18 @@ public interface ClubDao {
 	void updateClub(Club club);
 	void deleteClub(int clubNo);
 
-	// for INNER JOIN
+	//
+	List<ClubMember> readAllClubMembers(int clubNo);
+	List<Club> readBelongClubs(String email, int comNo);
+	List<Club> readManagedClubs(String email, int comNo);
+	ClubMember readClubMember(int clubNo, String email);
 	ClubMember addClubMember(ClubMember clubMember);
 	ClubManager addClubManager(ClubManager clubManager);
 	ClubKingManager addKingManager(ClubKingManager clubKingManager);
 	
+	
 	void deleteAllClubMember(int clubNo);
 	void deleteAllClubManager(int clubNo);
 	void deleteAllClubKingManger(int clubNo);
+	
 }

@@ -12,9 +12,6 @@ public class Club {
 	private String name;
 	private String description;
 	private Date openDate;
-	private ClubManager manager;
-	
-	private List<ClubMember> members;
 	
 	//---------------------------
 	public Club(int categoryNo, int comNo, String name, String description) {
@@ -23,7 +20,6 @@ public class Club {
 		this.comNo = comNo;
 		this.name = name;
 		this.description = description;
-		this.members = new ArrayList<ClubMember>();
 	}
 	
 	public Club(int categoryNo, int comNo, String name, String description, SocialPerson user) {
@@ -32,7 +28,6 @@ public class Club {
 		this.comNo = comNo;
 		this.name = name;
 		this.description = description;
-		this.members = new ArrayList<ClubMember>();
 
 		addMember(user);
 	}
@@ -84,57 +79,8 @@ public class Club {
 	public void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
-
-	public List<ClubMember> getMembers() {
-		return members;
-	}
-
-	public void setMembers(List<ClubMember> members) {
-		this.members = members;
-	}
-	
-	public ClubManager getManager() {
-		return manager;
-	}
-	
-	public void setManager(ClubManager manager) {
-		this.manager = manager;
-	}
 	//---------------------------------
 
-	public void addMember(SocialPerson rolePerson) {
-		// 
-		ClubMember member = new ClubMember(clubNo, rolePerson);
-		this.members.add(member);
-	}
-	
-	public ClubMember findMember(String userId) {
-		//
-		for (ClubMember member : members) {
-			if(member.getEmail().equals(userId)) {
-				return member;
-			}
-		}
-		return null;
-	}
-	
-	public void removeMember(String userId) {
-		//
-		ClubMember found = null;
-		for (ClubMember member : members) {
-			if(member.getEmail().equals(userId)) {
-				found = member;
-			}
-		}
-		if (found != null) {
-			members.remove(found);
-		}
-	}
-	
-	public void setManager(SocialPerson socialPerson) {
-		ClubManager manager = new ClubManager(clubNo, socialPerson);
-		this.manager = manager;
-	}
 
 	
 }
