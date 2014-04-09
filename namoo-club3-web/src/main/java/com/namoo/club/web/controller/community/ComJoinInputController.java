@@ -23,8 +23,8 @@ public class ComJoinInputController extends DefaultController{
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
-		String id = req.getParameter("id");
-		req.setAttribute("id", id);
+		String comNo = req.getParameter("comNo");
+		req.setAttribute("comNo", comNo);
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
 		

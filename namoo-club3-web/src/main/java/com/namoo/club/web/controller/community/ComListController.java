@@ -51,8 +51,6 @@ public class ComListController extends DefaultController{
 		List<Community> remove = new ArrayList<Community>();
 		for (Community joinCommunity : joinCommunities) {
 			for (Community community : allCommunities) {
-				
-				
 				if (community.getComNo() == (joinCommunity.getComNo())) {
 					remove.add(community);
 					break;

@@ -117,21 +117,21 @@ public class Community {
 		this.categories.add(category);
 	}
 	
-	public CommunityMember findMember(String userId) {
+	public CommunityMember findMember(String email) {
 		//
 		for (CommunityMember member : members) {
-			if(member.getEmail().equals(userId)) {
+			if(member.getEmail().equals(email)) {
 				return member;
 			};
 		}
 		return null;
 	}
 	
-	public void removeMember(String userId) {
+	public void removeMember(String email) {
 		// 
 		CommunityMember found = null;
 		for (CommunityMember member : members) {
-			if (member.getEmail().equals(userId)) {
+			if (member.getEmail().equals(email)) {
 				found = member;
 			}
 		}

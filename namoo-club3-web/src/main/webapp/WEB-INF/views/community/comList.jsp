@@ -84,6 +84,7 @@
 							<c:forEach var="community" items="${unjoincommunities}">
 									<li class="list-group-item"><span class="badge"></span>
 										<h4>
+										<input type="hidden" value="${community.comNo}" />
 											<a href="${ctx}/club/clubList.do?comNo=${community.comNo}&name=${name}">${community.name}</a>
 										</h4>
 										<p>${community.description}</p>
