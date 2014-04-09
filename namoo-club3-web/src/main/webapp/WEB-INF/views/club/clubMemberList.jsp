@@ -21,7 +21,7 @@
 							<p>${description}</p>
 							<p>
 								<input type="hidden" name="name" value="${name}" /> <input
-									type="hidden" name="cmId" value="${cmId}" /> <input
+									type="hidden" name="comNo" value="${comNo}" /> <input
 									type="submit" class="btn btn-warning btn-lg" value="클럽 개설하기">
 							</p>
 						</form>
@@ -76,11 +76,11 @@
 											<p>${club.description}</p> <c:choose>
 												<c:when test="${club.manager.name == name}">
 													<button type="button" class="btn btn-default btn-sm"
-														onclick="location.href='${ctx}/inform/clubRemoveCheck.do?clId=${club.id}&name=${name}&cmId=${cmId}'">클럽
+														onclick="location.href='${ctx}/inform/clubRemoveCheck.do?clubNo=${club.clubNo}&name=${name}&comNo=${comNo}'">클럽
 														삭제하기</button>
 													<button type="button" class="btn btn-default btn-sm"
 														disabled="disabled"
-														onclick="location.href='${ctx}/inform/clubWithdrawlCheck.do?clId=${club.id}&name=${name}&cmId=${cmId}'">멤버탈퇴
+														onclick="location.href='${ctx}/inform/clubWithdrawlCheck.do?clubNo=${club.clubNo}&name=${name}&comNo=${comNo}'">멤버탈퇴
 														신청하기</button>
 												</c:when>
 												<c:otherwise>

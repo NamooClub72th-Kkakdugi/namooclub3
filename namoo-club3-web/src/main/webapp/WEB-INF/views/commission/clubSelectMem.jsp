@@ -48,7 +48,7 @@
 								<td>${member.name}</td>
 								<td>${member.email}</td>
 						
-								<td> <button type="button" class="btn btn-default btn-sm" onclick="location.href='${ctx}/commission/clubCommission.do?clId=${clId}&email=${member.email}&cmId=${cmId}'">위임</button></td>
+								<td> <button type="button" class="btn btn-default btn-sm" onclick="location.href='${ctx}/commission/clubCommission.do?clubNo=${clubNo}&email=${member.email}&comNo=${comNo}'">위임</button></td>
 								</tr>
 							</c:forEach>
 					</tbody>

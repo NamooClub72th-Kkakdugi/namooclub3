@@ -54,7 +54,7 @@
 										<c:if test="${community.manager.name == name}">
 										<span class="label label-warning">관리자</span>
 										</c:if>
-											<a href="${ctx}/club/clubList.do?cmId=${community.id}">${community.name}&nbsp;(회원수 : ${community.members.size()} 클럽수 : ${community.clubs.size()})</a>
+											<a href="${ctx}/club/clubList.do?comNo=${community.comNo}">${community.name}&nbsp;(회원수 : ${community.members.size()} 클럽수 : ${community.clubs.size()})</a>
 										</h4>
 										<p>${community.description}</p>
 										<span class="badge">개설 날짜 : <fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
@@ -62,7 +62,7 @@
 										<c:choose>
 										<c:when test="${community.manager.name == name}">
 										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/inform/comRemoveCheck.do?id=${community.id}'; return false;">삭제하기</button>
-										<button class="label label-info" onclick="location.href='${ctx}/commission/comSelectMem.xhtml?cmId=${community.id}'; return false;">권한 위임하기</button>
+										<button class="label label-info" onclick="location.href='${ctx}/commission/comSelectMem.xhtml?comNo=${community.id}'; return false;">권한 위임하기</button>
 										</c:when>
 										<c:otherwise>
 										<button class="btn btn-default btn-sm" disabled="disabled" onclick="location.href='${ctx}/inform/comWithdrawlCheck.do?id=${community.id}'; return false;">삭제하기</button>
@@ -84,11 +84,11 @@
 							<c:forEach var="community" items="${unjoincommunities}">
 									<li class="list-group-item"><span class="badge"></span>
 										<h4>
-											<a href="${ctx}/club/clubList.do?cmId=${community.id}&name=${name}">${community.name}</a>
+											<a href="${ctx}/club/clubList.do?comNo=${community.comNo}&name=${name}">${community.name}</a>
 										</h4>
 										<p>${community.description}</p>
 										<span class="badge">개설 날짜 : <fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
-										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/community/comJoinInput.xhtml?id=${community.id}&name=${name}'">멤버가입</button></li>
+										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/community/comJoinInput.xhtml?comNo=${community.comNo}&name=${name}'">멤버가입</button></li>
 								</c:forEach>
 						</ul>
 					</div>

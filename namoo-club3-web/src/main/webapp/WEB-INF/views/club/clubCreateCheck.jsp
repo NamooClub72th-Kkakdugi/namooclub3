@@ -44,7 +44,7 @@
 				<div class="well">
 					<p>나와 같은 관심사를 가진 멤버를 모집하고 열심히 운영하여 클럽을 성장시켜 보세요.</p>
 					<form class="form-horizontal" action="${ctx}/club/clubCreate.do" method="post">
-						<input type="hidden" name="cmId" value="${cmId}" />
+						<input type="hidden" name="comNo" value="${comNo}" />
 						<fieldset>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">클럽 카테고리</label>
