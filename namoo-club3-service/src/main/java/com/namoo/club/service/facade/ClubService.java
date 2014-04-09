@@ -2,6 +2,8 @@ package com.namoo.club.service.facade;
 
 import java.util.List;
 
+import com.namoo.club.service.logic.StirString;
+
 import dom.entity.Club;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
@@ -20,7 +22,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void registClub(String category, String communityName, String clubName, String description, String email);
+	public void registClub(int categoryNo, int communityNo, String clubName, String description, String userId);
 
 	/**
 	 * 
@@ -41,7 +43,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void joinAsMember(int clubNo, String name, String email, String password);
+	public void joinAsMember(int clubNo, String userId, String name, String email, String password);
 	
 	/**
 	 * [주민으로 등록된 경우] 클럽 가입
@@ -54,7 +56,7 @@ public interface ClubService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void joinAsMember(int clubNo, String email);
+	public void joinAsMember(int clubNo, String userId);
 
 	/**
 	 * @return
@@ -96,7 +98,7 @@ public interface ClubService {
 	 * @param email
 	 * @return
 	 */
-	public List<Club> findBelongclubs(String userId, int comNo);
+	public List<Club> findBelongClubs(String userId, int comNo);
 	
 	/**
 	 * 해당 커뮤니티에

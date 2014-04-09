@@ -33,22 +33,12 @@ public class ClubServiceLogic implements ClubService {
 	//------------------------------------------------------------------------
 
 	@Override
-	public void registClub(String category, String communityName, String clubName, String description, String email) {
+	public void registClub(int categoryNo, int communityNo, String clubName, String description, String userId) {
 		// 
-		if (isExistClubByName(communityNo, club.getClubName())) {
+		if (isExistClubByName(communityNo, clubName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 클럽입니다.");
 		}
-//		SocialPerson towner = em.find(SocialPerson.class, email);
-//		if (towner == null) {
-//			throw NamooExceptionFactory.createRuntime("존재하지 않는 주민입니다.");
-//		}
-//		
-//		String id = SequenceGenerator.getNextId(Club.class);
-//		Club club = new Club(id, category, clubName, description, towner);
-//		
-//		community.addClub(club);
-//		em.store(community);
-//		em.store(club);
+		Club club = new Club(categoryNo, communityNo, clubName, description, new SocialPerson(userId));
 		clubDao.createClub(communityNo, club);
 	}
 	private boolean isExistClubByName(int communityNo, String clubName) {
@@ -73,7 +63,7 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void joinAsMember(int clubNo, String name, String email, String password) {
+	public void joinAsMember(int clubNo, String userId, String name, String email, String password) {
 		// 
 		Club club = clubDao.readClub(clubNo);
 		
@@ -81,29 +71,28 @@ public class ClubServiceLogic implements ClubService {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
 		// 	 email로 유저를 찾는게 맞는건가?
-		if(userDao.readUser(email).getEmail() != null){
+		if(userDao.readUser(userId) != null){
 			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
 		}
 		
-		SocialPerson user = new SocialPerson(socialPerson.getUserId(), name, email, password);
+		SocialPerson user = new SocialPerson(userId, name, email, password);
+		userDao.createUser(user);
 		club.addMember(user);
-		
 	}
 
 	@Override
-	public void joinAsMember(int clubNo, String email) {
+	public void joinAsMember(int clubNo, String userId) {
 		// 
 		Club club = clubDao.readClub(clubNo);
 		if(club == null) {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
 		// 	 email로 유저를 찾는게 맞는건가?
-		if (userDao.readUser(email).getEmail() != null){
+		if (userDao.readUser(userId) != null){
 			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
 		}
 
-		SocialPerson user = new SocialPerson(socialPerson.getUserId());
-		club.addMember(user);
+		club.addMember(new SocialPerson(userId));
 	}
 
 	@Override
@@ -113,12 +102,12 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public ClubMember findClubMember(int clubNo, String email) {
+	public ClubMember findClubMember(int clubNo, String userId) {
 		//
 		Club club = clubDao.readClub(clubNo);
 		List<ClubMember> clubMembers = club.getMembers();
 		for(ClubMember clubMember : clubMembers) {
-			if(clubMember.getRolePerson().getEmail().equals(email) {
+			if(clubMember.getUserId().equals(userId)) {
 				return clubMember;
 			}
 		}
@@ -143,11 +132,10 @@ public class ClubServiceLogic implements ClubService {
 	public void removeClub(int clubNo) {
 		// 
 		clubDao.deleteClub(clubNo);
-		
 	}
 
 	@Override
-	public List<Club> findBelongclubs(String userId, int comNo) {
+	public List<Club> findBelongClubs(String userId, int comNo) {
 		// 
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
@@ -163,8 +151,17 @@ public class ClubServiceLogic implements ClubService {
 
 	@Override
 	public List<Club> findManagedClubs(String userId, int comNo) {
-		// TODO Auto-generated method stub
-		return null;
+		// 
+		List<Club> clubs = clubDao.readAllClubs(comNo);
+		if (clubs == null) return null;
+		
+		List<Club> manages = new ArrayList<>();
+		for (Club club : clubs) {
+			if (club.getManager().getId().equals(userId)) {
+				manages.add(club);
+			}
+		}
+		return manages;
 	}
 
 	@Override
