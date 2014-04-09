@@ -27,9 +27,9 @@ public class CommunityManager {
 		return rolePerson.getName();
 	}
 
-	public String getUserId() {
+	public String getEmail() {
 		// 
-		return rolePerson.getUserId();
+		return rolePerson.getEmail();
 	}
 
 	public int getCommunityNo() {

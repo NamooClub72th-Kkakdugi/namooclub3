@@ -21,7 +21,7 @@ public interface CommunityService {
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void registCommunity(int communityNo, String communityName, String description, String userId);
+	public void registCommunity(int communityNo, String communityName, String description, String email);
 
 	/**
 	 * 
@@ -67,10 +67,10 @@ public interface CommunityService {
 	 * 이메일로 커뮤니티 회원 찾기
 	 * 
 	 * @param communityName
-	 * @param userId
+	 * @param email
 	 * @return
 	 */
-	public CommunityMember findCommunityMember(int communityNo, String userId);
+	public CommunityMember findCommunityMember(int communityNo, String email);
 	
 	
 	/**
@@ -98,7 +98,7 @@ public interface CommunityService {
 	 * @param email
 	 * @return
 	 */
-	public List<Community> findBelongCommunities(String userId);
+	public List<Community> findBelongCommunities(String email);
 	
 	/**
 	 * 자신이 관리하는 커뮤니티 목록조회
@@ -106,7 +106,7 @@ public interface CommunityService {
 	 * @param email
 	 * @return
 	 */
-	public List<Community> findManagedCommnities(String userId);
+	public List<Community> findManagedCommnities(String email);
 
 	/**
 	 * 커뮤니티에서 탈퇴하기
@@ -114,12 +114,12 @@ public interface CommunityService {
 	 * @param communityName
 	 * @param email
 	 */
-	public void withdrawalCommunity(int communityNo, String userId);
+	public void withdrawalCommunity(int communityNo, String email);
 	
 	public void commissionManagerCommunity(int communityNo, SocialPerson rolePerson);
 	
 	//카테고리
 	public List<ClubCategory> findAllCategories(int communityNo);
-	public void registCategory(int communityNo, ClubCategory category);
+	public void registCategory(int communityNo, List<ClubCategory> categories);
 
 }

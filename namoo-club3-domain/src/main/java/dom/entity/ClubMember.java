@@ -18,8 +18,8 @@ public class ClubMember {
 		return rolePerson.getName();
 	}
 	
-	public String getUserId() {
-		return rolePerson.getUserId();
+	public String getEmail() {
+		return rolePerson.getEmail();
 	}
 
 	public int getClubNo() {

@@ -2,33 +2,24 @@ package dom.entity;
 
 public class SocialPerson {
 	
-	private String userId;
+
 	private String name;
 	private String email;
 	private String password;
 	
-	public SocialPerson(String userId) {
+	public SocialPerson(String email) {
 		//
-		this.userId = userId;
+		this.email = email;
 	}
 	
-	public SocialPerson(String userId, String name, String email, String password) {
+	public SocialPerson(String name, String email, String password) {
 		//
-		this.userId = userId;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 	}
 
 	//----------------------------------------------------------------
-	
-	public String getUserId() {
-		return userId;
-	}
-	
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 	
 	public String getName() {
 		return name;

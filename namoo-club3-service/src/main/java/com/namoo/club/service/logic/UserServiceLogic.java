@@ -23,61 +23,51 @@ public class UserServiceLogic implements UserService {
 		this.userDao = daoFactory.getUserDao();
 		this.comDao = daoFactory.getCommunityDao();
 	}
-
+	
 	@Override
-	public List<SocialPerson> findAllUsers() {
+	public boolean loginAsTowner(String email, String password) {
 		//
-		return userDao.readAllUsers();
-	}
-
-	@Override
-	public SocialPerson findUser(String userId) {
-		//
-		return userDao.readUser(userId);
-	}
-
-	@Override
-	public void registUser(SocialPerson user) {
-		//
-		if (userDao.readUser(user.getUserId()) != null) {
-			throw new NamooClubException("이미 가입되어있는 사용자입니다.");
-		}
-		userDao.createUser(user);
-	}
-
-	@Override
-	public void modifyUser(SocialPerson user) {
-		//
-		if (userDao.readUser(user.getUserId()) == null) {
-			throw new NamooClubException("해당하는 사용자가 없습니다.");
-		} 
-		userDao.updateUser(user);
-	}
-
-	@Override
-	public void removeUser(String userId) {
-		//
-		List<Community> communities = comDao.readAllCommunities();
-		if (communities != null) {
-			for (Community community : communities) {
-				if (userId.equals(community.getManager().getUserId())) {
-					throw new NamooClubException("게시판 관리자는 탈퇴할 수 없습니다.");
-				}
-				userDao.deleteUser(userId);
-			}
-		}
-	}
-
-	@Override
-	public boolean login(String userId, String password) {
-		//
-		SocialPerson user = userDao.readUser(userId);
+		SocialPerson user = userDao.readUser(email);
 		if (user != null && password.equals(user.getPassword())) {
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+	@Override
+	public void registTowner(String name, String email, String password) {
+		//
+		if (userDao.readUser(email) != null) {
+			throw new NamooClubException("이미 가입되어있는 사용자입니다.");
+		}
+		SocialPerson user = new SocialPerson(name, email, password);
+		userDao.createUser(user);
+	}
+
+	@Override
+	public void removeTowner(String email) {
+		//
+		List<Community> communities = comDao.readAllCommunities();
+		if (communities != null) {
+			for (Community community : communities) {
+				if (email.equals(community.getManager().getEmail())) {
+					throw new NamooClubException("게시판 관리자는 탈퇴할 수 없습니다.");
+				}
+				userDao.deleteUser(email);
+			}
+		}
+	}
+
+	@Override
+	public SocialPerson findTowner(String email) {
+		//
+		return userDao.readUser(email);
+	}
+
+	@Override
+	public List<SocialPerson> findAllTowner() {
+		//
+		return userDao.readAllUsers();
+	}
 
 }

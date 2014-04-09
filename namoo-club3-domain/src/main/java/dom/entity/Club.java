@@ -102,7 +102,7 @@ public class Club {
 	public ClubMember findMember(String userId) {
 		//
 		for (ClubMember member : members) {
-			if(member.getUserId().equals(userId)) {
+			if(member.getEmail().equals(userId)) {
 				return member;
 			}
 		}
@@ -113,7 +113,7 @@ public class Club {
 		//
 		ClubMember found = null;
 		for (ClubMember member : members) {
-			if(member.getUserId().equals(userId)) {
+			if(member.getEmail().equals(userId)) {
 				found = member;
 			}
 		}

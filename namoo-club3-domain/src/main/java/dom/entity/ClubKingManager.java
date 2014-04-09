@@ -11,8 +11,8 @@ public class ClubKingManager {
 		this.clubNo = clubNo;
 	}
 	//--------------------------------------------------
-	public String getUserId() {
-		return rolePerson.getUserId();
+	public String getEmail() {
+		return rolePerson.getEmail();
 	}
 
 	public int getClubNo() {

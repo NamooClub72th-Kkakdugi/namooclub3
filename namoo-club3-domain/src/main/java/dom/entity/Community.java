@@ -120,7 +120,7 @@ public class Community {
 	public CommunityMember findMember(String userId) {
 		//
 		for (CommunityMember member : members) {
-			if(member.getUserId().equals(userId)) {
+			if(member.getEmail().equals(userId)) {
 				return member;
 			};
 		}
@@ -131,7 +131,7 @@ public class Community {
 		// 
 		CommunityMember found = null;
 		for (CommunityMember member : members) {
-			if (member.getUserId().equals(userId)) {
+			if (member.getEmail().equals(userId)) {
 				found = member;
 			}
 		}
