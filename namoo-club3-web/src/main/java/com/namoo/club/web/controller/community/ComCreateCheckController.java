@@ -1,8 +1,6 @@
 package com.namoo.club.web.controller.community;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
-import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.SocialPerson;
 
