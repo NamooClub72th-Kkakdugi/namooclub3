@@ -138,8 +138,11 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void removeClub(int clubNo) {
+	public void removeClub(int clubNo, int comNo) {
 		// 
+		if (clubDao.readClub(clubNo) == null) {
+			throw NamooClubExceptionFactory.createRuntime("존재하지 않는 클럽입니다.");
+		}
 		clubDao.deleteClub(clubNo);
 	}
 
