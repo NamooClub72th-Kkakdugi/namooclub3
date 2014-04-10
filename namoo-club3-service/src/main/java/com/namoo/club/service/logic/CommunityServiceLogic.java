@@ -47,6 +47,13 @@ public class CommunityServiceLogic implements CommunityService {
 		
 		return community;
 	}
+	
+	public void registCategory(int communityNo, List<ClubCategory> categories) {
+		//
+		for (ClubCategory category : categories) {
+			dao.createClubCategory(communityNo, category);
+		}
+	}
 
 	private boolean isExistCommunityByName(String communityName) {
 		//
@@ -205,13 +212,4 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		return dao.readAllCategories(communityNo);
 	}
-
-	@Override
-	public void registCategory(int communityNo, List<ClubCategory> categories) {
-		//
-		for (ClubCategory category : categories) {
-			dao.createClubCategory(communityNo, category);
-		}
-	}
-
 }

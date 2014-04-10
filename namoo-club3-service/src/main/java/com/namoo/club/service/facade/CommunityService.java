@@ -124,5 +124,4 @@ public interface CommunityService {
 	
 	//카테고리
 	public List<ClubCategory> findAllCategories(int communityNo);
-	public void registCategory(int communityNo, List<ClubCategory> categories);
 }

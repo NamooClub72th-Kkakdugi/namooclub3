@@ -15,7 +15,6 @@ import com.namoo.club.service.logic.CommunityServiceLogic;
 import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityMember;
-import dom.entity.SocialPerson;
 
 public class CommunityServiceTest extends DbCommonTest{
 	//
@@ -35,13 +34,19 @@ public class CommunityServiceTest extends DbCommonTest{
 		super.tearDown();
 	}
 	
-//	@Test
-//	public void testRegistCommunity() {
-//		//
-//		List<ClubCategory> categories = new ArrayList<>();
-//		ClubCategory category1 = new ClubCategory("1", communityNo, "category1"); 
-//		service.registCommunity("com3", "com3_des", "ekdgml", categories);
-//	}
+	@Test
+	public void testRegistCommunity() {
+		//
+		List<ClubCategory> categories = new ArrayList<>();
+		ClubCategory category1 = new ClubCategory(1, 3, "category1"); 
+		ClubCategory category2 = new ClubCategory(2, 3, "category2"); 
+		categories.add(category1);
+		categories.add(category2);
+		service.registCommunity("com3", "com3_des", "ekdgml", categories);
+		
+		//검증
+		
+	}
 
 	@Test
 	public void testFindCommunity() {
@@ -65,10 +70,10 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testJoinAsMember() {
 		//
-		service.joinAsMember(2, "hong");
+		service.joinAsMember(2, "wntjd");
 		
 		//검증
-		CommunityMember member = service.findCommunityMember(2, "hong");
+		CommunityMember member = service.findCommunityMember(2, "wntjd");
 		assertEquals("hong", member.getEmail());
 	}
 
@@ -119,11 +124,6 @@ public class CommunityServiceTest extends DbCommonTest{
 
 	@Test
 	public void testFindAllCategories() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRegistCategory() {
 		fail("Not yet implemented");
 	}
 
