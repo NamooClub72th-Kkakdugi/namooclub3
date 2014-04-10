@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.MemberDao;
+import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
+import dom.entity.Club;
+import dom.entity.ClubKingManager;
+import dom.entity.ClubManager;
+import dom.entity.ClubMember;
 import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
@@ -36,6 +41,7 @@ public class MemberDaoJdbc implements MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 매니저로 등록하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -65,6 +71,7 @@ public class MemberDaoJdbc implements MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버로 등록하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -97,6 +104,7 @@ public class MemberDaoJdbc implements MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -126,6 +134,7 @@ public class MemberDaoJdbc implements MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 매니저를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -158,6 +167,7 @@ public class MemberDaoJdbc implements MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("모든 커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -190,6 +200,7 @@ public class MemberDaoJdbc implements MemberDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("모든 커뮤니티 멤버쉽을 삭제하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -222,10 +233,163 @@ public class MemberDaoJdbc implements MemberDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버쉽을 삭제하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	
+	@Override
+	public ClubMember addClubMember(ClubMember clubMember) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, email, type)"
+					+ " VALUES(?, ?, 'b')";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubMember.getClubNo());
+			pstmt.setString(2, clubMember.getEmail());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubMember;
+	}
+
+	@Override
+	public ClubManager addClubManager(ClubManager clubManager) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, email, type"
+					+ " VALUES(?, ?, 'a')";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubManager.getClubNo());
+			pstmt.setString(2, clubManager.getEamil());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubManager;
+	}
+	
+	@Override
+	public ClubKingManager addKingManager(ClubKingManager clubKingManager) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "INSERT INTO clubmember(club_no, email, type"
+					+ " VALUES(?, ?, 'c')";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, clubKingManager.getClubNo());
+			pstmt.setString(2, clubKingManager.getEmail());
+			
+			pstmt.executeUpdate();
+			
+			resultSet = pstmt.getGeneratedKeys();
+		} catch (SQLException e) {
+				e.printStackTrace();
+		} finally {
+			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+		return clubKingManager;
+	}
+	
+	@Override
+	public void deleteAllClubMember(int clubNo) {
+		// 
+		deleteAllClubMembership(clubNo, "b");
+	}
+
+	@Override
+	public void deleteAllClubManager(int clubNo) {
+		// 
+		deleteAllClubMembership(clubNo, "a");
+	}
+	
+	@Override
+	public void deleteAllClubKingManger(int clubNo) {
+		// 
+		deleteAllClubMembership(clubNo, "c");
+		
+	}
+	private void deleteAllClubMembership(int clubNo, String type) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "DELETE FROM clubmember WHERE club_no = ? AND type = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, clubNo);
+			pstmt.setString(2, type);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+	}
+
+	@Override
+	public List<ClubMember> readAllClubMembers(int clubNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Club> readBelongClubs(String email, int comNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Club> readManagedClubs(String email, int comNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ClubMember readClubMember(int clubNo, String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

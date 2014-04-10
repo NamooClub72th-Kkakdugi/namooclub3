@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.UserDao;
+import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.SocialPerson;
 
@@ -37,6 +38,7 @@ public class UserDaoJdbc implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("사용자 목록을 조회하는 중 오류가 발생했습니다.");
 		} finally {
 			if (rset != null) try { rset.close(); } catch (SQLException e) { }
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
@@ -71,6 +73,7 @@ public class UserDaoJdbc implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("이메일을 받아 사용자를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null) try { rset.close(); } catch (SQLException e) { }
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
@@ -97,6 +100,7 @@ public class UserDaoJdbc implements UserDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("사용자를 생성하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
 			if (conn != null) try { conn.close(); } catch (SQLException e) { }
@@ -120,6 +124,7 @@ public class UserDaoJdbc implements UserDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("사용자 정보를 업데이트하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
 			if (conn != null) try { conn.close(); } catch (SQLException e) { }
@@ -142,6 +147,7 @@ public class UserDaoJdbc implements UserDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("사용자를 삭제하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) { }
 			if (conn != null) try { conn.close(); } catch (SQLException e) { }

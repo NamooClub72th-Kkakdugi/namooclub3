@@ -85,7 +85,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 				community.setOpenDate(date);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace();throw NamooClubExceptionFactory.createRuntime("커뮤니티 번호를 받아 커뮤니티를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -117,6 +117,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티를 생성하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -146,6 +147,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티정보를 업데이트하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -165,7 +167,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 			pstmt.setInt(1, comNo);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace();throw NamooClubExceptionFactory.createRuntime("커뮤니티를 삭제하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -199,6 +201,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("카테고리목록을 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -226,7 +229,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+			throw NamooClubExceptionFactory.createRuntime("카테고리를 생성하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
@@ -265,6 +268,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("관리하는 커뮤니티목록을 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}

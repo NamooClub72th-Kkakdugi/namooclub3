@@ -16,6 +16,7 @@ import dom.entity.SocialPerson;
 public class ClubDaoTest {
 	
 	private ClubDao clubDao;
+	private MemberDao memberDao;
 
 	int clubNo;
 	int categoryNo;
@@ -33,7 +34,7 @@ public class ClubDaoTest {
 	@After
 	public void tearDown() throws Exception {
 		//
-		clubDao.deleteAllClubMember(clubNo);
+		memberDao.deleteAllClubMember(clubNo);
 		clubDao.deleteClub(clubNo);
 
 
@@ -76,7 +77,7 @@ public class ClubDaoTest {
 		clubNo = clubDao.createClub(PrepareBuilder.COM_NO, club);
 		ClubMember clubMember = new ClubMember(clubNo, socialPerson);
 		
-		clubDao.addClubMember(clubMember);
+		memberDao.addClubMember(clubMember);
 	}
 
 	@Test
