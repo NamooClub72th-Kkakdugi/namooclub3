@@ -13,53 +13,63 @@ import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.logic.CommunityServiceLogic;
 
 import dom.entity.ClubCategory;
+import dom.entity.Community;
+import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
-public class CommunityServiceTest {
+public class CommunityServiceTest extends DbCommonTest{
 	//
 	private CommunityService service; 
 	
-	int communityNo;
-	String communityName = "CommunityServiceTest";
-	String description = "CommunityServiceTestDescription";
-	List<ClubCategory> categories = new ArrayList<ClubCategory>();
 	
 	@Before
 	public void setUp() throws Exception {
+		//
+		super.setUp();
 		service = new CommunityServiceLogic();
-		PrepareBuilder.createUser();
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		SocialPerson user = PrepareBuilder.readUser();
-		service.commissionManagerCommunity(communityNo, user);
-		service.removeCommunity(communityNo);
-		PrepareBuilder.deleteUser();
+		//
+		super.tearDown();
 	}
 	
-	@Test
-	public void testRegistCommunity() {
-		ClubCategory clubCategory1 = new ClubCategory(1, communityNo, "category1");
-		ClubCategory clubCategory2 = new ClubCategory(2, communityNo, "category2");
-		categories.add(clubCategory1);
-		categories.add(clubCategory2);
-		service.registCommunity(communityName, description, PrepareBuilder.EMAIL, categories);
-	}
+//	@Test
+//	public void testRegistCommunity() {
+//		//
+//		List<ClubCategory> categories = new ArrayList<>();
+//		ClubCategory category1 = new ClubCategory("1", communityNo, "category1"); 
+//		service.registCommunity("com3", "com3_des", "ekdgml", categories);
+//	}
 
 	@Test
 	public void testFindCommunity() {
-		fail("Not yet implemented");
+		//
+		Community community = service.findCommunity(1);
+		
+		//검증
+		assertEquals("com1", community.getName());
 	}
 
 	@Test
-	public void testJoinAsMemberIntStringStringString() {
-		fail("Not yet implemented");
+	public void testJoinAsMemberAndUser() {
+		//
+		service.joinAsMember(2, "abcd", "abcdId", "jkl");
+		
+		//검증
+		CommunityMember member = service.findCommunityMember(2, "abcdId");
+		assertEquals("abcdId", member.getEmail());
 	}
 
 	@Test
-	public void testJoinAsMemberIntString() {
-		fail("Not yet implemented");
+	public void testJoinAsMember() {
+		//
+		service.joinAsMember(2, "hong");
+		
+		//검증
+		CommunityMember member = service.findCommunityMember(2, "hong");
+		assertEquals("hong", member.getEmail());
 	}
 
 	@Test
