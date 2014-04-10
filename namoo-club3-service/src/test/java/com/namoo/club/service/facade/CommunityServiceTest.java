@@ -87,24 +87,12 @@ public class CommunityServiceTest extends DbCommonTest{
 	}
 
 	@Test
-	public void testFindCommunityMember() {
-		//
-		
-	}
-
-	@Test
-	public void testFindAllCommunityMember() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCountMembers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testRemoveCommunity() {
-		fail("Not yet implemented");
+		//
+		service.removeCommunity(1);
+		
+		List<Community> communities = service.findAllCommunities();
+		assertEquals(1, communities.size());
 	}
 
 	@Test
