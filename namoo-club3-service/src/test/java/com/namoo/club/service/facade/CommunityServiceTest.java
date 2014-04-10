@@ -15,6 +15,7 @@ import com.namoo.club.service.logic.CommunityServiceLogic;
 import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityMember;
+import dom.entity.SocialPerson;
 
 public class CommunityServiceTest extends DbCommonTest{
 	//
@@ -98,27 +99,41 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testFindBelongCommunities() {
 		//
+		List<Community> communities = service.findBelongCommunities("ekdgml");
 		
+		//검증
+		assertEquals(1, communities.size());
 	}
 
 	@Test
 	public void testFindManagedCommnities() {
-		fail("Not yet implemented");
+		//
+		List<Community> communities = service.findManagedCommunities("ekdgml");
+		
+		//검증
+		assertEquals(1, communities.size());
 	}
 
 	@Test
 	public void testWithdrawalCommunity() {
-		fail("Not yet implemented");
+		//
+		service.withdrawalCommunity(1, "hong");
+		//검증
+		assertEquals(1, service.findAllCommunityMember(1).size());
 	}
 
 	@Test
 	public void testCommissionManagerCommunity() {
-		fail("Not yet implemented");
+		//
+		service.commissionManagerCommunity(1, new SocialPerson("ekdgml"));
+		//검증
+		assertEquals(0, service.findManagedCommunities("ekdgml").size());
 	}
 
 	@Test
 	public void testFindAllCategories() {
-		fail("Not yet implemented");
+		//
+		assertEquals(2, service.findAllCategories(1).size());
 	}
 
 }

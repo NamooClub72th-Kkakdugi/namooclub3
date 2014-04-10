@@ -185,8 +185,10 @@ public class CommunityDaoJdbc implements CommunityDao {
 		
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT category_no, com_no, category_nm FROM clubcategory";
+			String sql = "SELECT category_no, com_no, category_nm FROM clubcategory WHERE com_no=?";
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, comNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -234,45 +236,6 @@ public class CommunityDaoJdbc implements CommunityDao {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
-	}
-
-
-
-	@Override
-	public List<Community> readAllManagedCommunities(String email) {
-		//
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-	    List<Community> communities = new ArrayList<Community>();
-	    
-		try {
-			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a " +
-					"INNER JOIN communitymember b ON a.com_no = b.com_no AND b.is_manager='1'";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email);
-			
-			rset = pstmt.executeQuery();
-			
-			while (rset.next()) {
-				int comNo = rset.getInt("com_no");
-				String name = rset.getString("com_nm");
-				String description = rset.getString("com_des");
-				Date date = rset.getDate("com_date");
-				Community community = new Community(name, description);
-				community.setComNo(comNo);
-				community.setOpenDate(date);
-				communities.add(community);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw NamooClubExceptionFactory.createRuntime("관리하는 커뮤니티목록을 조회하는 중 오류가 발생하였습니다.");
-		} finally {
-			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
-			if (conn != null)try {conn.close();} catch (SQLException e) {}
-		}
-		return communities;
 	}
 
 	@Override

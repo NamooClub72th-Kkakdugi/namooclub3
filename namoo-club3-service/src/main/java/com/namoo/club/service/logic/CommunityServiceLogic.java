@@ -31,6 +31,7 @@ public class CommunityServiceLogic implements CommunityService {
 		this.dao = daoFactory.getCommunityDao();
 		this.userDao = daoFactory.getUserDao();
 		this.memberDao = daoFactory.getMemberDao();
+		this.clubDao = daoFactory.getClubDao();
 	}
 
 	@Override
@@ -156,6 +157,7 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		List<Club> clubs = clubDao.readAllClubs(communityNo);
 		if (forcingRemove) {
+			//TODO deleteAllClubs(int comNo)
 			for (Club club : clubs) {
 				memberDao.deleteAllClubKingManger(club.getClubNo());
 				memberDao.deleteAllClubManager(club.getClubNo());
@@ -195,7 +197,7 @@ public class CommunityServiceLogic implements CommunityService {
 
 		List<Community> managers = new ArrayList<>();
 		for (Community community : commnities) {
-			if (!dao.readAllManagedCommunities(email).isEmpty()) {
+			if (memberDao.readCommunityManager(community.getComNo()) != null) {
 				managers.add(community);
 			}
 		}

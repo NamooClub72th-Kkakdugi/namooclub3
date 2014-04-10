@@ -31,7 +31,7 @@ public class ComWithdrawlController extends DefaultController{
 		req.setAttribute("name", name);
 		req.setAttribute("comNo", comNo);
 		
-		service.removeCommunity(comNo);
+		service.removeCommunity(comNo,true);
 		
 		redirect(req, resp, "/community/comList.do");
 		

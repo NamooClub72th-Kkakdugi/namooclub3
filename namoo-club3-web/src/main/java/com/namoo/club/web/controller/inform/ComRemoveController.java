@@ -23,7 +23,7 @@ public class ComRemoveController extends DefaultController{
 		//
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
-		service.removeCommunity(comNo);
+		service.removeCommunity(comNo,true);
 		req.setAttribute("name", req.getParameter("name"));
 		
 		redirect(req, resp, "/community/comList.do");

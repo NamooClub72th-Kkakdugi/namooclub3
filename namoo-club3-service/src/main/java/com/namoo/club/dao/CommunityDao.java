@@ -13,7 +13,6 @@ public interface CommunityDao {
 	int createCommunity(Community community);
 	void updateCommunity(Community community);
 	void deleteCommunity(int comNo);
-	List<Community> readAllManagedCommunities(String email);
 	
 	// ClubCategory
 	List<ClubCategory> readAllCategories(int comNo);
