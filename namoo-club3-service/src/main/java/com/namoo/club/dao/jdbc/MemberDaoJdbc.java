@@ -89,7 +89,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    CommunityMember comMember = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email FROM communitymember WHERE com_no = ?  AND email=?";
+			String sql = "SELECT com_no, email FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			pstmt.setString(2, email);
@@ -111,7 +111,6 @@ public class MemberDaoJdbc implements MemberDao {
 		}
 		return comMember;
 	}
-
 
 	@Override
 	public CommunityManager readCommunityManager(int comNo) {
@@ -152,7 +151,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ?";
+			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			
@@ -361,6 +360,20 @@ public class MemberDaoJdbc implements MemberDao {
 			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
 	}
+	
+	@Override
+	public void deleteClubManager(int clubNo, String email) {
+		//
+		deleteClubMembership(clubNo, email, "a");
+		
+	}
+	
+	@Override
+	public void deleteClubMember(int clubNo, String email) {
+		// 
+		deleteClubMembership(clubNo, email, "b");
+		
+	}
 
 	@Override
 	public void deleteClubKingManger(int clubNo, String email) {
@@ -390,6 +403,40 @@ public class MemberDaoJdbc implements MemberDao {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
+	}
+
+	@Override
+	public List<ClubMember> readAllClubMembers(int clubNo) {
+		//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//	    List<ClubMember> clubMembers = new ArrayList<ClubMember>();
+//	    
+//		try {
+//			conn = DbConnection.getConnection();
+//			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2'";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, comNo);
+//			
+//			rset = pstmt.executeQuery();
+//			
+//			while (rset.next()) {
+//				int comNo2 = rset.getInt("com_no");
+//				String email2 = rset.getString("email");
+//				
+//				CommunityMember comMember = new CommunityMember(comNo2, new SocialPerson(email2));
+//				members.add(comMember);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw NamooClubExceptionFactory.createRuntime("모든 커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
+//		} finally {
+//			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+//			if (conn != null)try {conn.close();} catch (SQLException e) {}
+//		}
+//		return members;
+		return null;
 	}
 
 	@Override

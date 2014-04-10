@@ -12,25 +12,28 @@ import dom.entity.CommunityMember;
 public interface MemberDao {
 	//
 	//community
-	CommunityMember addCommunityMember(int comNo, CommunityMember comMember);
 	CommunityManager addCommunityManager(int comNo, CommunityManager comManager);
+	CommunityMember addCommunityMember(int comNo, CommunityMember comMember);
 	CommunityMember readCommunityMember(int comNo, String email);
-	List<CommunityMember> readAllCommunityMember(int comNo);
 	CommunityManager readCommunityManager(int comNo);
+	List<CommunityMember> readAllCommunityMember(int comNo);
 	void deleteAllComMember(int comNo);
 	void deleteAllComManager(int comNo);
 	void deleteCommuninyMember(int comNo, String email);
 	void deleteCommunityManager(int comNo, String email);
 	
 	//club
-	List<ClubMember> readAllClubMembers(int clubNo);
-	List<Club> readBelongClubs(String email, int comNo);
-	List<Club> readManagedClubs(String email, int comNo);
-	ClubMember readClubMember(int clubNo, String email);
 	ClubMember addClubMember(ClubMember clubMember);
 	ClubManager addClubManager(ClubManager clubManager);
 	ClubKingManager addKingManager(ClubKingManager clubKingManager);
 	void deleteAllClubMember(int clubNo);
 	void deleteAllClubManager(int clubNo);
-	void deleteAllClubKingManger(int clubNo);
+	void deleteClubMember(int clubNo, String email);
+	void deleteClubManager(int clubNo, String email);
+	void deleteClubKingManger(int clubNo, String email);
+	List<ClubMember> readAllClubMembers(int clubNo);
+	List<Club> readBelongClubs(String email, int comNo);
+	List<Club> readManagedClubs(String email, int comNo);
+	ClubMember readClubMember(int clubNo, String email);
+
 }

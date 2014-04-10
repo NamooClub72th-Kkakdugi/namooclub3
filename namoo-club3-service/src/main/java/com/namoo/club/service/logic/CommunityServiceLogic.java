@@ -159,7 +159,7 @@ public class CommunityServiceLogic implements CommunityService {
 		if (forcingRemove) {
 			//TODO deleteAllClubs(int comNo)
 			for (Club club : clubs) {
-				memberDao.deleteAllClubKingManger(club.getClubNo());
+				memberDao.deleteClubKingManger(club.getClubNo(), "ekdgml");
 				memberDao.deleteAllClubManager(club.getClubNo());
 				memberDao.deleteAllClubMember(club.getClubNo());
 				clubDao.deleteClub(club.getClubNo());
