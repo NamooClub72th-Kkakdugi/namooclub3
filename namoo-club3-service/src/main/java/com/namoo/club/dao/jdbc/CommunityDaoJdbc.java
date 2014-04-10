@@ -110,7 +110,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 			rset = pstmt.getGeneratedKeys();
 			if (rset.next()) {
-				community.setComNo(rset.getInt("com_no"));
+				community.setComNo(rset.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -163,6 +163,8 @@ public class CommunityDaoJdbc implements CommunityDao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, comNo);
+			
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();throw NamooClubExceptionFactory.createRuntime("커뮤니티를 삭제하는 중 오류가 발생하였습니다.");
 		} finally {

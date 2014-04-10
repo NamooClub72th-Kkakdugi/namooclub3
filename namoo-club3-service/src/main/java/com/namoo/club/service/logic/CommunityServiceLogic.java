@@ -3,6 +3,7 @@ package com.namoo.club.service.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.namoo.club.dao.ClubDao;
 import com.namoo.club.dao.CommunityDao;
 import com.namoo.club.dao.MemberDao;
 import com.namoo.club.dao.UserDao;
@@ -22,6 +23,7 @@ public class CommunityServiceLogic implements CommunityService {
 	private CommunityDao dao;
 	private UserDao userDao;
 	private MemberDao memberDao;
+	private ClubDao clubDao;
 	
 	public CommunityServiceLogic() {
 		DaoFactory daoFactory = DaoFactory.createFactory(DbType.MariaDB);
@@ -149,8 +151,14 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public void removeCommunity(int communityNo) {
+	public void removeCommunity(int communityNo, boolean forcingRemove) {
 		//
+		if (forcingRemove) {
+			memberDao.deleteAllClubKingManger(clubNo);
+			memberDao.deleteAllComMember(communityNo);
+			memberDao.deleteAllComManager(communityNo);
+			dao.deleteCommunity(communityNo);
+		}
 		dao.deleteCommunity(communityNo);
 	}
 

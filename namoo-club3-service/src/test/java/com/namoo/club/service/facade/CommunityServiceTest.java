@@ -89,7 +89,7 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testRemoveCommunity() {
 		//
-		service.removeCommunity(1);
+		service.removeCommunity(1, true);
 		
 		List<Community> communities = service.findAllCommunities();
 		assertEquals(1, communities.size());

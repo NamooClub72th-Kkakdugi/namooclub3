@@ -92,7 +92,7 @@ public interface CommunityService {
 	/**
 	 * @param communityName
 	 */
-	public void removeCommunity(int communityNo);
+	public void removeCommunity(int communityNo, boolean forcingRemove);
 	
 	/**
 	 * 자신이 회원으로 있는 커뮤니티 목록조회
