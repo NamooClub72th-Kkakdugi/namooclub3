@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import com.namoo.club.service.UserServiceTest;
+import com.namoo.club.dao.jdbc.DbConnection;
 
 
 public class DbCommonTest {

@@ -1,4 +1,4 @@
 <dataset>
-	<user user_id="ekdgml" user_nm="박상희" email="ekdgml@naver.com" />
-	<user user_id="hong"   user_nm="홍길동" email="hong@naver.com" />
+	<user email="ekdgml" name="박상희" password="asdf" />
+	<user email="hong"   name="홍길동" password="1234" />
 </dataset>

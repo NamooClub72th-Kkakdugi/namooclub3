@@ -2,6 +2,8 @@ package com.namoo.club.service.facade;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,28 +13,24 @@ import com.namoo.club.service.logic.UserServiceLogic;
 
 import dom.entity.SocialPerson;
 
-public class UserServiceTest {
+public class UserServiceTest extends DbCommonTest{
 	//
 	private UserService service;
 	
-	String email = "a_a_a_a";
-	String name = "a_a_a_a";
-	String password = "a_a_a_a";
-	
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
 		service = new UserServiceLogic();
-		service.removeTowner(email);
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		service.removeTowner(email);
+		super.tearDown();
 	}
 	
 	@Test
 	public void testLoginAsTowner() {
-		boolean login = service.loginAsTowner(email, password);
+		boolean login = service.loginAsTowner("ekdgml", "asdf");
 		
 		assertEquals(true, login);
 	}
@@ -40,21 +38,19 @@ public class UserServiceTest {
 	@Test
 	public void testRegistTowner() {
 		//
-		service.registTowner(name, email, password);
+		service.registTowner("박상희2", "ekdgml2", "asdf2");
 		
-		SocialPerson user = service.findTowner(email);
-		assertEquals(password, user.getPassword());
-		assertEquals(name, user.getName());
-		assertEquals(email, user.getEmail());
+		SocialPerson user = service.findTowner("ekdgml2");
+		assertEquals("asdf2", user.getPassword());
+		assertEquals("박상희2", user.getName());
+		assertEquals("ekdgml2", user.getEmail());
 	}
 
 	@Test
 	public void testFindAllTowner() {
 		//
-		int before = service.findAllTowner().size();
-		service.registTowner(name, email, password);
-		int after = service.findAllTowner().size();
+		List<SocialPerson> users = service.findAllTowner();
 		
-		assertEquals(before+1, after);
+		assertEquals(2, users.size());
 	}
 }
