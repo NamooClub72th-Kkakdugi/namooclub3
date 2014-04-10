@@ -46,9 +46,9 @@ CREATE TABLE Club (
 
 -- 커뮤니티회원
 CREATE TABLE CommunityMember (
-	EMAIL      VARCHAR(40) NOT NULL COMMENT 이메일, -- 이메일
-	COM_NO     INTEGER     NOT NULL COMMENT 커뮤니티NO, -- 커뮤니티NO
-	IS_MANAGER CHAR(1)     NULL     COMMENT 멤버구분 -- 멤버구분
+	EMAIL      VARCHAR(40) NOT NULL , -- 이메일
+	COM_NO     INTEGER     NOT NULL , -- 커뮤니티NO
+	IS_MANAGER CHAR(1)     NULL      -- 멤버구분
 )
 COMMENT 커뮤니티회원;
 
@@ -62,9 +62,9 @@ ALTER TABLE CommunityMember
 
 -- 클럽 회원
 CREATE TABLE ClubMember (
-	EMAIL   VARCHAR(40) NOT NULL COMMENT 이메일, -- 이메일
-	CLUB_NO INTEGER     NOT NULL COMMENT 클럽NO, -- 클럽NO
-	TYPE    CHAR(1)     NOT NULL COMMENT 멤버구분 -- 멤버구분
+	EMAIL   VARCHAR(40) NOT NULL , -- 이메일
+	CLUB_NO INTEGER     NOT NULL , -- 클럽NO
+	TYPE    CHAR(1)     NOT NULL  -- 멤버구분
 )
 COMMENT 클럽 회원;
 
