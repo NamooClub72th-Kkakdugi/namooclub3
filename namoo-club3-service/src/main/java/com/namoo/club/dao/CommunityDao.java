@@ -18,5 +18,6 @@ public interface CommunityDao {
 	// ClubCategory
 	List<ClubCategory> readAllCategories(int comNo);
 	void createClubCategory(int comNo, ClubCategory category);
+	void deleteAllClubCategory(int comNo);
 
 }

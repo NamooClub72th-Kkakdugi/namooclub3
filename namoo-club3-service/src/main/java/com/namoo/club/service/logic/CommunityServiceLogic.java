@@ -12,6 +12,7 @@ import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
+import dom.entity.Club;
 import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityManager;
@@ -24,14 +25,14 @@ public class CommunityServiceLogic implements CommunityService {
 	private UserDao userDao;
 	private MemberDao memberDao;
 	private ClubDao clubDao;
-	
+
 	public CommunityServiceLogic() {
 		DaoFactory daoFactory = DaoFactory.createFactory(DbType.MariaDB);
 		this.dao = daoFactory.getCommunityDao();
 		this.userDao = daoFactory.getUserDao();
 		this.memberDao = daoFactory.getMemberDao();
 	}
-	
+
 	@Override
 	public Community registCommunity(String communityName, String description, String email, List<ClubCategory> categories) {
 		//
@@ -40,16 +41,16 @@ public class CommunityServiceLogic implements CommunityService {
 		}
 		Community community = new Community(communityName, description, new SocialPerson(email));
 		int communityNo = dao.createCommunity(community);
-		
+
 		CommunityManager comManager = new CommunityManager(communityNo, new SocialPerson(email));
 		memberDao.addCommunityManager(communityNo, comManager);
-		
+
 		// 카테고리 추가
 		registCategory(communityNo, categories);
-		
+
 		return community;
 	}
-	
+
 	public void registCategory(int communityNo, List<ClubCategory> categories) {
 		//
 		for (ClubCategory category : categories) {
@@ -81,15 +82,15 @@ public class CommunityServiceLogic implements CommunityService {
 	public void joinAsMember(int communityNo, String name, String email, String password) {
 		//
 		Community community = dao.readCommunity(communityNo);
-		
+
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
-		
+
 		if (memberDao.readCommunityMember(communityNo, email) != null) {
 			throw NamooClubExceptionFactory.createRuntime("이미 커뮤니티 회원입니다.");
 		}
-		
+
 		SocialPerson user = new SocialPerson(email);
 		userDao.createUser(user);
 		memberDao.addCommunityMember(communityNo, new CommunityMember(communityNo, user));
@@ -99,7 +100,7 @@ public class CommunityServiceLogic implements CommunityService {
 	public void joinAsMember(int communityNo, String email) {
 		//
 		Community community = dao.readCommunity(communityNo);
-		
+
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
@@ -114,19 +115,19 @@ public class CommunityServiceLogic implements CommunityService {
 
 	@Override
 	public CommunityMember findCommunityMember(int communityNo, String email) {
-		// 
+		//
 		Community community = dao.readCommunity(communityNo);
-		
+
 		if (community == null) {
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
 		}
-		
+
 		for (CommunityMember member : memberDao.readAllCommunityMember(communityNo)) {
 			if (member.getEmail().equals(email)) {
 				return member;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -153,7 +154,15 @@ public class CommunityServiceLogic implements CommunityService {
 	@Override
 	public void removeCommunity(int communityNo, boolean forcingRemove) {
 		//
+		List<Club> clubs = clubDao.readAllClubs(communityNo);
 		if (forcingRemove) {
+			for (Club club : clubs) {
+				memberDao.deleteAllClubKingManger(club.getClubNo());
+				memberDao.deleteAllClubManager(club.getClubNo());
+				memberDao.deleteAllClubMember(club.getClubNo());
+				clubDao.deleteClub(club.getClubNo());
+			}
+			dao.deleteAllClubCategory(communityNo);
 			memberDao.deleteAllComMember(communityNo);
 			memberDao.deleteAllComManager(communityNo);
 			dao.deleteCommunity(communityNo);
@@ -165,8 +174,9 @@ public class CommunityServiceLogic implements CommunityService {
 	public List<Community> findBelongCommunities(String email) {
 		//
 		List<Community> commnities = dao.readAllCommunities();
-		if (commnities == null) return null;
-		
+		if (commnities == null)
+			return null;
+
 		List<Community> belongs = new ArrayList<>();
 		for (Community community : commnities) {
 			if (memberDao.readCommunityMember(community.getComNo(), email) != null) {
@@ -180,8 +190,9 @@ public class CommunityServiceLogic implements CommunityService {
 	public List<Community> findManagedCommunities(String email) {
 		//
 		List<Community> commnities = dao.readAllCommunities();
-		if (commnities == null) return null;
-		
+		if (commnities == null)
+			return null;
+
 		List<Community> managers = new ArrayList<>();
 		for (Community community : commnities) {
 			if (!dao.readAllManagedCommunities(email).isEmpty()) {
@@ -207,7 +218,7 @@ public class CommunityServiceLogic implements CommunityService {
 		memberDao.deleteCommunityManager(communityNo, rolePerson.getEmail());
 		memberDao.addCommunityMember(communityNo, new CommunityMember(communityNo, rolePerson));
 	}
-	
+
 	@Override
 	public void commissionMemberCommunity(int communityNo, SocialPerson rolePerson) {
 		//

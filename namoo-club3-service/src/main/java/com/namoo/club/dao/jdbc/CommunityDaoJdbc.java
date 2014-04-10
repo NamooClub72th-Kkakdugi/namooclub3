@@ -275,4 +275,29 @@ public class CommunityDaoJdbc implements CommunityDao {
 		return communities;
 	}
 
+	@Override
+	public void deleteAllClubCategory(int comNo) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn= DbConnection.getConnection();
+			String sql = "DELETE FROM clubcategory WHERE com_no=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, comNo);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("카테고리를 모두 삭제하는 중 오류가 발생하였습니다.");
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		
+	}
+
 }
