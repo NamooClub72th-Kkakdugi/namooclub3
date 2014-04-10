@@ -82,7 +82,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    CommunityMember comMember = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
+			String sql = "SELECT com_no, email FROM communitymember WHERE com_no = ? AND is_manager ='2' AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			pstmt.setString(2, email);
