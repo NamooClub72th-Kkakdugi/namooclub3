@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.logic.CommunityServiceLogic;
 
 import dom.entity.ClubCategory;

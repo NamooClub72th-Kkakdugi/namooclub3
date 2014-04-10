@@ -2,6 +2,7 @@ package com.namoo.club.service.facade;
 
 import com.namoo.club.dao.jdbc.CommunityDaoJdbc;
 import com.namoo.club.dao.jdbc.UserDaoJdbc;
+import com.namoo.club.service.facade.UserService;
 import com.namoo.club.service.logic.CommunityServiceLogic;
 import com.namoo.club.service.logic.UserServiceLogic;
 

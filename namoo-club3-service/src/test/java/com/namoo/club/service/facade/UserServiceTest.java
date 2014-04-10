@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.namoo.club.service.facade.UserService;
 import com.namoo.club.service.logic.UserServiceLogic;
 
 import dom.entity.SocialPerson;
