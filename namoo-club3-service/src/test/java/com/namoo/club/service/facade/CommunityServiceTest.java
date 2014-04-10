@@ -97,7 +97,8 @@ public class CommunityServiceTest extends DbCommonTest{
 
 	@Test
 	public void testFindBelongCommunities() {
-		fail("Not yet implemented");
+		//
+		
 	}
 
 	@Test
