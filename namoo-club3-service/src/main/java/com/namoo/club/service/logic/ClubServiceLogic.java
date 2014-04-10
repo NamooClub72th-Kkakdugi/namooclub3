@@ -34,7 +34,7 @@ public class ClubServiceLogic implements ClubService {
 	//------------------------------------------------------------------------
 
 	@Override
-	public void registClub(int categoryNo, int communityNo, String clubName, String description, String email) {
+	public Club registClub(int categoryNo, int communityNo, String clubName, String description, String email) {
 		// 
 		if (isExistClubByName(communityNo, clubName)) {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 클럽입니다.");
@@ -44,7 +44,7 @@ public class ClubServiceLogic implements ClubService {
 		int clubNo = clubDao.createClub(communityNo, club);
 		
 		memberDao.addClubManager(new ClubManager(clubNo, new SocialPerson(email)));
-		
+		return club;
 	}
 	private boolean isExistClubByName(int communityNo, String clubName) {
 		//

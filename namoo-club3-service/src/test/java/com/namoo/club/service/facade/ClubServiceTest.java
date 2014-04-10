@@ -2,13 +2,39 @@ package com.namoo.club.service.facade;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class ClubServiceTest {
+import com.namoo.club.service.logic.ClubServiceLogic;
 
+import dom.entity.Club;
+
+public class ClubServiceTest extends DbCommonTest {
+	//
+	private ClubService clubService;
+
+	@Before
+	public  void seUp() throws Exception {
+		//
+		super.setUp();
+		clubService = new ClubServiceLogic();
+	}
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	//-------------------------------------------------------------
 	@Test
 	public void testRegistClub() {
-		fail("Not yet implemented");
+		//
+		Club club = clubService.registClub(1, 1, "TestClub", "TestClub'description", "wntjd1211");
+		
+		// 검증
+		club = clubService.findClub(club.getClubNo());
+		assertEquals("TestClub", club.getName());
+		
 	}
 
 	@Test

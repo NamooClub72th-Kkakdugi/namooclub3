@@ -1,8 +1,6 @@
 package dom.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Club {
 	
@@ -29,7 +27,6 @@ public class Club {
 		this.name = name;
 		this.description = description;
 	}
-	
 	public int getComNo() {
 		return comNo;
 	}
