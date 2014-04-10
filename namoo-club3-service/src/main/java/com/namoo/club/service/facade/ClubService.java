@@ -27,21 +27,6 @@ public interface ClubService {
 	 * @param clubName
 	 */
 	public Club findClub(int clubNo);
-
-	/**
-	 * [주민으로 등록되지 않은 경우] 클럽 가입
-	 * 
-	 * 주민 가입을 처리하고 나서 클럽에 가입한다.
-	 * 이미 존재하는 주민인 경우 예외가 발생한다.
-	 * 
-	 * @param clubName
-	 * @param name
-	 * @param email
-	 * @param password
-	 * 
-	 * @throws NamooRuntimeException
-	 */
-	public void joinAsMember(int clubNo, String email, String name, String password);
 	
 	/**
 	 * [주민으로 등록된 경우] 클럽 가입

@@ -281,7 +281,7 @@ public class MemberDaoJdbc implements MemberDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, email, type"
+			String sql = "INSERT INTO clubmember(club_no, email, type)"
 					+ " VALUES(?, ?, 'a')";
 			pstmt = conn.prepareStatement(sql);
 			

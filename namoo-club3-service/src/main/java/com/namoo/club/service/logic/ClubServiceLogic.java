@@ -68,24 +68,6 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void joinAsMember(int clubNo, String email, String name, String password) {
-		// 
-		Club club = clubDao.readClub(clubNo);
-		
-		if(club == null) {
-			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
-		}
-		// 	 email로 유저를 찾는게 맞는건가?
-		if(userDao.readUser(email) != null){
-			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
-		}
-		
-		SocialPerson user = new SocialPerson(email, name, password);
-		userDao.createUser(user);
-		memberDao.addClubMember(new ClubMember(clubNo, user));
-	}
-
-	@Override
 	public void joinAsMember(int clubNo, String email) {
 		// 
 		Club club = clubDao.readClub(clubNo);

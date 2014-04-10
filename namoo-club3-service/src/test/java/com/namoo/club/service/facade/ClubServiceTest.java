@@ -1,6 +1,9 @@
 package com.namoo.club.service.facade;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +12,7 @@ import org.junit.Test;
 import com.namoo.club.service.logic.ClubServiceLogic;
 
 import dom.entity.Club;
+import dom.entity.ClubMember;
 
 public class ClubServiceTest extends DbCommonTest {
 	//
@@ -29,7 +33,7 @@ public class ClubServiceTest extends DbCommonTest {
 	@Test
 	public void testRegistClub() {
 		//
-		Club club = clubService.registClub(1, 1, "TestClub", "TestClub'description", "wntjd1211");
+		Club club = clubService.registClub(1, 1, "TestClub", "TestClub'description", "wntjd");
 		
 		// 검증
 		club = clubService.findClub(club.getClubNo());
@@ -39,12 +43,10 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testFindClub() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testJoinAsMemberIntStringStringString() {
-		fail("Not yet implemented");
+		//
+		Club club = clubService.findClub(1);
+		// 검증
+		assertEquals("club1", club.getName());
 	}
 
 	@Test
@@ -54,12 +56,19 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testFindAllClubs() {
-		fail("Not yet implemented");
+		//
+		List<Club> clubs = clubService.findAllClubs(1);
+		//검증
+		assertEquals(4, clubs.size());
 	}
 
 	@Test
 	public void testFindClubMember() {
-		fail("Not yet implemented");
+		//
+		ClubMember clubMember = clubService.findClubMember(1, "wntjd");
+		
+		// 검증
+		assertEquals("wntjd", clubMember.getEmail());
 	}
 
 	@Test
@@ -74,7 +83,11 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testRemoveClub() {
-		fail("Not yet implemented");
+		//
+		clubService.removeClub(1, 1);
+		// 검증
+		assertEquals(3, clubService.findAllClubs(1).size());
+		
 	}
 
 	@Test
@@ -89,7 +102,8 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testWithdrawalClub() {
-		fail("Not yet implemented");
+		//
+		
 	}
 
 	@Test

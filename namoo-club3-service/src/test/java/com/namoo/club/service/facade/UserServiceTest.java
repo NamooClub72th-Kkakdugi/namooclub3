@@ -51,6 +51,6 @@ public class UserServiceTest extends DbCommonTest{
 		//
 		List<SocialPerson> users = service.findAllTowner();
 		
-		assertEquals(2, users.size());
+		assertEquals(3, users.size());
 	}
 }
