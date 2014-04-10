@@ -13,7 +13,6 @@ import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
-import dom.entity.SocialPerson;
 
 public class CommunityDaoJdbc implements CommunityDao {
 
@@ -28,8 +27,7 @@ public class CommunityDaoJdbc implements CommunityDao {
 
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.com_no, a.com_nm, a.com_des, a.com_date, b.email FROM community a " +
-					"INNER JOIN communitymember b ON a.com_no = b.com_no AND b.is_manager='1' ";
+			String sql = "SELECT com_no, com_nm, com_des, com_date FROM community";
 			pstmt = conn.prepareStatement(sql);
 
 			rset = pstmt.executeQuery();
@@ -39,9 +37,8 @@ public class CommunityDaoJdbc implements CommunityDao {
 				String comName = rset.getString("com_nm");
 				String comDescription = rset.getString("com_des");
 				Date date = rset.getDate("com_date");
-				String email = rset.getString("email");
 
-				Community community = new Community(comName, comDescription, new SocialPerson(email));
+				Community community = new Community(comName, comDescription);
 				community.setComNo(comNo);
 				community.setOpenDate(date);
 				communities.add(community);

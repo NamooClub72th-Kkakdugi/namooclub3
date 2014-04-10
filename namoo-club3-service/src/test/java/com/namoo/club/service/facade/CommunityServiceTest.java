@@ -74,12 +74,16 @@ public class CommunityServiceTest extends DbCommonTest{
 		
 		//검증
 		CommunityMember member = service.findCommunityMember(2, "wntjd");
-		assertEquals("hong", member.getEmail());
+		assertEquals("wntjd", member.getEmail());
 	}
 
 	@Test
 	public void testFindAllCommunities() {
-		fail("Not yet implemented");
+		//
+		List<Community> communities = service.findAllCommunities();
+		
+		//검증
+		assertEquals(2, communities.size());
 	}
 
 	@Test

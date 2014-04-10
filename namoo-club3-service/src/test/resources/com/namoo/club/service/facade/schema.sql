@@ -45,18 +45,34 @@ CREATE TABLE Club (
 );
 
 -- 커뮤니티회원
-CREATE TABLE CommunityMember (
-	EMAIL      VARCHAR(40) PRIMARY KEY , -- 이메일
-	COM_NO     INTEGER     NOT NULL , -- 커뮤니티NO
-	IS_MANAGER CHAR(1)     NULL      -- 멤버구분
+CREATE TABLE `communitymember` (
+   `COM_NO`     INT(11)     NOT NULL , -- 커뮤니티NO
+   `EMAIL`      VARCHAR(40) NOT NULL , -- 이메일
+   `IS_MANAGER` CHAR(1)     NULL      -- 멤버구분
 );
+ 
+-- 커뮤니티회원
+ALTER TABLE `communitymember`
+   ADD CONSTRAINT
+      PRIMARY KEY (
+         `COM_NO`, -- 커뮤니티NO
+         `EMAIL`   -- 이메일
+      );
 
 -- 클럽 회원
-CREATE TABLE ClubMember (
-	EMAIL   VARCHAR(40) PRIMARY KEY , -- 이메일
-	CLUB_NO INTEGER     NOT NULL , -- 클럽NO
-	TYPE    CHAR(1)     NOT NULL  -- 멤버구분
+CREATE TABLE `clubmember` (
+   `CLUB_NO` INT(11)     NOT NULL , -- 클럽NO
+   `EMAIL`   VARCHAR(40) NOT NULL , -- 이메일
+   `TYPE`    CHAR(1)     NOT NULL  -- 멤버구분
 );
+ 
+-- 클럽 회원
+ALTER TABLE `clubmember`
+   ADD CONSTRAINT
+      PRIMARY KEY (
+         `CLUB_NO`, -- 클럽NO
+         `EMAIL`    -- 이메일
+      );
 
 -- 클럽 카테고리
 CREATE TABLE ClubCategory (
