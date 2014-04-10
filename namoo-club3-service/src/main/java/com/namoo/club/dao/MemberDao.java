@@ -34,6 +34,6 @@ public interface MemberDao {
 	List<ClubMember> readAllClubMembers(int clubNo);
 	List<Club> readBelongClubs(String email, int comNo);
 	List<Club> readManagedClubs(String email, int comNo);
-	ClubMember readClubMember(int clubNo, String email);
+	ClubMember readClubMember(int clubNo, String email); 
 
 }

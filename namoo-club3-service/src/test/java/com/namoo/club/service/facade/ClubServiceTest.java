@@ -103,6 +103,9 @@ public class ClubServiceTest extends DbCommonTest {
 	@Test
 	public void testWithdrawalClub() {
 		//
+		clubService.withdrawalClub(1, "wntjd");
+		//검증
+		//assert
 		
 	}
 
