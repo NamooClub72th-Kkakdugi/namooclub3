@@ -112,7 +112,6 @@ public class MemberDaoJdbc implements MemberDao {
 		return comMember;
 	}
 
-
 	@Override
 	public CommunityManager readCommunityManager(int comNo) {
 		//
@@ -186,7 +185,7 @@ public class MemberDaoJdbc implements MemberDao {
 		//
 		deleteAllCommunityMembership(comNo, "1");
 	}
-	
+
 	private void deleteAllCommunityMembership(int comNo, String is_manager) {
 		//
 		Connection conn = null;
@@ -206,7 +205,7 @@ public class MemberDaoJdbc implements MemberDao {
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
 	}
-
+	
 	@Override
 	public void deleteCommuninyMember(int comNo, String email) {
 		//
@@ -241,7 +240,6 @@ public class MemberDaoJdbc implements MemberDao {
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	
 	@Override
 	public ClubMember addClubMember(ClubMember clubMember) {
 		// 
@@ -343,13 +341,8 @@ public class MemberDaoJdbc implements MemberDao {
 		deleteAllClubMembership(clubNo, "a");
 	}
 	
-	@Override
-	public void deleteAllClubKingManger(int clubNo) {
-		// 
-		deleteAllClubMembership(clubNo, "c");
-		
-	}
 	private void deleteAllClubMembership(int clubNo, String type) {
+		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -367,12 +360,83 @@ public class MemberDaoJdbc implements MemberDao {
 			if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
 	}
+	
+	@Override
+	public void deleteClubManager(int clubNo, String email) {
+		//
+		deleteClubMembership(clubNo, email, "a");
+		
+	}
+	
+	@Override
+	public void deleteClubMember(int clubNo, String email) {
+		// 
+		deleteClubMembership(clubNo, email, "b");
+		
+	}
 
 	@Override
-	public List<ClubMember> readAllClubMembers(int clubNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteClubKingManger(int clubNo, String email) {
+		// 
+		deleteClubMembership(clubNo, email, "c");
+		
 	}
+
+	private void deleteClubMembership(int clubNo, String email, String type) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			
+			String sql = "DELETE FROM clubmember WHERE club_no = ? AND email=? AND type = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, clubNo);
+			pstmt.setString(2, email);
+			pstmt.setString(3, type);
+		
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버쉽을 삭제하는 중 오류가 발생하였습니다.");
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+	}
+
+//	@Override
+//	public List<ClubMember> readAllClubMembers(int clubNo) {
+//		//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//	    List<ClubMember> clubMembers = new ArrayList<ClubMember>();
+//	    
+//		try {
+//			conn = DbConnection.getConnection();
+//			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='2'";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, comNo);
+//			
+//			rset = pstmt.executeQuery();
+//			
+//			while (rset.next()) {
+//				int comNo2 = rset.getInt("com_no");
+//				String email2 = rset.getString("email");
+//				
+//				CommunityMember comMember = new CommunityMember(comNo2, new SocialPerson(email2));
+//				members.add(comMember);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw NamooClubExceptionFactory.createRuntime("모든 커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
+//		} finally {
+//			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+//			if (conn != null)try {conn.close();} catch (SQLException e) {}
+//		}
+//		return members;
+//	}
 
 	@Override
 	public List<Club> readBelongClubs(String email, int comNo) {
@@ -388,8 +452,36 @@ public class MemberDaoJdbc implements MemberDao {
 
 	@Override
 	public ClubMember readClubMember(int clubNo, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	    ClubMember clubMember = null;
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type ='b' AND email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, clubNo);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int clubNo2 = rset.getInt("club_no");
+				String email2 = rset.getString("email");
+				
+				clubMember = new ClubMember(clubNo2, new SocialPerson(email2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+		return clubMember;
 	}
+
+	
 	
 }
