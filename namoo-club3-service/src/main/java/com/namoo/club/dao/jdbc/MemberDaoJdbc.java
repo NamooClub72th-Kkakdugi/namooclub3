@@ -10,7 +10,6 @@ import java.util.List;
 import com.namoo.club.dao.MemberDao;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
-import dom.entity.Club;
 import dom.entity.ClubKingManager;
 import dom.entity.ClubManager;
 import dom.entity.ClubMember;
