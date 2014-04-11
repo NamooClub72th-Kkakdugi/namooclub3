@@ -4,6 +4,7 @@ import java.util.List;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
+import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
@@ -74,6 +75,13 @@ public interface CommunityService {
 	 */
 	public CommunityMember findCommunityMember(int communityNo, String email);
 	
+	/**
+	 * 커뮤니티 관리자 찾기
+	 * 
+	 * @param communityNㅐ
+	 * @return
+	 */
+	public CommunityManager findCommunityManager(int communityNo);
 	
 	/**
 	 * 커뮤니티 회원목록 조회

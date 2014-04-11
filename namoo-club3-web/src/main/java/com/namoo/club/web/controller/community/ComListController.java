@@ -41,6 +41,11 @@ public class ComListController extends DefaultController{
 		req.setAttribute("unjoincommunities", unjoinCommunities);
 		req.setAttribute("name", name);
 		
+		
+		for (Community joinCommunity : joinCommunities) {
+			service.findCommunityManager(joinCommunity.getComNo());
+		}
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comList.jsp");
 		dispatcher.forward(req, resp);		
 	}
@@ -62,4 +67,5 @@ public class ComListController extends DefaultController{
 		}
 		return unjoinCommunities;
 	}
+	
 }

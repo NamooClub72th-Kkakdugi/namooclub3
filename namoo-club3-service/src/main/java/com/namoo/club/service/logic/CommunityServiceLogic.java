@@ -131,6 +131,18 @@ public class CommunityServiceLogic implements CommunityService {
 
 		return null;
 	}
+	
+
+	@Override
+	public CommunityManager findCommunityManager(int communityNo) {
+		//
+		Community community = dao.readCommunity(communityNo);
+
+		if (community == null) {
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티가 존재하지 않습니다.");
+		}
+		return memberDao.readCommunityManager(communityNo);
+	}
 
 	@Override
 	public List<CommunityMember> findAllCommunityMember(int communityNo) {
@@ -233,4 +245,5 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		return dao.readAllCategories(communityNo);
 	}
+
 }
