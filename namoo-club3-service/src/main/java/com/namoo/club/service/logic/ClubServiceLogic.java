@@ -6,7 +6,6 @@ import java.util.List;
 import com.namoo.club.dao.ClubDao;
 import com.namoo.club.dao.CommunityDao;
 import com.namoo.club.dao.MemberDao;
-import com.namoo.club.dao.UserDao;
 import com.namoo.club.dao.factory.DaoFactory;
 import com.namoo.club.dao.factory.DaoFactory.DbType;
 import com.namoo.club.service.facade.ClubService;
@@ -22,8 +21,6 @@ public class ClubServiceLogic implements ClubService {
 	//
 	private ClubDao clubDao;
 	private CommunityDao comDao;
-	private SocialPerson socialPerson;
-	private UserDao userDao;
 	private MemberDao memberDao;
 	
 	public ClubServiceLogic() {
@@ -168,12 +165,16 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void commissionManagerCommunity(int clubNo, SocialPerson rolePerson) {
+	public void commissionFromManagerClub(int clubNo, SocialPerson rolePerson) {
 		//
-		Club club = clubDao.readClub(clubNo);
-		if (club == null) {
-			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
-		}
+		memberDao.deleteClubManager(clubNo, rolePerson.getEmail());
+		memberDao.addClubMember(new ClubMember(clubNo, rolePerson));
+	}
+
+	@Override
+	public void commissionGoManagerClub(int clubNo, SocialPerson rolePerson) {
+		//
+		memberDao.deleteClubMember(clubNo, rolePerson.getEmail());
 		memberDao.addClubManager(new ClubManager(clubNo, rolePerson));
 	}
 }

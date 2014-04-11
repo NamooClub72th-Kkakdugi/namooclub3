@@ -224,6 +224,7 @@ public class CommunityServiceLogic implements CommunityService {
 	@Override
 	public void commissionMemberCommunity(int communityNo, SocialPerson rolePerson) {
 		//
+		memberDao.deleteCommuninyMember(communityNo, rolePerson.getEmail());
 		memberDao.addCommunityManager(communityNo, new CommunityManager(communityNo, rolePerson));
 	}
 

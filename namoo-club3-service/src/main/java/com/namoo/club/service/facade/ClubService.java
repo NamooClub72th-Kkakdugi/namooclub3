@@ -100,6 +100,10 @@ public interface ClubService {
 	 */
 	public void withdrawalClub(int clubNo, String email);
 	
-	public void commissionManagerCommunity(int clubNo, SocialPerson rolePerson);
+	public void commissionFromManagerClub(int clubNo, SocialPerson rolePerson);
+	
+	public void commissionGoManagerClub(int clubNo, SocialPerson rolePerson);
+
+
 
 }
