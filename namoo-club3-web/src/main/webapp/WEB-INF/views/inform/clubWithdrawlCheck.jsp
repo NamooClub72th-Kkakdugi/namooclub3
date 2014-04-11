@@ -71,8 +71,8 @@ body {
 			<form action="${ctx}/inform/clubWithdrawl.do" method="post">
 				<h3>탈퇴 안내</h3>
 				<p>정말로 ${ComName} 커뮤니티의 ${clubName}에서 탈퇴 하시겠습니까??</p>
-				<input type="hidden" name="clId" value="${clId}" />
-				<input type="hidden" name="cmId" value="${cmId}" />
+				<input type="hidden" name="clubNo" value="${clubNo}" />
+				<input type="hidden" name="comNo" value="${comNo}" />
 				<input type="submit" value="확인" />
 				<button onclick="history.back(); return false;">취소</button>
 			</form>

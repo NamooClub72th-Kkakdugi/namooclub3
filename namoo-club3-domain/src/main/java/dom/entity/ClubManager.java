@@ -5,6 +5,7 @@ public class ClubManager  {
 	private int clubNo;
 	private SocialPerson rolePerson;
 	//----------------------------------------------------------------
+	
 	public ClubManager(int clubNo) {
 		//
 		this.clubNo = clubNo;
@@ -16,7 +17,7 @@ public class ClubManager  {
 		this.clubNo = clubNo;
 	}
 	//--------------------------------------------------
-	public String getEamil() {
+	public String getEmail() {
 		return rolePerson.getEmail();
 	}
 

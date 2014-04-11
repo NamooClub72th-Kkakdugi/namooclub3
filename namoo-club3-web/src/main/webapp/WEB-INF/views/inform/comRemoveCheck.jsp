@@ -71,7 +71,7 @@ body {
 			<form action="${ctx}/inform/comRemove.do" method="post">
 				<h3>삭제 안내</h3>
 				<p>정말로 ${communityName}을 삭제 하시겠습니까??</p>
-				<input type="hidden" name="id" value="${id}" />
+				<input type="hidden" name="comNo" value="${comNo}" />
 				<input type="submit" value="확인" />
 				<button onclick="history.back(); return false;">취소</button>
 			</form>

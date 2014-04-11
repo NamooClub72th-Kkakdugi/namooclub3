@@ -126,9 +126,8 @@ public interface CommunityService {
 	 */
 	public void withdrawalCommunity(int communityNo, String email);
 	
-	public void commissionManagerCommunity(int communityNo, SocialPerson rolePerson);
+	public void commissionManagerCommunity(int communityNo, SocialPerson originPerson, SocialPerson nwPerson);
 	
-	public void commissionMemberCommunity(int communityNo, SocialPerson rolePerson);
 	
 	//카테고리
 	public List<ClubCategory> findAllCategories(int communityNo);

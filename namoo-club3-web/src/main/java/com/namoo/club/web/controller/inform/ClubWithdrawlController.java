@@ -27,15 +27,16 @@ public class ClubWithdrawlController extends DefaultController {
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
-		int clId = Integer.parseInt(req.getParameter("clId"));
-		int cmId = Integer.parseInt(req.getParameter("cmId"));
+		String email = person.getEmail();
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
 		req.setAttribute("name", name);
-		req.setAttribute("clId", clId);
-		req.setAttribute("cmId", cmId);
+		req.setAttribute("clubNo", clubNo);
+		req.setAttribute("comNo", comNo);
 		
-		service.removeClub(clId, cmId);
+		service.withdrawalClub(clubNo, email);
 		
-		redirect(req, resp, "/club/clubList.do?cmId=" + cmId);
+		redirect(req, resp, "/club/clubList.do?comNo=" + comNo);
 	}
 }

@@ -8,11 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.club.service.facade.CommunityService;
-import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.Club;
 import dom.entity.SocialPerson;
 
 
@@ -26,23 +25,22 @@ public class ClubCreateCheckController extends DefaultController{
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
-		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
-		int cmId = Integer.parseInt(req.getParameter("cmId"));
-		String communityName = service.findCommunity(cmId).getName();
-		String description = service.findCommunity(cmId).getDescription();
 		
 		String name = person.getName();
-		String clubCategory = req.getParameter("clubCategory");
+		System.out.println(name);
+		int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
+		System.out.println(categoryNo);
 		String clubName = req.getParameter("clubName");
+		System.out.println(clubName);
 		String clubDescription = req.getParameter("clubDescription");
+		System.out.println(clubDescription);
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		System.out.println(comNo);
+		Club club = new Club(categoryNo, comNo, clubName, clubDescription, person);
 		
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", cmId);
-		req.setAttribute("clubCategory", clubCategory);
-		req.setAttribute("clubName", clubName);
-		req.setAttribute("clubDescription", clubDescription);
-		req.setAttribute("communityName", communityName);
-		req.setAttribute("description", description);
+		req.setAttribute("club", club);
+		req.setAttribute("comNo", comNo);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubCreateCheck.jsp");
 		dispatcher.forward(req, resp);

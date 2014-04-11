@@ -48,9 +48,10 @@ public class ComCreateController extends DefaultController {
 			}
 		}
 		req.setAttribute("name", name);
+		
 		community = service.registCommunity(communityName, description, email, categories);
 		
-		redirect(req, resp, "/community/comList.do?");
+		redirect(req, resp, "/community/comList.do");
 		
 	}
 

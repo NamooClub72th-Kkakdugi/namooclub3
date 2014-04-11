@@ -12,6 +12,7 @@ import com.namoo.club.dao.ClubDao;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.Club;
+import dom.entity.ClubCategory;
 
 public class ClubDaoJdbc implements ClubDao {
 
@@ -38,7 +39,7 @@ public class ClubDaoJdbc implements ClubDao {
 				String clubNm = resultSet.getString("club_nm");
 				String clubDes = resultSet.getString("club_des");
 				Date date = resultSet.getDate("club_date");
-				
+
 				Club club = new Club(categoryNo, comNo, clubNm, clubDes);
 				club.setOpenDate(date);
 				club.setClubNo(clubNo);

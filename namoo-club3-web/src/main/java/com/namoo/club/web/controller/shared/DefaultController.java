@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 public abstract class DefaultController extends HttpServlet {
 
 	private static final long serialVersionUID = 5419831456544653632L;
@@ -21,6 +22,7 @@ public abstract class DefaultController extends HttpServlet {
 				return;
 			}
 		}
+		// 로그인된 상황...
 		process(req, resp);
 	}
 

@@ -27,18 +27,18 @@ public class ClubCreateController extends DefaultController{
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		
 		String email = person.getEmail();
-		int cmId = Integer.parseInt(req.getParameter("cmId"));
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		String name = person.getName();
 		
-		int categoryNo = Integer.parseInt(req.getParameter("clubCategory"));
+		int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
 		String clubName = req.getParameter("clubName");
 		String clubDescription = req.getParameter("clubDescription");
 		
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", cmId);
+		req.setAttribute("comNo", comNo);
 		
-		service.registClub(categoryNo, cmId, clubName, clubDescription, email);
+		service.registClub(categoryNo, comNo, clubName, clubDescription, email);
 		
-		redirect(req, resp, "/club/clubList.do?cmId="+cmId+"&name="+name);
+		redirect(req, resp, "/club/clubList.do?comNo="+comNo+"&name="+name);
 	}
 }

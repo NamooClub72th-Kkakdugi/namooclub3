@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.namoo.club.service.facade.ClubService;
+import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.Club;
+import dom.entity.Community;
 import dom.entity.SocialPerson;
 
 @WebServlet("/club/clubJoin.do")
@@ -23,6 +26,7 @@ public class ClubJoinController extends DefaultController {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
+		CommunityService comService = NamooClubServiceFactory.getInstance().getCommunityService();
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
@@ -30,9 +34,12 @@ public class ClubJoinController extends DefaultController {
 		String name = person.getName();
 		String email = person.getEmail();
 		
+		Community community = comService.findCommunity(comNo);
+		Club club = service.findClub(clubNo);
+		
 		req.setAttribute("name", name);
-		req.setAttribute("comNo", comNo);
-		req.setAttribute("clubNo", clubNo);
+		req.setAttribute("community", community);
+		req.setAttribute("club", club);
 		
 		service.joinAsMember(clubNo, email);
 		

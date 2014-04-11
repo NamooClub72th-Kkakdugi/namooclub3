@@ -1,7 +1,6 @@
 package com.namoo.club.web.controller.club;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,7 @@ import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.Community;
 import dom.entity.SocialPerson;
 
 @WebServlet("/club/clubCreateInput.do")
@@ -27,13 +27,11 @@ public class ClubCreateInputController extends DefaultController{
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
-		String communityName = service.findCommunity(comNo).getName();
-		String description = service.findCommunity(comNo).getDescription();
+		
+		Community community = service.findCommunity(comNo);
 		String name = person.getName();
 		
-		req.setAttribute("communityName", communityName);
-		req.setAttribute("description", description);
-		req.setAttribute("comNo", comNo);
+		req.setAttribute("community", community);
 		req.setAttribute("name", name);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubCreateInput.jsp");

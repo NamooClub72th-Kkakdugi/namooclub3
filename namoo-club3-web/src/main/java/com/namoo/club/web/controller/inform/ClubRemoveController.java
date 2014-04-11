@@ -25,16 +25,16 @@ public class ClubRemoveController extends DefaultController{
 		CommunityService comService = NamooClubServiceFactory.getInstance().getCommunityService();
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		String name = req.getParameter("name");
-		int cmId = Integer.parseInt(req.getParameter("cmId"));
-		int clId = Integer.parseInt(req.getParameter("clId"));
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
 		
-		comService.findCommunity(cmId).removeClub(clId);
-		service.removeClub(clId, cmId);
+		comService.findCommunity(comNo).removeClub(clubNo);
+		service.removeClub(clubNo, comNo, true);
 		
-		req.setAttribute("cmId", cmId);
+		req.setAttribute("comNo", comNo);
 		req.setAttribute("name", name);
 		
-		redirect(req, resp, "/club/clubList.do?cmId="+cmId);
+		redirect(req, resp, "/club/clubList.do?comNo="+comNo);
 	}
 
 }

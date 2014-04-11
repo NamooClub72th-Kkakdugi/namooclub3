@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.namoo.club.service.facade.ClubService;
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.club.pres.PresClub;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
@@ -38,24 +39,39 @@ public class ClubListController extends DefaultController {
 		String email = person.getEmail();
 
 		Community community = comService.findCommunity(comNo);
-		String communityName = community.getName();
-		String description = community.getDescription();
-		req.setAttribute("communityName", communityName);
-		req.setAttribute("description", description);
+		req.setAttribute("community", community);
+		req.setAttribute("name", name);
 
 		List<Club> allClubs = service.findAllClubs(comNo);
 		List<Club> joinClubs = service.findBelongClubs(email, comNo);
 		List<Club> unjoinClubs = filterList(allClubs, joinClubs);
 
-		req.setAttribute("categories", req.getParameter("categories"));
+		List<PresClub> presJoinClubs = convertAll(joinClubs,service,email);
+		List<PresClub> presUnJoinClubs = convertAll(unjoinClubs,service,email);
 		
-		req.setAttribute("joinClubs", joinClubs);
-		req.setAttribute("unJoinClubs", unjoinClubs);
-		req.setAttribute("name", name);
-		req.setAttribute("comNo", comNo);
+		
+		req.setAttribute("joinClubs", presJoinClubs);
+		req.setAttribute("unjoinClubs", presUnJoinClubs);
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubList.jsp");
 		dispatcher.forward(req, resp);
+	}
+
+	private List<PresClub> convertAll(List<Club> clubs,ClubService service,String loginEmail) {
+		//
+		List<PresClub> presClubs = new ArrayList<PresClub>();
+		for (Club club : clubs) {
+
+			int clubNo = club.getClubNo();
+			PresClub presClub = new PresClub(club);
+			presClub.setKingManager(service.findClubKingManager(clubNo));
+			presClub.setManager(service.findClubManager(clubNo, loginEmail));
+			presClub.setMembers(service.findAllClubMember(clubNo));
+			presClub.setLoginEmail(loginEmail);
+			presClubs.add(presClub);
+		}
+		return presClubs;
+		
 	}
 
 	private List<Club> filterList(List<Club> allClubs, List<Club> joinClubs) {

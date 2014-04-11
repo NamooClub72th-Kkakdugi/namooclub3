@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,8 +15,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-					<h1>${communityName}</h1>
-					<p>${description}</p>
+					<h1>${community.name}</h1>
+					<p>${community.description}</p>
 				</div>
 			</div>
 		</div>
@@ -41,21 +43,17 @@
 
 				<div class="well">
 					<p>나와 같은 관심사를 가진 멤버를 모집하고 열심히 운영하여 클럽을 성장시켜 보세요.</p>
-					<form class="form-horizontal" action="${ctx}/club/clubCreateCheck.do" method="post">
-					<input type="hidden" name="comNo" value="${comNo}" />
+					<form class="form-horizontal" action="${ctx}/club/clubCreateCheck.do?comNo=${community.comNo}" method="post">
+					<input type="hidden" name="comNo" value="${community.comNo}" />
 						<fieldset>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">클럽 카테고리</label>
 
 								<div class="col-lg-10">
-									<select class="form-control" id="select" name="clubCategory">
-										<option>축구</option>
-										<option>야구</option>
-										<option>농구</option>
-										<option>테니스</option>
-										<option>MTB</option>
-										<option>탁구</option>
-										<option>배드민턴</option>
+									<select class="form-control" id="select" name="categoryNo">
+									<c:forEach var="category" items="${community.categories}">
+										<option value="${category.categoryNo}">${category.categoryName}</option>
+										</c:forEach>
 									</select>
 								</div>
 							</div>
@@ -88,7 +86,7 @@
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
 									<button type="submit" class="btn btn-primary">확인</button>
-									<button class="btn btn-default" onclick="location.href='${ctx}/club/clubList.do?comNo=${comNo}'; return false;">취소</button>
+									<button class="btn btn-default" onclick="location.href='${ctx}/club/clubList.do?comNo=${community.comNo}'; return false;">취소</button>
 								</div>
 							</div>
 						</fieldset>

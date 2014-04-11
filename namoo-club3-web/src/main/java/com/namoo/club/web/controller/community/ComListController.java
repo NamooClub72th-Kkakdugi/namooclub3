@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.namoo.club.service.facade.ClubService;
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.community.pres.PresCommunity;
@@ -28,33 +29,46 @@ public class ComListController extends DefaultController{
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
-		PresCommunity presCommunity = new PresCommunity();
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String email = person.getEmail();
 		String name = person.getName();
+		req.setAttribute("name", name);
 		
 		List<Community> allCommunities = service.findAllCommunities();
 		List<Community> joinCommunities = service.findBelongCommunities(email);
 		List<Community> unjoinCommunities = filterList(allCommunities, joinCommunities);
 
-		for (Community joinCommunity : joinCommunities) {
-			presCommunity.setManager(service.findCommunityManager(joinCommunity.getComNo()));
-			presCommunity.setMembers(service.findAllCommunityMember(joinCommunity.getComNo()));
-			presCommunity.setLoginEmail(email);
-		}
+		List<PresCommunity> presJoinedCommunities = convertAll(joinCommunities, service, email);
+		List<PresCommunity> presUnjoinedCommunities = convertAll(unjoinCommunities, service, email);
+	
 		
-		req.setAttribute("joinCommunities", joinCommunities);
-		req.setAttribute("unjoincommunities", unjoinCommunities);
-		req.setAttribute("email", email);
-		req.setAttribute("name", name);
-		req.setAttribute("presCommunity", presCommunity);
+		req.setAttribute("joinCommunities", presJoinedCommunities);
+		req.setAttribute("unjoincommunities", presUnjoinedCommunities);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comList.jsp");
 		dispatcher.forward(req, resp);		
 	}
-	
+
+	private List<PresCommunity> convertAll(List<Community> communities, CommunityService service, String loginEmail) {
+		// 
+		ClubService clubservice = NamooClubServiceFactory.getInstance().getClubService();
+		List<PresCommunity> presCommunities = new ArrayList<PresCommunity>();
+		for (Community community : communities) {
+			
+			int communityNo = community.getComNo();
+			PresCommunity presCommunity = new PresCommunity(community);
+			presCommunity.setManager(service.findCommunityManager(communityNo));
+			presCommunity.setMembers(service.findAllCommunityMember(communityNo));
+			presCommunity.setClubs(clubservice.findAllClubs(communityNo));
+			presCommunity.setLoginEmail(loginEmail);
+			
+			presCommunities.add(presCommunity);
+		}
+		return presCommunities;
+	}
+
 	private List<Community> filterList(List<Community> allCommunities, List<Community> joinCommunities) {
 		// 
 		List<Community> unjoinCommunities = new ArrayList<Community>(allCommunities);

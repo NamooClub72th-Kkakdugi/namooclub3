@@ -14,6 +14,7 @@ import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
+import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
 import dom.entity.SocialPerson;
 
@@ -33,6 +34,9 @@ public class ComSelectMemController extends DefaultController {
 		String communityName = service.findCommunity(comNo).getName();
 		List<CommunityMember> members = service.findAllCommunityMember(comNo);
 		
+		CommunityManager manager = service.findCommunityManager(comNo);
+		members = filter(members, manager);
+		
 		req.setAttribute("members", members);
 		req.setAttribute("name", name);
 		req.setAttribute("communityName", communityName);
@@ -40,5 +44,23 @@ public class ComSelectMemController extends DefaultController {
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/commission/comSelectMem.jsp");
 		dispatcher.forward(req, resp);
+	}
+
+	private List<CommunityMember> filter(List<CommunityMember> members, CommunityManager manager) {
+		// 
+		CommunityMember found = null;
+		for (CommunityMember member : members) {
+			if (member.getEmail().equals(manager.getEmail())) {
+				found = member;
+				System.out.println(found.getEmail());
+				break;
+			}
+		}
+		
+		if (found != null) {
+			members.remove(found);
+		}
+		
+		return members;
 	}
 }

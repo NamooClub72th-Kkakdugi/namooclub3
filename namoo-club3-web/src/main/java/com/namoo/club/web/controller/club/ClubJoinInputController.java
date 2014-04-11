@@ -25,8 +25,8 @@ public class ClubJoinInputController extends DefaultController {
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", req.getParameter("cmId"));
-		req.setAttribute("clId", req.getParameter("clId"));
+		req.setAttribute("comNo", req.getParameter("comNo"));
+		req.setAttribute("clubNo", req.getParameter("clubNo"));
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubJoinInput.jsp");
 		dispatcher.forward(req, resp);

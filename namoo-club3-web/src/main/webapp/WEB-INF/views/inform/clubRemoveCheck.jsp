@@ -68,7 +68,7 @@ body {
 
 		<!-- body -->
 		<div class="info-body">
-			<form action="${ctx}/inform/clubRemove.do?clId=${clId}&cmId=${cmId}" method="post">
+			<form action="${ctx}/inform/clubRemove.do?clubNo=${clubNo}&comNo=${comNo}" method="post">
 				<h3>삭제 안내</h3>
 				<p>정말로 ${clubName}을 삭제 하시겠습니까??</p>
 				<input type="submit" value="확인" />

@@ -29,7 +29,7 @@ public interface MemberDao {
 	void deleteAllClubManager(int clubNo);
 	void deleteClubMember(int clubNo, String email);
 	void deleteClubManager(int clubNo, String email);
-	void deleteClubKingManger(int clubNo, String email);
+	void deleteClubKingManger(int clubNo);
 	List<ClubMember> readAllClubMembers(int clubNo);
 	List<ClubManager> readAllClubManagers(int clubNo);
 	ClubMember readClubMember(int clubNo, String email); 

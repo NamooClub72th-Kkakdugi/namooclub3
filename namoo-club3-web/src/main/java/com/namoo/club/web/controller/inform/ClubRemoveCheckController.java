@@ -24,16 +24,16 @@ public class ClubRemoveCheckController extends DefaultController {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
-		String cmId = req.getParameter("cmId");
-		int clId = Integer.parseInt(req.getParameter("clId"));
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
 		
 		String name = req.getParameter("name");
-		String clubName = service.findClub(clId).getName();
+		String clubName = service.findClub(clubNo).getName();
 		req.setAttribute("clubName", clubName);
-		req.setAttribute("clId", clId);
+		req.setAttribute("clubNo", clubNo);
 		req.setAttribute("name", name);
-		req.setAttribute("cmId", cmId);
+		req.setAttribute("comNo", comNo);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/inform/clubRemoveCheck.jsp");
 		dispatcher.forward(req, resp);

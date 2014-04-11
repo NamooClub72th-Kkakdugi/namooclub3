@@ -3,15 +3,15 @@ package dom.entity;
 import java.util.Date;
 
 public class Club {
-	
+
 	private int comNo;
 	private int clubNo;
 	private int categoryNo;
 	private String name;
 	private String description;
 	private Date openDate;
-	
-	//---------------------------
+
+	// ---------------------------
 	public Club(int categoryNo, int comNo, String name, String description) {
 		//
 		this.categoryNo = categoryNo;
@@ -19,7 +19,7 @@ public class Club {
 		this.name = name;
 		this.description = description;
 	}
-	
+
 	public Club(int categoryNo, int comNo, String name, String description, SocialPerson user) {
 		//
 		this.categoryNo = categoryNo;
@@ -27,6 +27,7 @@ public class Club {
 		this.name = name;
 		this.description = description;
 	}
+
 	public int getComNo() {
 		return comNo;
 	}
@@ -66,7 +67,7 @@ public class Club {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public Date getOpenDate() {
 		return openDate;
 	}
@@ -74,8 +75,6 @@ public class Club {
 	public void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
-	//---------------------------------
+	// ---------------------------------
 
-
-	
 }

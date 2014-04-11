@@ -7,6 +7,12 @@ public class SocialPerson {
 	private String email;
 	private String password;
 	
+	public SocialPerson(String email,String name) {
+		//
+		this.email = email;
+		this.name = name;
+	}
+	
 	public SocialPerson(String email) {
 		//
 		this.email = email;

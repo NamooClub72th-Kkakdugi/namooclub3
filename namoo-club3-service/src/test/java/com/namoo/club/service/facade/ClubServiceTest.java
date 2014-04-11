@@ -1,7 +1,6 @@
 package com.namoo.club.service.facade;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -46,8 +45,10 @@ public class ClubServiceTest extends DbCommonTest {
 	public void testFindClub() {
 		//
 		Club club = clubService.findClub(1);
+		
 		// 검증
 		assertEquals("club1", club.getName());
+		
 	}
 
 	@Test
@@ -81,14 +82,14 @@ public class ClubServiceTest extends DbCommonTest {
 	public void testFindAllClubMember() {
 		//
 		int clubMembers = clubService.findAllClubMember(1).size();
-		// 검증
+		// 검증 
 		assertEquals(3, clubMembers);
 	}
 
 	@Test
 	public void testRemoveClub() {
 		//
-		clubService.removeClub(1, 1);
+		clubService.removeClub(1, 1, true);
 		// 검증
 		assertEquals(3, clubService.findAllClubs(1).size());
 		

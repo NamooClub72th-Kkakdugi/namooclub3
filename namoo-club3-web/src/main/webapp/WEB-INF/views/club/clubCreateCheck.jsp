@@ -15,8 +15,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-					<h1>${communityName}</h1>
-					<p>${description}</p>
+					<h1>${community.name}</h1>
+					<p>${community.description}</p>
 				</div>
 			</div>
 		</div>
@@ -50,14 +50,14 @@
 								<label class="col-lg-2 control-label">클럽 카테고리</label>
 
 								<div class="col-lg-10">
-									<input type="text" name="clubCategory" value="${clubCategory}"
+									<input type="text" name="categoryNo" value="${club.categoryNo}"
 										readonly="readonly" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">클럽명</label>
 								<div class="col-lg-10">
-									<input type="text" name="clubName" value="${clubName}"
+									<input type="text" name="clubName" value="${club.name}"
 										readonly="readonly" class="form-control">
 								</div>
 							</div>
@@ -65,7 +65,7 @@
 								<label for="textArea" class="col-lg-2 control-label">클럽 대표문구</label>
 								<div class="col-lg-10">
 									<input type="text" class="form-control" id="textArea"
-										name="clubDescription" value="${clubDescription}" readonly="readonly">
+										name="clubDescription" value="${club.description}" readonly="readonly">
 
 									<span class="help-block">클럽을 소개하는 대표문구를 입력해 주세요. 클럽 홈화면에 입력하신
 										문구가 출력됩니다.</span>

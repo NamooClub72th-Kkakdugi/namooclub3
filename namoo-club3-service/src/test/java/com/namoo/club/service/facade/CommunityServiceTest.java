@@ -123,14 +123,6 @@ public class CommunityServiceTest extends DbCommonTest{
 	}
 
 	@Test
-	public void testCommissionManagerCommunity() {
-		//
-		service.commissionManagerCommunity(1, new SocialPerson("ekdgml"));
-		//검증
-		assertEquals(0, service.findManagedCommunities("ekdgml").size());
-	}
-
-	@Test
 	public void testFindAllCategories() {
 		//
 		assertEquals(2, service.findAllCategories(1).size());

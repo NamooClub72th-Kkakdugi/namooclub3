@@ -32,7 +32,7 @@ public class ComCommissionController extends DefaultController{
 		String email = req.getParameter("email");
 		
 		SocialPerson person = townService.findTowner(email);
-		service.commissionManagerCommunity(comNo, person);
+		service.commissionManagerCommunity(comNo, originPerson, person);
 		 
 		req.setAttribute("name", originPerson.getName());
 		redirect(req, resp, "/community/comList.do");

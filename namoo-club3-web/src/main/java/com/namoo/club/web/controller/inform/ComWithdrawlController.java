@@ -26,12 +26,13 @@ public class ComWithdrawlController extends DefaultController{
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
 		String name = person.getName();
+		String email = person.getEmail();
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
 		req.setAttribute("name", name);
 		req.setAttribute("comNo", comNo);
 		
-		service.removeCommunity(comNo,true);
+		service.withdrawalCommunity(comNo, email);
 		
 		redirect(req, resp, "/community/comList.do");
 		

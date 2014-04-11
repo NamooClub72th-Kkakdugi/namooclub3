@@ -22,7 +22,7 @@ public class ComCreateInputController extends DefaultController{
 		//
 		String name = req.getParameter("name");
 		req.setAttribute("name", name);
-		
+		req.setAttribute("categories", req.getParameter("categories"));
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comCreateInput.jsp");
 		dispatcher.forward(req, resp);
 	}

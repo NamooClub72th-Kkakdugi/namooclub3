@@ -26,20 +26,20 @@ public class ClubWithdrawlCheckController extends DefaultController {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
-		int cmId = Integer.parseInt(req.getParameter("cmId"));
-		int clId = Integer.parseInt(req.getParameter("clId"));
-		req.setAttribute("cmId", cmId);
-		req.setAttribute("clId", clId);
+		int comNo = Integer.parseInt(req.getParameter("comNo"));
+		int clubNo = Integer.parseInt(req.getParameter("clubNo"));
+		req.setAttribute("comNo", comNo);
+		req.setAttribute("clubNo", clubNo);
 		
 		req.setAttribute("name", req.getParameter("name"));
 		
 		ClubService service = NamooClubServiceFactory.getInstance().getClubService();
-		Club club = service.findClub(clId);
+		Club club = service.findClub(clubNo);
 		String clubName = club.getName();
 		req.setAttribute("clubName", clubName);
 		
 		CommunityService service2 = NamooClubServiceFactory.getInstance().getCommunityService();
-		Community community = service2.findCommunity(cmId);
+		Community community = service2.findCommunity(comNo);
 		String comName = community.getName();
 		req.setAttribute("ComName", comName);
 		
