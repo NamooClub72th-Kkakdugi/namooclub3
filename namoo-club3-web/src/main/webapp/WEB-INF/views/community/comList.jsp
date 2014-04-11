@@ -50,13 +50,25 @@
 							<ul class="list-group">
 								<c:forEach var="community" items="${joinCommunities}">
 									<li class="list-group-item"><span class="badge"></span>
+									<c:if test="${presCommunity.isManager()}">
+										<span class="label label-warning">관리자</span>
+										</c:if>
 										<h4>
-											<a href="${ctx}/club/clubList.do?comNo=${community.comNo}">${community.name}&nbsp;(회원수 : ${presCommunity.members.size()} 클럽수 : ${community.clubs.size()})</a>
+											<a href="${ctx}/club/clubList.do?comNo=${community.comNo}&categories=${community.categories}">${community.name}&nbsp;(회원수 : ${presCommunity.members.size()} 클럽수 : ${community.clubs.size()})</a>
 										</h4>
 										<p>${community.description}</p>
 										<span class="badge">개설 날짜 : <fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
 										<input type="hidden" name="comNo" value="${community.comNo}" />
-										
+										<c:choose>
+										<c:when test="${presCommunity.isManager()}">
+										<button class="btn btn-default btn-sm" onclick="location.href='${ctx}/inform/comRemoveCheck.do?comNo=${community.comNo}'; return false;">삭제하기</button>
+										<button class="label label-info" onclick="location.href='${ctx}/commission/comSelectMem.xhtml?comNo=${community.comNo}'; return false;">권한 위임하기</button>
+										</c:when>
+										<c:otherwise>
+										<button class="btn btn-default btn-sm" disabled="disabled" onclick="location.href='${ctx}/inform/comWithdrawlCheck.do?comNo=${community.comNo}'; return false;">삭제하기</button>
+										<input type="submit" value="멤버탈퇴" class="btn btn-default btn-sm" />
+										</c:otherwise>
+										</c:choose>
 										</li>
 								</c:forEach>
 							</ul>

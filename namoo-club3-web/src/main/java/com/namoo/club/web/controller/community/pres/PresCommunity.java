@@ -11,7 +11,9 @@ public class PresCommunity {
 	//
 	
 	private List<CommunityMember> members;
+	private String loginEmail;
 	private CommunityManager manager;
+	
 	
 	public PresCommunity() {
 		//
@@ -33,7 +35,20 @@ public class PresCommunity {
 	public void setManager(CommunityManager manager) {
 		this.manager = manager;
 	}
-	
-	
 
+	public String getLoginEmail() {
+		return loginEmail;
+	}
+
+	public void setLoginEmail(String loginEmail) {
+		this.loginEmail = loginEmail;
+	}
+	
+	public boolean isManager() {
+		//
+		if (loginEmail.equals(manager.getEmail())) {
+			return true; 
+		}
+		return false;
+	}
 }

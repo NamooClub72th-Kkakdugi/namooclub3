@@ -128,7 +128,8 @@ public class MemberDaoJdbc implements MemberDao {
 			
 			while (rset.next()) {
 				int comNo2 = rset.getInt("com_no");
-				comManager = new CommunityManager(comNo2);
+				String email = rset.getString("email");
+				comManager = new CommunityManager(comNo2, new SocialPerson(email));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

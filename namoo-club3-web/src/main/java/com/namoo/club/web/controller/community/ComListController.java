@@ -42,6 +42,7 @@ public class ComListController extends DefaultController{
 		for (Community joinCommunity : joinCommunities) {
 			presCommunity.setManager(service.findCommunityManager(joinCommunity.getComNo()));
 			presCommunity.setMembers(service.findAllCommunityMember(joinCommunity.getComNo()));
+			presCommunity.setLoginEmail(email);
 		}
 		
 		req.setAttribute("joinCommunities", joinCommunities);

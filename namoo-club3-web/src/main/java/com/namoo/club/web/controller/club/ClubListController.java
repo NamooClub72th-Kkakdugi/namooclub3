@@ -47,6 +47,8 @@ public class ClubListController extends DefaultController {
 		List<Club> joinClubs = service.findBelongClubs(email, comNo);
 		List<Club> unjoinClubs = filterList(allClubs, joinClubs);
 
+		req.setAttribute("categories", req.getParameter("categories"));
+		
 		req.setAttribute("joinClubs", joinClubs);
 		req.setAttribute("unJoinClubs", unjoinClubs);
 		req.setAttribute("name", name);
