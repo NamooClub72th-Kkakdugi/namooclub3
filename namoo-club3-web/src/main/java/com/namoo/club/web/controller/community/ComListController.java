@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
+import com.namoo.club.web.controller.community.pres.PresCommunity;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
@@ -27,6 +28,7 @@ public class ComListController extends DefaultController{
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//
+		PresCommunity presCommunity = new PresCommunity();
 		CommunityService service = NamooClubServiceFactory.getInstance().getCommunityService();
 		
 		SocialPerson person = (SocialPerson) req.getSession().getAttribute("loginUser");
@@ -37,14 +39,16 @@ public class ComListController extends DefaultController{
 		List<Community> joinCommunities = service.findBelongCommunities(email);
 		List<Community> unjoinCommunities = filterList(allCommunities, joinCommunities);
 
+		for (Community joinCommunity : joinCommunities) {
+			presCommunity.setManager(service.findCommunityManager(joinCommunity.getComNo()));
+			presCommunity.setMembers(service.findAllCommunityMember(joinCommunity.getComNo()));
+		}
+		
 		req.setAttribute("joinCommunities", joinCommunities);
 		req.setAttribute("unjoincommunities", unjoinCommunities);
+		req.setAttribute("email", email);
 		req.setAttribute("name", name);
-		
-		
-		for (Community joinCommunity : joinCommunities) {
-			service.findCommunityManager(joinCommunity.getComNo());
-		}
+		req.setAttribute("presCommunity", presCommunity);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/community/comList.jsp");
 		dispatcher.forward(req, resp);		
