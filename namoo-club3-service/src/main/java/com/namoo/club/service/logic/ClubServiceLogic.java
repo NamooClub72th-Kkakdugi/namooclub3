@@ -12,6 +12,7 @@ import com.namoo.club.service.facade.ClubService;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.Club;
+import dom.entity.ClubKingManager;
 import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.Community;
@@ -128,9 +129,12 @@ public class ClubServiceLogic implements ClubService {
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
 		
+		//내가 속한 클럽들.
 		List<Club> belongs = new ArrayList<>();
+
 		for (Club club : clubs) {
-			if (memberDao.readClubMember(club.getComNo(), email) != null) {
+			if (memberDao.readClubMember(club.getClubNo(), email) != null) {
+
 				belongs.add(club);
 			}
 		}
@@ -146,6 +150,7 @@ public class ClubServiceLogic implements ClubService {
 		List<Club> managers = new ArrayList<>();
 		for (Club club : clubs) {
 			if (memberDao.readClubManager(club.getClubNo(), email) != null) {
+				
 				managers.add(club);
 			}
 		}
@@ -176,5 +181,46 @@ public class ClubServiceLogic implements ClubService {
 		//
 		memberDao.deleteClubMember(clubNo, rolePerson.getEmail());
 		memberDao.addClubManager(new ClubManager(clubNo, rolePerson));
+	}
+
+	@Override
+	public void commissionGoKingManagerClub(int clubNo, SocialPerson originPerson, SocialPerson nwPerson) {
+		//
+		memberDao.deleteClubKingManger(clubNo, originPerson.getEmail());
+		memberDao.addClubManager(new ClubManager(clubNo, originPerson));
+		memberDao.deleteClubManager(clubNo, nwPerson.getEmail());
+		memberDao.addKingManager(new ClubKingManager(clubNo, nwPerson));
+	}
+
+	@Override
+	public List<ClubManager> findAllClubManager(int clubNo) {
+		// 
+		Club club = clubDao.readClub(clubNo);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
+		return memberDao.readAllClubManagers(clubNo);
+	}
+
+	@Override
+	public ClubManager findClubManager(int clubNo, String email) {
+		// 
+		Club club = clubDao.readClub(clubNo);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
+		
+		return memberDao.readClubManager(clubNo, email);
+	}
+
+	@Override
+	public ClubKingManager findClubKingManager(int clubNo) {
+		// 
+		Club club = clubDao.readClub(clubNo);
+		if (club == null) {
+			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
+		}
+		
+		return memberDao.readClubKingManager(clubNo);
 	}
 }

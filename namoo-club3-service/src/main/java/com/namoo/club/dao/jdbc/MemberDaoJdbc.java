@@ -249,7 +249,7 @@ public class MemberDaoJdbc implements MemberDao {
 			conn = DbConnection.getConnection();
 			
 			String sql = "INSERT INTO clubmember(club_no, email, type)"
-					+ " VALUES(?, ?, 'b')";
+					+ " VALUES(?, ?, 'c')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
@@ -279,7 +279,7 @@ public class MemberDaoJdbc implements MemberDao {
 			conn = DbConnection.getConnection();
 			
 			String sql = "INSERT INTO clubmember(club_no, email, type)"
-					+ " VALUES(?, ?, 'a')";
+					+ " VALUES(?, ?, 'b')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubManager.getClubNo());
@@ -303,13 +303,11 @@ public class MemberDaoJdbc implements MemberDao {
 		// 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet resultSet = null;
 		
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, email, type"
-					+ " VALUES(?, ?, 'c')";
+			String sql = "INSERT INTO clubmember(club_no, email, type) VALUES(?, ?, 'a')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubKingManager.getClubNo());
@@ -317,11 +315,9 @@ public class MemberDaoJdbc implements MemberDao {
 			
 			pstmt.executeUpdate();
 			
-			resultSet = pstmt.getGeneratedKeys();
 		} catch (SQLException e) {
 				e.printStackTrace();
 		} finally {
-			 if ( resultSet != null) try { resultSet.close(); } catch (SQLException e) { }
 			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
 			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
 		}
@@ -414,7 +410,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT club_no, email, type FROM clubmember WHERE club_no = ? AND type ='c'";
+			String sql = "SELECT club_no, email, type FROM clubmember WHERE club_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			
@@ -462,7 +458,7 @@ public class MemberDaoJdbc implements MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버를 조회하는 중 오류가 발생하였습니다.");
+			throw NamooClubExceptionFactory.createRuntime("클럽 멤버를 조회하는 중 오류가 발생하였습니다.");
 		} finally {
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
@@ -479,7 +475,7 @@ public class MemberDaoJdbc implements MemberDao {
 		List<ClubManager> managers = new ArrayList<>();
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type ='b'";
+			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type IN ('a','b')";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			
@@ -545,13 +541,15 @@ public class MemberDaoJdbc implements MemberDao {
 			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type ='a'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
-			
+		
 			rset = pstmt.executeQuery();
-			
 			while (rset.next()) {
 				int clubNo2 = rset.getInt("club_no");
+				String email = rset.getString("email");
 				
-				clubKingManager = new ClubKingManager(clubNo2);
+				clubKingManager = new ClubKingManager(clubNo2, new SocialPerson(email));
+		
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

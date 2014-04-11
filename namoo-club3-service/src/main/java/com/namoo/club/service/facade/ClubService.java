@@ -3,6 +3,8 @@ package com.namoo.club.service.facade;
 import java.util.List;
 
 import dom.entity.Club;
+import dom.entity.ClubKingManager;
+import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
 
@@ -55,6 +57,10 @@ public interface ClubService {
 	 */
 	public ClubMember findClubMember(int clubNo, String email);
 	
+	public ClubManager findClubManager(int clubNo, String email);
+	
+	public ClubKingManager findClubKingManager(int clubNo);
+	
 	/**
 	 * 클럽 회원목록 조회
 	 * 
@@ -62,6 +68,8 @@ public interface ClubService {
 	 * @return
 	 */
 	public List<ClubMember> findAllClubMember(int clubNo);
+	
+	public List<ClubManager> findAllClubManager(int clubNo);
 	
 	/**
 	 * 
@@ -103,6 +111,8 @@ public interface ClubService {
 	public void commissionFromManagerClub(int clubNo, SocialPerson rolePerson);
 	
 	public void commissionGoManagerClub(int clubNo, SocialPerson rolePerson);
+	
+	public void commissionGoKingManagerClub(int clubNo, SocialPerson originPerson, SocialPerson nwPerson);
 
 
 

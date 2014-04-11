@@ -13,6 +13,7 @@ import com.namoo.club.service.logic.ClubServiceLogic;
 
 import dom.entity.Club;
 import dom.entity.ClubMember;
+import dom.entity.SocialPerson;
 
 public class ClubServiceTest extends DbCommonTest {
 	//
@@ -85,11 +86,6 @@ public class ClubServiceTest extends DbCommonTest {
 	}
 
 	@Test
-	public void testCountMembers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testRemoveClub() {
 		//
 		clubService.removeClub(1, 1);
@@ -100,12 +96,19 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testFindBelongClubs() {
-		fail("Not yet implemented");
+		//
+		List<Club> clubs = clubService.findBelongClubs("wntjd", 1);
+		// 검증
+		assertEquals(2, clubs.size());
+		
 	}
 
 	@Test
 	public void testFindManagedClubs() {
-		fail("Not yet implemented");
+		//
+		List<Club> managedClubs = clubService.findManagedClubs("wntjd", 1);
+		//
+		assertEquals(2, managedClubs.size());
 	}
 
 	@Test
@@ -113,13 +116,33 @@ public class ClubServiceTest extends DbCommonTest {
 		//
 		clubService.withdrawalClub(1, "wntjd");
 		//검증
-		//assert
-		
+		assertEquals(0, clubService.findAllClubMember(1).size());
 	}
 
 	@Test
-	public void testCommissionManagerCommunity() {
-		fail("Not yet implemented");
+	public void testCommissionFromManagerCommunity() {
+		//
+		clubService.commissionFromManagerClub(1, new SocialPerson("hong"));
+		
+		//
+		assertEquals(1, clubService.findAllClubManager(1).size());
 	}
-
+	
+	@Test
+	public void testCommissionGoManagerClub() {
+		//
+		clubService.commissionGoManagerClub(1, new SocialPerson("wntjd"));
+		//
+		assertEquals(3, clubService.findAllClubManager(1).size());
+		
+	}
+	
+	@Test
+	public void testCommissionGoKingManagerClub() {
+		//
+		clubService.commissionGoKingManagerClub(1, new SocialPerson("ekdgml"), new SocialPerson("hong"));
+		//
+		assertEquals("hong", clubService.findClubKingManager(1).getEmail());
+		
+	}
 }
