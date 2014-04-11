@@ -16,7 +16,6 @@ public class PresCommunity {
 	public PresCommunity() {
 		//
 		this.members = new ArrayList<CommunityMember>();
-		this.manager = manager;
 	}
 
 	public List<CommunityMember> getMembers() {
