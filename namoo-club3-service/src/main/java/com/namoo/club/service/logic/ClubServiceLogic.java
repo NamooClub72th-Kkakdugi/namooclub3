@@ -1,5 +1,6 @@
 package com.namoo.club.service.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.namoo.club.dao.ClubDao;
@@ -132,7 +133,13 @@ public class ClubServiceLogic implements ClubService {
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
 		
-		return memberDao.readBelongClubs(email, comNo);
+		List<Club> belongs = new ArrayList<>();
+		for (Club club : clubs) {
+			if (memberDao.readClubMember(club.getComNo(), email) != null) {
+				belongs.add(club);
+			}
+		}
+		return belongs;
 	}
 
 	@Override
@@ -140,8 +147,16 @@ public class ClubServiceLogic implements ClubService {
 		// 
 		List<Club> clubs = clubDao.readAllClubs(comNo);
 		if (clubs == null) return null;
+
+		List<Club> managers = new ArrayList<>();
+		for (Club club : clubs) {
+			if (memberDao.readClubManager(club.getClubNo(), email) != null) {
+				managers.add(club);
+			}
+		}
+		return managers;
 		
-		return memberDao.readManagedClubs(email, comNo);
+		
 	}
 
 	@Override
@@ -151,7 +166,7 @@ public class ClubServiceLogic implements ClubService {
 		if (club == null) {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
-		//memberDao.d
+		memberDao.deleteClubMember(clubNo, email);
 	}
 
 	@Override

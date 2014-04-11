@@ -7,6 +7,11 @@ public class ClubMember {
 	
 	//--------------------------------------------------------------------
 	
+	public ClubMember(int clubNo) {
+		//
+		this.clubNo = clubNo;
+	}
+	
 	public ClubMember(int clubNo, SocialPerson rolePerson) {
 		//
 		this.clubNo = clubNo;

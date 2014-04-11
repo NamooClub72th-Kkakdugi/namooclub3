@@ -5,6 +5,11 @@ public class ClubKingManager {
 	private int clubNo;
 	private SocialPerson rolePerson;
 	//----------------------------------------------------------------
+	public ClubKingManager(int clubNo) {
+		//
+		this.clubNo = clubNo;
+	}
+	
 	public ClubKingManager(int clubNo, SocialPerson rolePerson) {
 		//
 		this.rolePerson = rolePerson;
