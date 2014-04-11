@@ -75,10 +75,8 @@ public class ClubServiceLogic implements ClubService {
 		if(club == null) {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
-		if (userDao.readUser(email) != null){
-			throw NamooClubExceptionFactory.createRuntime("해당 주민이 이미 존재합니다.");
-		}
-		memberDao.addClubMember(new ClubMember(clubNo, socialPerson));
+	
+		memberDao.addClubMember(new ClubMember(clubNo, new SocialPerson(email)));
 	}
 
 	@Override

@@ -50,8 +50,13 @@ public class ClubServiceTest extends DbCommonTest {
 	}
 
 	@Test
-	public void testJoinAsMemberIntString() {
-		fail("Not yet implemented");
+	public void testJoinAsMember() {
+		//
+		clubService.joinAsMember(4, "wntjd");
+		
+		//
+		clubService.findClubMember(4, "wntjd");
+		
 	}
 
 	@Test
@@ -73,7 +78,10 @@ public class ClubServiceTest extends DbCommonTest {
 
 	@Test
 	public void testFindAllClubMember() {
-		fail("Not yet implemented");
+		//
+		int clubMembers = clubService.findAllClubMember(1).size();
+		// 검증
+		assertEquals(3, clubMembers);
 	}
 
 	@Test
