@@ -61,7 +61,6 @@ public class ClubListController extends DefaultController {
 		//
 		List<PresClub> presClubs = new ArrayList<PresClub>();
 		for (Club club : clubs) {
-
 			int clubNo = club.getClubNo();
 			PresClub presClub = new PresClub(club);
 			presClub.setKingManager(service.findClubKingManager(clubNo));

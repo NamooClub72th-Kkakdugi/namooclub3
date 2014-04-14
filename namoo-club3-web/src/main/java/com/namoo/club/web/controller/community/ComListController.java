@@ -56,14 +56,12 @@ public class ComListController extends DefaultController{
 		ClubService clubservice = NamooClubServiceFactory.getInstance().getClubService();
 		List<PresCommunity> presCommunities = new ArrayList<PresCommunity>();
 		for (Community community : communities) {
-			
 			int communityNo = community.getComNo();
 			PresCommunity presCommunity = new PresCommunity(community);
 			presCommunity.setManager(service.findCommunityManager(communityNo));
 			presCommunity.setMembers(service.findAllCommunityMember(communityNo));
 			presCommunity.setClubs(clubservice.findAllClubs(communityNo));
 			presCommunity.setLoginEmail(loginEmail);
-			
 			presCommunities.add(presCommunity);
 		}
 		return presCommunities;
