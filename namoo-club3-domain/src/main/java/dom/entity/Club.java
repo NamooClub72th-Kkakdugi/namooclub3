@@ -1,6 +1,7 @@
 package dom.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Club {
 
@@ -10,8 +11,8 @@ public class Club {
 	private String name;
 	private String description;
 	private Date openDate;
-	private ClubManager manager;
-	private ClubMember member;
+	private List<ClubManager> manager;
+	private List<ClubMember> member;
 	private ClubKingManager kingManager;
 
 	// ---------------------------------------------------------------------------------------------
@@ -87,19 +88,19 @@ public class Club {
 		this.kingManager = kingManager;
 	}
 
-	public ClubManager getManager() {
+	public List<ClubManager> getManager() {
 		return manager;
 	}
 
-	public void setManager(ClubManager manager) {
+	public void setManager(List<ClubManager> manager) {
 		this.manager = manager;
 	}
 
-	public ClubMember getMember() {
+	public List<ClubMember> getMember() {
 		return member;
 	}
 
-	public void setMember(ClubMember member) {
+	public void setMember(List<ClubMember> member) {
 		this.member = member;
 	}
 }

@@ -70,7 +70,11 @@ public class ClubServiceLogic implements ClubService {
 	@Override
 	public Club findClub(int clubNo) {
 		//
-		return clubDao.readClub(clubNo);
+		Club club = clubDao.readClub(clubNo);
+		club.setKingManager(memberDao.readClubKingManager(clubNo));
+		club.setManager(memberDao.readAllClubManagers(clubNo));
+		club.setMember(memberDao.readAllClubMembers(clubNo));
+		return club;
 	}
 
 	@Override
