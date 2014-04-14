@@ -1,6 +1,5 @@
 package com.namoo.club.web.controller.club.pres;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,17 +12,13 @@ import dom.entity.ClubMember;
 public class PresClub {
 	//
 	private Club club;
-	private List<ClubMember> members;
 	private String loginEmail;
-	private ClubManager manager;
-	private ClubKingManager kingManager;
 
 	//--------------------------------------------------------------------------
 	
 	public PresClub(Club club){
 		//
 		this.club = club;
-		this.members = new ArrayList<ClubMember>();
 	}
 	
 	//--------------------------------------------------------------------------
@@ -56,28 +51,16 @@ public class PresClub {
 	}
 	
 	public List<ClubMember> getMembers() {
-		return members;
+		return club.getMember();
 	}
 	
-	public void setMembers(List<ClubMember> members) {
-		this.members = members;
+	public List<ClubManager> getManager() {
+		
+		return club.getManager();
 	}
-	
-	public ClubManager getManager() {
-		return manager;
-	}
-	
-	public void setManager(ClubManager manager) {
-		this.manager = manager;
-	}
-
 	
 	public ClubKingManager getKingManager() {
-		return kingManager;
-	}
-
-	public void setKingManager(ClubKingManager kingManager) {
-		this.kingManager = kingManager;
+		return club.getKingManager();
 	}
 
 	//------------------------------------------------------------------------
@@ -92,17 +75,13 @@ public class PresClub {
 	
 	public boolean isManager() {
 		//
-		if (manager != null && loginEmail.equals(manager.getEmail())) {
-			return true; 
-		}
-		return false;
+		ClubManager manager = club.findManager(loginEmail);
+		return manager != null ? true : false;
 	}
 	
 	public boolean isKingManager() {
 		//
-		if (kingManager != null && loginEmail.equals(kingManager.getEmail())) {
-			return true;
-		}
-		return false;
+		ClubKingManager manager = club.getKingManager();
+		return (manager != null && manager.getEmail().equals(loginEmail)) ? true : false; 
 	}
 }

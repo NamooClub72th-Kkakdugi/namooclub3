@@ -57,15 +57,11 @@ public class ClubListController extends DefaultController {
 		dispatcher.forward(req, resp);
 	}
 
-	private List<PresClub> convertAll(List<Club> clubs,ClubService service,String loginEmail) {
+	private List<PresClub> convertAll(List<Club> clubs, ClubService service, String loginEmail) {
 		//
 		List<PresClub> presClubs = new ArrayList<PresClub>();
 		for (Club club : clubs) {
-			int clubNo = club.getClubNo();
 			PresClub presClub = new PresClub(club);
-			presClub.setKingManager(service.findClubKingManager(clubNo));
-			presClub.setManager(service.findClubManager(clubNo, loginEmail));
-			presClub.setMembers(service.findAllClubMember(clubNo));
 			presClub.setLoginEmail(loginEmail);
 			presClubs.add(presClub);
 		}

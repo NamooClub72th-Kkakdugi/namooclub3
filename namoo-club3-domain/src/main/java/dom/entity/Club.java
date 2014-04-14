@@ -103,4 +103,11 @@ public class Club {
 	public void setMember(List<ClubMember> member) {
 		this.member = member;
 	}
+
+	public ClubManager findManager(String loginEmail) {
+		// 
+		
+		
+		return null;
+	}
 }
