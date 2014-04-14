@@ -17,9 +17,8 @@ public interface MemberDao {
 	CommunityManager readCommunityManager(int comNo);
 	List<CommunityMember> readAllCommunityMember(int comNo);
 	void deleteAllComMember(int comNo);
-	void deleteAllComManager(int comNo);
 	void deleteCommuninyMember(int comNo, String email);
-	void deleteCommunityManager(int comNo, String email);
+	void deleteCommunityManager(int comNo);
 	
 	//club
 	ClubMember addClubMember(ClubMember clubMember);

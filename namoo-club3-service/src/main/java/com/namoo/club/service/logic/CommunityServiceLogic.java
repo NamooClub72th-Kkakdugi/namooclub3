@@ -180,7 +180,7 @@ public class CommunityServiceLogic implements CommunityService {
 			}
 			dao.deleteAllClubCategory(communityNo);
 			memberDao.deleteAllComMember(communityNo);
-			memberDao.deleteAllComManager(communityNo);
+			memberDao.deleteCommunityManager(communityNo);
 			dao.deleteCommunity(communityNo);
 		} else {
 		throw NamooClubExceptionFactory.createRuntime("하위 클럽부터 삭제하세요.");
@@ -232,7 +232,7 @@ public class CommunityServiceLogic implements CommunityService {
 	@Override
 	public void commissionManagerCommunity(int communityNo, SocialPerson originPerson, SocialPerson nwPerson) {
 		//
-		memberDao.deleteCommunityManager(communityNo, originPerson.getEmail());
+		memberDao.deleteCommunityManager(communityNo);
 		memberDao.addCommunityMember(communityNo, new CommunityMember(communityNo, originPerson));
 		memberDao.deleteCommuninyMember(communityNo, nwPerson.getEmail());
 		memberDao.addCommunityManager(communityNo, new CommunityManager(communityNo, nwPerson));

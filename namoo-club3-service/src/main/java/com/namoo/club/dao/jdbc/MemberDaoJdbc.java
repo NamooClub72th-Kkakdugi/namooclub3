@@ -24,7 +24,6 @@ public class MemberDaoJdbc implements MemberDao {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
 
 		CommunityManager manager = null;
 
@@ -42,7 +41,6 @@ public class MemberDaoJdbc implements MemberDao {
 			e.printStackTrace();
 			throw NamooClubExceptionFactory.createRuntime("커뮤니티 매니저로 등록하는 중 오류가 발생하였습니다.");
 		} finally {
-			if (rset != null)try {rset.close();} catch (SQLException e) {}
 			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
@@ -88,7 +86,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    CommunityMember comMember = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email FROM communitymember WHERE com_no = ? AND email=?";
+			String sql = "SELECT a.com_no, a.email, b.name FROM communitymember A JOIN user b ON a.email = b.email WHERE a.com_no = ? AND a.email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			pstmt.setString(2, email);
@@ -96,10 +94,10 @@ public class MemberDaoJdbc implements MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
-				int comNo2 = rset.getInt("com_no");
-				String email2 = rset.getString("email");
-				
-				comMember = new CommunityMember(comNo2, new SocialPerson(email2));
+				int _comNo = rset.getInt("com_no");
+				String _email = rset.getString("email");
+				String name = rset.getString("name");
+				comMember = new CommunityMember(_comNo, new SocialPerson(_email, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,7 +118,7 @@ public class MemberDaoJdbc implements MemberDao {
 		CommunityManager comManager = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT com_no, email, is_manager FROM communitymember WHERE com_no = ? AND is_manager ='1'";
+			String sql = "SELECT a.com_no, a.email, a.is_manager, b.name FROM communitymember A JOIN user b ON a.email = b.email WHERE com_no = ? AND is_manager ='1'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
 			
@@ -129,7 +127,8 @@ public class MemberDaoJdbc implements MemberDao {
 			while (rset.next()) {
 				int comNo2 = rset.getInt("com_no");
 				String email = rset.getString("email");
-				comManager = new CommunityManager(comNo2, new SocialPerson(email));
+				String name = rset.getString("name");
+				comManager = new CommunityManager(comNo2, new SocialPerson(email, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -178,25 +177,13 @@ public class MemberDaoJdbc implements MemberDao {
 	@Override
 	public void deleteAllComMember(int comNo) {
 		//
-		deleteAllCommunityMembership(comNo, "2");
-	}
-
-	@Override
-	public void deleteAllComManager(int comNo) {
-		//
-		deleteAllCommunityMembership(comNo, "1");
-	}
-
-	private void deleteAllCommunityMembership(int comNo, String is_manager) {
-		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ?";
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = '2'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
-			pstmt.setString(2, is_manager);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -206,30 +193,38 @@ public class MemberDaoJdbc implements MemberDao {
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
 	}
-	
-	@Override
-	public void deleteCommuninyMember(int comNo, String email) {
-		//
-		deleteCommunityMembership(comNo, email, "2");
-	}
 
 	@Override
-	public void deleteCommunityManager(int comNo, String email) {
-		//
-		deleteCommunityMembership(comNo, email, "1");
-	}
-	
-	private void deleteCommunityMembership(int comNo, String email, String is_manager) {
+	public void deleteCommuninyMember(int comNo, String email) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = ? AND email=?";
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = '2' AND email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comNo);
-			pstmt.setString(2, is_manager);
-			pstmt.setString(3, email);
+			pstmt.setString(2, email);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooClubExceptionFactory.createRuntime("커뮤니티 멤버를 삭제하는 중 오류가 발생하였습니다.");
+		} finally {
+			if (pstmt != null)try {pstmt.close();} catch (SQLException e) {	}
+			if (conn != null)try {conn.close();} catch (SQLException e) {}
+		}
+	}
+
+	@Override
+	public void deleteCommunityManager(int comNo) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbConnection.getConnection();
+			String sql = "DELETE FROM communitymember WHERE com_no = ? AND is_manager = '1'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comNo);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -239,6 +234,7 @@ public class MemberDaoJdbc implements MemberDao {
 			if (conn != null)try {conn.close();} catch (SQLException e) {}
 		}
 	}
+	
 	
 	//------------------------------------------------------------------------------------------------------------------
 	@Override
@@ -427,7 +423,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.club_no, a.email, b.name type FROM clubmember A JOIN user b ON a.email = b.email WHERE club_no = ?";
+			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember A JOIN user b ON a.email = b.email WHERE club_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			
@@ -460,7 +456,7 @@ public class MemberDaoJdbc implements MemberDao {
 	    ClubMember clubMember = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND email=?";
+			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember A JOIN user b ON a.email=b.email WHERE a.club_no = ? AND a.email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			pstmt.setString(2, email);
@@ -468,10 +464,10 @@ public class MemberDaoJdbc implements MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
-				int clubNo2 = rset.getInt("club_no");
-				String email2 = rset.getString("email");
-				
-				clubMember = new ClubMember(clubNo2, new SocialPerson(email2));
+				int _clubNo = rset.getInt("club_no");
+				String _email = rset.getString("email");
+				String name = rset.getString("name");
+				clubMember = new ClubMember(_clubNo, new SocialPerson(_email, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
