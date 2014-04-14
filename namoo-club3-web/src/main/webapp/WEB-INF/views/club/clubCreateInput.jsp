@@ -52,7 +52,7 @@
 								<div class="col-lg-10">
 									<select class="form-control" id="select" name="categoryNo">
 									<c:forEach var="category" items="${community.categories}">
-										<option value="${category.categoryNo}">${category.categoryName}</option>
+										<option value="${category.categoryNo, category.categoryName}">${category.categoryName}</option>
 										</c:forEach>
 									</select>
 								</div>
