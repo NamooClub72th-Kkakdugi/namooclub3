@@ -13,6 +13,8 @@ public class Community {
 	
 	private List<Club> clubs;
 	private List<ClubCategory> categories;
+	private List<CommunityMember> members;
+	private CommunityManager manager;
 	
 	//----------------------------------------------------------------
 	public Community(String name, String description) {
@@ -81,6 +83,21 @@ public class Community {
 		this.categories = categories;
 	}
 	
+	public List<CommunityMember> getMembers() {
+		return members;
+	}
+	
+	public void setMembers(List<CommunityMember> members) {
+		this.members = members;
+	}
+	
+	public CommunityManager getManager() {
+		return manager;
+	}
+	
+	public void setManager(CommunityManager manager) {
+		this.manager = manager;
+	}
 	
 //-----------------------------------------------------------------------------
 

@@ -78,6 +78,8 @@ public class CommunityServiceLogic implements CommunityService {
 		//
 		Community community = dao.readCommunity(communityNo);
 		community.setCategories(dao.readAllCategories(communityNo));
+		community.setManager(memberDao.readCommunityManager(communityNo));
+		community.setMembers(memberDao.readAllCommunityMember(communityNo));
 		return community;
 	}
 
