@@ -250,7 +250,7 @@ public class MemberDaoJdbc implements MemberDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
-			pstmt.setString(2, clubMember.getEmail());
+			//pstmt.setString(2, clubMember.getEmail());
 			
 			pstmt.executeUpdate();
 			
@@ -520,7 +520,7 @@ public class MemberDaoJdbc implements MemberDao {
 		ClubManager clubManager = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type ='b' AND email=?";
+			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember A JOIN user b ON a.email=b.email WHERE a.club_no = ? AND a.type ='b' AND a.email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			pstmt.setString(2, email);
@@ -528,10 +528,10 @@ public class MemberDaoJdbc implements MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while (rset.next()) {
-				int clubNo2 = rset.getInt("club_no");
-				String email2 = rset.getString("email");
-				
-//				clubManager = new ClubManager(clubNo2, new SocialPerson(email2));
+				int _clubNo = rset.getInt("club_no");
+				String _email = rset.getString("email");
+				String name = rset.getString("name");
+				clubManager = new ClubManager(_clubNo, new SocialPerson(_email, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -552,7 +552,7 @@ public class MemberDaoJdbc implements MemberDao {
 		ClubKingManager clubKingManager = null;
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT club_no, email FROM clubmember WHERE club_no = ? AND type ='a'";
+			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember A JOIN user b ON a.email=b.email WHERE a.club_no = ? AND a.type ='a'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 		
@@ -560,8 +560,8 @@ public class MemberDaoJdbc implements MemberDao {
 			while (rset.next()) {
 				int clubNo2 = rset.getInt("club_no");
 				String email = rset.getString("email");
-				
-//				clubKingManager = new ClubKingManager(clubNo2, new SocialPerson(email));
+				String name = rset.getString("name");
+				clubKingManager = new ClubKingManager(clubNo2, new SocialPerson(email, name));
 		
 				
 			}

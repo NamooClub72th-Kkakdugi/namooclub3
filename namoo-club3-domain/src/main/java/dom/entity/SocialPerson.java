@@ -2,7 +2,6 @@ package dom.entity;
 
 public class SocialPerson {
 	
-
 	private String name;
 	private String email;
 	private String password;
