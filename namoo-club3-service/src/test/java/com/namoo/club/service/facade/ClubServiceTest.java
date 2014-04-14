@@ -56,6 +56,7 @@ public class ClubServiceTest extends DbCommonTest {
 		assertEquals(1, club.getCategoryNo());
 		assertEquals("club1", club.getName());
 		assertEquals("club1_des", club.getDescription());
+		
 	}
 	
 	@Test

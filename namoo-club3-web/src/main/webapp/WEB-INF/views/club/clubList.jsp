@@ -84,7 +84,7 @@
 												</c:when>
 												<c:when test="${club.isKingManager()}">
 													<button type="button" class="btn btn-default btn-sm" onclick="location.href='${ctx}/inform/clubRemoveCheck.do?clubNo=${club.clubNo}&comNo=${community.comNo}'">클럽 삭제하기</button>
-													<button type="button" class="btn btn-default btn-sm" onclick="location.href='${ctx}/commission/clubSelectMem.xhtml?clubNo=${club.clubNo}&comNo=${community.comNo}'">관리자 지정하기</button>
+													<button type="button" class="btn btn-default btn-sm" onclick="location.href='${ctx}/commission/clubSelectMng.xhtml?clubNo=${club.clubNo}&comNo=${community.comNo}'">관리자 지정하기</button>
 													<button class="label label-info" onclick="location.href='${ctx}/commission/clubSelectMem.xhtml?clubNo=${club.clubNo}&comNo=${community.comNo}'; return false;">권한 위임하기</button>
 												</c:when>
 												<c:otherwise>

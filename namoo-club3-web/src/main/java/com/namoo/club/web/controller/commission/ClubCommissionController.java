@@ -32,8 +32,8 @@ public class ClubCommissionController extends DefaultController {
 		String email = req.getParameter("email");
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		
-		SocialPerson person = userService.findTowner(email);
-		service.commissionManagerClub(clubNo, originPerson, person);
+		SocialPerson nwPerson = userService.findTowner(email);
+		service.commissionGoKingManagerClub(clubNo, originPerson, nwPerson);
 		
 		req.setAttribute("comNo", comNo); 
 		req.setAttribute("name", originPerson.getName());

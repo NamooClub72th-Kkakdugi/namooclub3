@@ -20,7 +20,6 @@ public class PresClub {
 
 	//--------------------------------------------------------------------------
 	
-	
 	public PresClub(Club club){
 		//
 		this.club = club;

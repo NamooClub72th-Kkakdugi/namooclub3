@@ -14,13 +14,13 @@ import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
-import dom.entity.ClubManager;
+import dom.entity.ClubKingManager;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
 
 @WebServlet("/commission/clubSelectMng.xhtml")
 @LoginRequired
-public class ClubSelectMemController extends DefaultController{
+public class ClubSelectMngController extends DefaultController{
 
 	private static final long serialVersionUID = 7884665973587174715L;
 
@@ -34,8 +34,8 @@ public class ClubSelectMemController extends DefaultController{
 		String clubName = service.findClub(clubNo).getName();
 		List<ClubMember> members = service.findAllClubMember(clubNo);
 		
-		List<ClubManager> managers = service.findAllClubManager(clubNo);
-		members = filter(members, managers);
+		ClubKingManager manager = service.findClubKingManager(clubNo);
+		members = filter(members, manager);
 		
 		req.setAttribute("members", members);
 		req.setAttribute("name", name);
@@ -46,11 +46,10 @@ public class ClubSelectMemController extends DefaultController{
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/commission/clubSelectMem.jsp");
 		dispatcher.forward(req, resp);
 	}
-	private List<ClubMember> filter(List<ClubMember> members, List<ClubManager> managers) {
+	private List<ClubMember> filter(List<ClubMember> members, ClubKingManager manager) {
 		// 
 		ClubMember found = null;
 		for (ClubMember member : members) {
-			for (ClubManager manager : managers)
 			if (member.getEmail().equals(manager.getEmail())) {
 				found = member;
 				System.out.println(found.getEmail());
