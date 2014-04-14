@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import com.namoo.club.dao.jdbc.MemberDaoJdbc;
 
+import dom.entity.ClubKingManager;
+import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.CommunityManager;
 import dom.entity.CommunityMember;
@@ -105,17 +107,28 @@ public class MemberDaoTest extends DbCommonTest{
 
 	@Test
 	public void testAddClubManager() {
-		fail("Not yet implemented");
+		//
+		ClubManager clubManager = new ClubManager(2, new SocialPerson("wntjd", "이주성"));
+		dao.addClubManager(clubManager);
+		//검증
+		assertEquals("이주성", dao.readClubManager(2, "wntjd").getName());
 	}
 
 	@Test
 	public void testAddKingManager() {
-		fail("Not yet implemented");
+		//
+		ClubKingManager clubKingManager = new ClubKingManager(2, new SocialPerson("wntjd", "이주성"));
+		dao.addKingManager(clubKingManager);
+		//검증
+		assertEquals("이주성", dao.readClubKingManager(2).getName());
 	}
 
 	@Test
 	public void testDeleteAllClubMember() {
-		fail("Not yet implemented");
+		//
+		dao.deleteAllClubMember(1);
+		//검증
+		assertNull(dao.readAllClubMembers(1));
 	}
 
 	@Test

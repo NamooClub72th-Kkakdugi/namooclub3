@@ -20,6 +20,10 @@ public class ClubManager  {
 	public String getEmail() {
 		return rolePerson.getEmail();
 	}
+	
+	public String getName() {
+		return rolePerson.getName();
+	}
 
 	public int getClubNo() {
 		return clubNo;
