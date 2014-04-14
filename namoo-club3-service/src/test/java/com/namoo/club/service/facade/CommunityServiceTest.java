@@ -15,18 +15,16 @@ import com.namoo.club.service.logic.CommunityServiceLogic;
 import dom.entity.ClubCategory;
 import dom.entity.Community;
 import dom.entity.CommunityMember;
-import dom.entity.SocialPerson;
 
 public class CommunityServiceTest extends DbCommonTest{
 	//
-	private CommunityService service; 
-	
+	private CommunityService communityService; 
 	
 	@Before
 	public void setUp() throws Exception {
 		//
 		super.setUp();
-		service = new CommunityServiceLogic();
+		communityService = new CommunityServiceLogic();
 	}
 	
 	@After
@@ -34,7 +32,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		//
 		super.tearDown();
 	}
-	
+	//----------------------------------------------------------------------------------------------
 	@Test
 	public void testRegistCommunity() {
 		//
@@ -43,45 +41,45 @@ public class CommunityServiceTest extends DbCommonTest{
 		ClubCategory category2 = new ClubCategory(2, 3, "category2"); 
 		categories.add(category1);
 		categories.add(category2);
-		service.registCommunity("com3", "com3_des", "ekdgml", categories);
+		communityService.registCommunity("com3", "com3_des", "ekdgml", categories);
 		
-		//검증
-		
+		assertEquals(3, communityService.findAllCommunities().size());
 	}
 
 	@Test
 	public void testFindCommunity() {
 		//
-		Community community = service.findCommunity(1);
+		Community community = communityService.findCommunity(1);
 		
 		//검증
 		assertEquals("com1", community.getName());
+		assertEquals("com1_des", community.getDescription());
 	}
 
 	@Test
 	public void testJoinAsMemberAndUser() {
 		//
-		service.joinAsMember(2, "abcd", "abcdId", "jkl");
+		communityService.joinAsMember(2, "abcd", "abcdId", "jkl");
 		
 		//검증
-		CommunityMember member = service.findCommunityMember(2, "abcdId");
+		CommunityMember member = communityService.findCommunityMember(2, "abcdId");
 		assertEquals("abcdId", member.getEmail());
 	}
 
 	@Test
 	public void testJoinAsMember() {
 		//
-		service.joinAsMember(2, "wntjd");
+		communityService.joinAsMember(2, "wntjd");
 		
 		//검증
-		CommunityMember member = service.findCommunityMember(2, "wntjd");
+		CommunityMember member = communityService.findCommunityMember(2, "wntjd");
 		assertEquals("wntjd", member.getEmail());
 	}
 
 	@Test
 	public void testFindAllCommunities() {
 		//
-		List<Community> communities = service.findAllCommunities();
+		List<Community> communities = communityService.findAllCommunities();
 		
 		//검증
 		assertEquals(2, communities.size());
@@ -90,16 +88,16 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testRemoveCommunity() {
 		//
-		service.removeCommunity(1, true);
+		communityService.removeCommunity(1, true);
 		
-		List<Community> communities = service.findAllCommunities();
+		List<Community> communities = communityService.findAllCommunities();
 		assertEquals(1, communities.size());
 	}
 
 	@Test
 	public void testFindBelongCommunities() {
 		//
-		List<Community> communities = service.findBelongCommunities("ekdgml");
+		List<Community> communities = communityService.findBelongCommunities("ekdgml");
 		
 		//검증
 		assertEquals(1, communities.size());
@@ -108,7 +106,7 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testFindManagedCommnities() {
 		//
-		List<Community> communities = service.findManagedCommunities("ekdgml");
+		List<Community> communities = communityService.findManagedCommunities("ekdgml");
 		
 		//검증
 		assertEquals(1, communities.size());
@@ -117,15 +115,15 @@ public class CommunityServiceTest extends DbCommonTest{
 	@Test
 	public void testWithdrawalCommunity() {
 		//
-		service.withdrawalCommunity(1, "hong");
+		communityService.withdrawalCommunity(1, "hong");
 		//검증
-		assertEquals(1, service.findAllCommunityMember(1).size());
+		assertEquals(1, communityService.findAllCommunityMember(1).size());
 	}
 
 	@Test
 	public void testFindAllCategories() {
 		//
-		assertEquals(2, service.findAllCategories(1).size());
+		assertEquals(2, communityService.findAllCategories(1).size());
 	}
 
 }

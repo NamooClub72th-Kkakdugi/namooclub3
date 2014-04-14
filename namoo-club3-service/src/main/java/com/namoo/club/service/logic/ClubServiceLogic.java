@@ -184,17 +184,12 @@ public class ClubServiceLogic implements ClubService {
 	}
 
 	@Override
-	public void commissionFromManagerClub(int clubNo, SocialPerson rolePerson) {
+	public void commissionManagerClub(int clubNo, SocialPerson originPerson, SocialPerson nwPerson) {
 		//
-		memberDao.deleteClubManager(clubNo, rolePerson.getEmail());
-		memberDao.addClubMember(new ClubMember(clubNo, rolePerson));
-	}
-
-	@Override
-	public void commissionGoManagerClub(int clubNo, SocialPerson rolePerson) {
-		//
-		memberDao.deleteClubMember(clubNo, rolePerson.getEmail());
-		memberDao.addClubManager(new ClubManager(clubNo, rolePerson));
+		memberDao.deleteClubManager(clubNo, originPerson.getEmail());
+		memberDao.addClubMember(new ClubMember(clubNo, originPerson));
+		memberDao.deleteClubMember(clubNo, nwPerson.getEmail());
+		memberDao.addClubManager(new ClubManager(clubNo, nwPerson));
 	}
 
 	@Override

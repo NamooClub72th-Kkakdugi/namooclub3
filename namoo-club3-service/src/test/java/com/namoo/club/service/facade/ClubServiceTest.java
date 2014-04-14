@@ -82,7 +82,7 @@ public class ClubServiceTest extends DbCommonTest {
 		// 검증
 		assertEquals(1, clubMember.getClubNo());
 		assertEquals("wntjd", clubMember.getEmail());
-		System.out.println(clubMember.getType());
+//		System.out.println(clubMember.getType());
 //		assertEquals('c', clubMember.getType());
 	}
 
@@ -133,23 +133,15 @@ public class ClubServiceTest extends DbCommonTest {
 	@Test
 	public void testCommissionFromManagerCommunity() {
 		//
-		clubService.commissionFromManagerClub(1, new SocialPerson("wntjd", "이주성"));
+		clubService.commissionManagerClub(1, new SocialPerson("hong", "홍길동"), new SocialPerson("wntjd", "이주성"));
 		//
 		assertEquals(2, clubService.findAllClubManager(1).size());
 	}
 	
 	@Test
-	public void testCommissionGoManagerClub() {
-		//
-		clubService.commissionGoManagerClub(1, new SocialPerson("asdf", "asdf"));
-		//
-		assertEquals(3, clubService.findAllClubManager(1).size());
-	}
-	
-	@Test
 	public void testCommissionGoKingManagerClub() {
 		//
-//		clubService.commissionGoKingManagerClub(1, new SocialPerson("ekdgml"), new SocialPerson("hong"));
+		clubService.commissionGoKingManagerClub(1, new SocialPerson("ekdgml", "박상희"), new SocialPerson("hong", "홍길동"));
 		
 		//
 		assertEquals("hong", clubService.findClubKingManager(1).getEmail());
