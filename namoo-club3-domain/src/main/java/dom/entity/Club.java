@@ -10,6 +10,7 @@ public class Club {
 	private int categoryNo;
 	private String name;
 	private String description;
+	private String categoryName;
 	private Date openDate;
 	private List<ClubManager> manager;
 	private List<ClubMember> member;
@@ -27,6 +28,15 @@ public class Club {
 	public Club(int categoryNo, int comNo, String name, String description, SocialPerson user) {
 		//
 		this.categoryNo = categoryNo;
+		this.comNo = comNo;
+		this.name = name;
+		this.description = description;
+	}
+	
+	public Club(int categoryNo, String categoryName, int comNo, String name, String description, SocialPerson user) {
+		//
+		this.categoryNo = categoryNo;
+		this.categoryName = categoryName;
 		this.comNo = comNo;
 		this.name = name;
 		this.description = description;
@@ -106,8 +116,15 @@ public class Club {
 
 	public ClubManager findManager(String loginEmail) {
 		// 
-		
-		
 		return null;
 	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	
 }

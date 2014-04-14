@@ -36,7 +36,10 @@ public class ClubCreateCheckController extends DefaultController{
 		System.out.println(clubDescription);
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		System.out.println(comNo);
-		Club club = new Club(categoryNo, comNo, clubName, clubDescription, person);
+		String categoryName = req.getParameter("categoryName");
+		Club club = new Club(categoryNo, categoryName , comNo, clubName, clubDescription, person);
+		
+		
 		
 		String clubQuOne = req.getParameter("clubQuOne");
 		String clubQuTwo = req.getParameter("clubQuTwo");
