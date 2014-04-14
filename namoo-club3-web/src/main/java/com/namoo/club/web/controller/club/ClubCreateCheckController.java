@@ -38,9 +38,16 @@ public class ClubCreateCheckController extends DefaultController{
 		System.out.println(comNo);
 		Club club = new Club(categoryNo, comNo, clubName, clubDescription, person);
 		
+		String clubQuOne = req.getParameter("clubQuOne");
+		String clubQuTwo = req.getParameter("clubQuTwo");
+		String clubQuThree = req.getParameter("clubQuThree");
+		
 		req.setAttribute("name", name);
 		req.setAttribute("club", club);
 		req.setAttribute("comNo", comNo);
+		req.setAttribute("clubQuOne", clubQuOne);
+		req.setAttribute("clubQuTwo", clubQuTwo);
+		req.setAttribute("clubQuThree", clubQuThree);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/club/clubCreateCheck.jsp");
 		dispatcher.forward(req, resp);

@@ -50,7 +50,7 @@
 								<label class="col-lg-2 control-label">클럽 카테고리</label>
 
 								<div class="col-lg-10">
-									<input type="text" name="categoryNo" value="${club.categoryNo}"
+									<input type="text" name="categoryNo" value="${club.categoryName}"
 										readonly="readonly" class="form-control">
 								</div>
 							</div>
