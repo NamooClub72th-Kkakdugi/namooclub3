@@ -12,7 +12,6 @@ import com.namoo.club.dao.ClubDao;
 import com.namoo.club.shared.exception.NamooClubExceptionFactory;
 
 import dom.entity.Club;
-import dom.entity.ClubCategory;
 
 public class ClubDaoJdbc implements ClubDao {
 

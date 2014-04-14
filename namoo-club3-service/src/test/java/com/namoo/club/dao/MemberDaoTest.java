@@ -128,52 +128,72 @@ public class MemberDaoTest extends DbCommonTest{
 		//
 		dao.deleteAllClubMember(1);
 		//검증
-		assertNull(dao.readAllClubMembers(1));
+		assertEquals(2, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testDeleteAllClubManager() {
-		fail("Not yet implemented");
+		//
+		dao.deleteAllClubManager(1);
+		//검증
+		assertEquals(2, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testDeleteClubMember() {
-		fail("Not yet implemented");
+		//
+		dao.deleteClubMember(1, "wntjd");
+		//검증
+		assertEquals(2, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testDeleteClubManager() {
-		fail("Not yet implemented");
+		//
+		dao.deleteClubManager(1, "hong");
+		//검증
+		assertEquals(2, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testDeleteClubKingManger() {
-		fail("Not yet implemented");
+		//
+		dao.deleteClubKingManger(1);
+		//검증
+		assertEquals(2, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testReadAllClubMembers() {
-		fail("Not yet implemented");
+		//
+		assertEquals(3, dao.readAllClubMembers(1).size());
 	}
 
 	@Test
 	public void testReadAllClubManagers() {
-		fail("Not yet implemented");
+		//
+		assertEquals(2, dao.readAllClubManagers(1).size());
 	}
 
 	@Test
 	public void testReadClubMember() {
-		fail("Not yet implemented");
+		//
+		ClubMember clubMember = dao.readClubMember(1, "ekdgml");
+		assertEquals("박상희", clubMember.getName());
 	}
 
 	@Test
 	public void testReadClubManager() {
-		fail("Not yet implemented");
+		//
+		ClubManager clubManager = dao.readClubManager(1, "hong");
+		assertEquals("홍길동", clubManager.getName());
 	}
 
 	@Test
 	public void testReadClubKingManager() {
-		fail("Not yet implemented");
+		//
+		ClubKingManager clubKingManager = dao.readClubKingManager(1);
+		assertEquals("박상희", clubKingManager.getName());
 	}
 
 }
