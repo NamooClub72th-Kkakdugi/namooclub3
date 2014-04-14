@@ -4,6 +4,7 @@ public class ClubMember {
 	
 	private int clubNo;
 	private SocialPerson rolePerson;
+	private char type;
 	
 	//--------------------------------------------------------------------
 	
@@ -41,6 +42,14 @@ public class ClubMember {
 
 	public void setRolePerson(SocialPerson rolePerson) {
 		this.rolePerson = rolePerson;
+	}
+
+	public char getType() {
+		return type;
+	}
+
+	public void setType(char type) {
+		this.type = type;
 	}
 	
 	

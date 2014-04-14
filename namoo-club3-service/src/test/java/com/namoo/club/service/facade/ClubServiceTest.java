@@ -33,11 +33,15 @@ public class ClubServiceTest extends DbCommonTest {
 	@Test
 	public void testRegistClub() {
 		//
-		Club club = clubService.registClub(1, 1, "TestClub", "TestClub'description", "wntjd");
+		Club club = clubService.registClub(1, 1, "TestClub", "TestClub's description", "wntjd");
 		
 		// 검증
 		club = clubService.findClub(club.getClubNo());
+		assertEquals(1, club.getCategoryNo());
+		assertEquals(1, club.getComNo());
 		assertEquals("TestClub", club.getName());
+		assertEquals("TestClub's description", club.getDescription());
+		assertEquals("wntjd", clubService.findClubKingManager(club.getClubNo()).getEmail());
 		
 	}
 
@@ -47,18 +51,19 @@ public class ClubServiceTest extends DbCommonTest {
 		Club club = clubService.findClub(1);
 		
 		// 검증
+		assertEquals(1, club.getClubNo());
+		assertEquals(1, club.getComNo());
+		assertEquals(1, club.getCategoryNo());
 		assertEquals("club1", club.getName());
-		
+		assertEquals("club1_des", club.getDescription());
 	}
-
+	
 	@Test
 	public void testJoinAsMember() {
 		//
 		clubService.joinAsMember(4, "wntjd");
-		
 		//
 		clubService.findClubMember(4, "wntjd");
-		
 	}
 
 	@Test
@@ -75,13 +80,17 @@ public class ClubServiceTest extends DbCommonTest {
 		ClubMember clubMember = clubService.findClubMember(1, "wntjd");
 		
 		// 검증
+		assertEquals(1, clubMember.getClubNo());
 		assertEquals("wntjd", clubMember.getEmail());
+//		System.out.println(clubMember.getType());
+		assertEquals('c', clubMember.getType());
 	}
 
 	@Test
 	public void testFindAllClubMember() {
 		//
 		int clubMembers = clubService.findAllClubMember(1).size();
+		
 		// 검증 
 		assertEquals(3, clubMembers);
 	}
@@ -90,26 +99,27 @@ public class ClubServiceTest extends DbCommonTest {
 	public void testRemoveClub() {
 		//
 		clubService.removeClub(1, 1, true);
+		
 		// 검증
 		assertEquals(3, clubService.findAllClubs(1).size());
-		
 	}
 
 	@Test
 	public void testFindBelongClubs() {
 		//
 		List<Club> clubs = clubService.findBelongClubs("wntjd", 1);
-		// 검증
-		assertEquals(2, clubs.size());
 		
+		// 검증
+		assertEquals(1, clubs.size());
 	}
 
 	@Test
 	public void testFindManagedClubs() {
 		//
-		List<Club> managedClubs = clubService.findManagedClubs("wntjd", 1);
+		List<Club> managedClubs = clubService.findManagedClubs("hong", 1);
+	
 		//
-		assertEquals(2, managedClubs.size());
+		assertEquals(1, managedClubs.size());
 	}
 
 	@Test
@@ -117,16 +127,15 @@ public class ClubServiceTest extends DbCommonTest {
 		//
 		clubService.withdrawalClub(1, "wntjd");
 		//검증
-		assertEquals(0, clubService.findAllClubMember(1).size());
+		assertEquals(2, clubService.findAllClubMember(1).size());
 	}
 
 	@Test
 	public void testCommissionFromManagerCommunity() {
 		//
-		clubService.commissionFromManagerClub(1, new SocialPerson("hong"));
-		
+		clubService.commissionFromManagerClub(1, new SocialPerson("wntjd", "이주성"));
 		//
-		assertEquals(1, clubService.findAllClubManager(1).size());
+		assertEquals(2, clubService.findAllClubManager(1).size());
 	}
 	
 	@Test
@@ -135,15 +144,14 @@ public class ClubServiceTest extends DbCommonTest {
 		clubService.commissionGoManagerClub(1, new SocialPerson("wntjd"));
 		//
 		assertEquals(3, clubService.findAllClubManager(1).size());
-		
 	}
 	
 	@Test
 	public void testCommissionGoKingManagerClub() {
 		//
 		clubService.commissionGoKingManagerClub(1, new SocialPerson("ekdgml"), new SocialPerson("hong"));
+		
 		//
 		assertEquals("hong", clubService.findClubKingManager(1).getEmail());
-		
 	}
 }

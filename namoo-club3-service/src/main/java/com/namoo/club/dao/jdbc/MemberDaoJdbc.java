@@ -250,8 +250,7 @@ public class MemberDaoJdbc implements MemberDao {
 		try {
 			conn = DbConnection.getConnection();
 			
-			String sql = "INSERT INTO clubmember(club_no, email, type)"
-					+ " VALUES(?, ?, 'c')";
+			String sql = "INSERT INTO clubmember(club_no, email, type) VALUES(?, ?, 'c')";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
@@ -493,7 +492,7 @@ public class MemberDaoJdbc implements MemberDao {
 		List<ClubManager> managers = new ArrayList<>();
 		try {
 			conn = DbConnection.getConnection();
-			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember JOIN user b ON a.email = b.email WHERE club_no = ? AND type IN ('a','b')";
+			String sql = "SELECT a.club_no, a.email, b.name FROM clubmember a JOIN user b ON a.email = b.email WHERE club_no = ? AND type IN ('a','b')";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, clubNo);
 			
