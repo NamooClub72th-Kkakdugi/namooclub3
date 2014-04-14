@@ -31,8 +31,10 @@ public class UserServiceTest extends DbCommonTest{
 	@Test
 	public void testLoginAsTowner() {
 		boolean login = service.loginAsTowner("ekdgml", "asdf");
+//		boolean login2 = service.loginAsTowner("wntjd", "qwer");
 		
 		assertEquals(true, login);
+//		assertEquals(true, login2);
 	}
 
 	@Test
