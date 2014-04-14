@@ -18,7 +18,7 @@ import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
 
-@WebServlet("/commission/clubSelectMng.xhtml")
+@WebServlet("/commission/clubSelectMem.xhtml")
 @LoginRequired
 public class ClubSelectMemController extends DefaultController{
 
