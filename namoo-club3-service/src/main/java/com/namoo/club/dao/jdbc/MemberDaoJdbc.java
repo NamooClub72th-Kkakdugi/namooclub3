@@ -250,7 +250,7 @@ public class MemberDaoJdbc implements MemberDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, clubMember.getClubNo());
-			//pstmt.setString(2, clubMember.getEmail());
+			pstmt.setString(2, clubMember.getEmail());
 			
 			pstmt.executeUpdate();
 			
