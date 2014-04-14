@@ -43,7 +43,7 @@ public class ClubServiceLogic implements ClubService {
 			throw NamooClubExceptionFactory.createRuntime("이미 존재하는 클럽입니다.");
 		}
 
-		Club club = new Club(categoryNo, communityNo, clubName, description, new SocialPerson(email));
+		Club club = new Club(categoryNo, communityNo, clubName, description, new SocialPerson(email, "asdf"));
 		int clubNo = clubDao.createClub(communityNo, club);
 
 		SocialPerson person = userDao.readUser(email);
@@ -81,7 +81,7 @@ public class ClubServiceLogic implements ClubService {
 			throw NamooClubExceptionFactory.createRuntime("클럽이 존재하지 않습니다.");
 		}
 
-		memberDao.addClubMember(new ClubMember(clubNo, new SocialPerson(email)));
+		memberDao.addClubMember(new ClubMember(clubNo, new SocialPerson(email, "qwer")));
 	}
 
 	@Override

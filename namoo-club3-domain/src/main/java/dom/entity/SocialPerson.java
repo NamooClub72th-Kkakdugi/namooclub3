@@ -13,11 +13,6 @@ public class SocialPerson {
 		this.name = name;
 	}
 	
-	public SocialPerson(String email) {
-		//
-		this.email = email;
-	}
-	
 	public SocialPerson(String name, String email, String password) {
 		//
 		this.name = name;

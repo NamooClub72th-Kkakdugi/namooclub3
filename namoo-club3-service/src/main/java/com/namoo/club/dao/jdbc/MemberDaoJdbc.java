@@ -531,7 +531,7 @@ public class MemberDaoJdbc implements MemberDao {
 				int clubNo2 = rset.getInt("club_no");
 				String email2 = rset.getString("email");
 				
-				clubManager = new ClubManager(clubNo2, new SocialPerson(email2));
+//				clubManager = new ClubManager(clubNo2, new SocialPerson(email2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -561,7 +561,7 @@ public class MemberDaoJdbc implements MemberDao {
 				int clubNo2 = rset.getInt("club_no");
 				String email = rset.getString("email");
 				
-				clubKingManager = new ClubKingManager(clubNo2, new SocialPerson(email));
+//				clubKingManager = new ClubKingManager(clubNo2, new SocialPerson(email));
 		
 				
 			}
