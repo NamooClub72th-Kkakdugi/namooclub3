@@ -10,8 +10,11 @@ public class Club {
 	private String name;
 	private String description;
 	private Date openDate;
+	private ClubManager manager;
+	private ClubMember member;
+	private ClubKingManager kingManager;
 
-	// ---------------------------
+	// ---------------------------------------------------------------------------------------------
 	public Club(int categoryNo, int comNo, String name, String description) {
 		//
 		this.categoryNo = categoryNo;
@@ -27,7 +30,7 @@ public class Club {
 		this.name = name;
 		this.description = description;
 	}
-
+	//----------------------------------------------------------------------------------------------
 	public int getComNo() {
 		return comNo;
 	}
@@ -75,6 +78,28 @@ public class Club {
 	public void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
-	// ---------------------------------
 
+	public ClubKingManager getKingManager() {
+		return kingManager;
+	}
+	
+	public void setKingManager(ClubKingManager kingManager) {
+		this.kingManager = kingManager;
+	}
+
+	public ClubManager getManager() {
+		return manager;
+	}
+
+	public void setManager(ClubManager manager) {
+		this.manager = manager;
+	}
+
+	public ClubMember getMember() {
+		return member;
+	}
+
+	public void setMember(ClubMember member) {
+		this.member = member;
+	}
 }
