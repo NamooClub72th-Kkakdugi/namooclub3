@@ -114,17 +114,25 @@ public class Club {
 		this.member = member;
 	}
 
-	public ClubManager findManager(String loginEmail) {
-		// 
-		return null;
-	}
-
 	public String getCategoryName() {
 		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	
+	//--------------------------------------------------------------------------
+	
+	public ClubManager findManager(String loginEmail) {
+		//
+		List<ClubManager> managers = this.getManager();
+		for (ClubManager manager : managers) {
+			if (manager.getEmail().equals(loginEmail)) {
+				return manager;
+			}
+		}
+		return null;
 	}
 	
 }
