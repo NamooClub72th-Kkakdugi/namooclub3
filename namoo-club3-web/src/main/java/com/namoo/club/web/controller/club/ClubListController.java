@@ -46,8 +46,8 @@ public class ClubListController extends DefaultController {
 		List<Club> joinClubs = service.findBelongClubs(email, comNo);
 		List<Club> unjoinClubs = filterList(allClubs, joinClubs);
 
-		List<PresClub> presJoinClubs = convertAll(joinClubs,service,email);
-		List<PresClub> presUnJoinClubs = convertAll(unjoinClubs,service,email);
+		List<PresClub> presJoinClubs = convertAll(joinClubs, email);
+		List<PresClub> presUnJoinClubs = convertAll(unjoinClubs, email);
 		
 		
 		req.setAttribute("joinClubs", presJoinClubs);
@@ -57,7 +57,7 @@ public class ClubListController extends DefaultController {
 		dispatcher.forward(req, resp);
 	}
 
-	private List<PresClub> convertAll(List<Club> clubs, ClubService service, String loginEmail) {
+	private List<PresClub> convertAll(List<Club> clubs, String loginEmail) {
 		//
 		List<PresClub> presClubs = new ArrayList<PresClub>();
 		for (Club club : clubs) {

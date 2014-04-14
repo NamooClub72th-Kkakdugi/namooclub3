@@ -1,6 +1,5 @@
 package com.namoo.club.web.controller.community.pres;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,19 +12,13 @@ import dom.entity.CommunityMember;
 public class PresCommunity {
 	//
 	private Community community;
-	private List<CommunityMember> members;
 	private String loginEmail;
-	private CommunityManager manager;
-	private List<Club> clubs;
-
 	//--------------------------------------------------------------------------
 	
 	
 	public PresCommunity(Community community) {
 		//
 		this.community = community;
-		this.members = new ArrayList<CommunityMember>();
-		this.clubs = new ArrayList<Club>();
 	}
 	
 	//--------------------------------------------------------------------------
@@ -43,7 +36,7 @@ public class PresCommunity {
 	}
 	
 	public List<Club> getClubs() {
-		return clubs;
+		return community.getClubs();
 	}
 	
 	public String getDescription() {
@@ -52,23 +45,12 @@ public class PresCommunity {
 	
 	
 	public List<CommunityMember> getMembers() {
-		return members;
+		return community.getMembers();
 	}
 
-	public void setMembers(List<CommunityMember> members) {
-		this.members = members;
-	}
 
 	public CommunityManager getManager() {
-		return manager;
-	}
-
-	public void setManager(CommunityManager manager) {
-		this.manager = manager;
-	}
-	
-	public void setClubs(List<Club> clubs) {
-		this.clubs = clubs;
+		return community.getManager();
 	}
 
 	//------------------------------------------------------------------------
@@ -82,9 +64,7 @@ public class PresCommunity {
 	
 	public boolean isManager() {
 		//
-		if (manager != null && loginEmail.equals(manager.getEmail())) {
-			return true; 
-		}
-		return false;
+		CommunityManager manager = community.getManager();
+		return (manager != null && manager.getEmail().equals(loginEmail));
 	}
 }

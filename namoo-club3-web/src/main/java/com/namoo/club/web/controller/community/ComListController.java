@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.club.service.facade.ClubService;
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.factory.NamooClubServiceFactory;
 import com.namoo.club.web.controller.community.pres.PresCommunity;
@@ -40,8 +39,8 @@ public class ComListController extends DefaultController{
 		List<Community> joinCommunities = service.findBelongCommunities(email);
 		List<Community> unjoinCommunities = filterList(allCommunities, joinCommunities);
 
-		List<PresCommunity> presJoinedCommunities = convertAll(joinCommunities, service, email);
-		List<PresCommunity> presUnjoinedCommunities = convertAll(unjoinCommunities, service, email);
+		List<PresCommunity> presJoinedCommunities = convertAll(joinCommunities, email);
+		List<PresCommunity> presUnjoinedCommunities = convertAll(unjoinCommunities, email);
 	
 		
 		req.setAttribute("joinCommunities", presJoinedCommunities);
@@ -51,16 +50,11 @@ public class ComListController extends DefaultController{
 		dispatcher.forward(req, resp);		
 	}
 
-	private List<PresCommunity> convertAll(List<Community> communities, CommunityService service, String loginEmail) {
+	private List<PresCommunity> convertAll(List<Community> communities, String loginEmail) {
 		// 
-		ClubService clubservice = NamooClubServiceFactory.getInstance().getClubService();
 		List<PresCommunity> presCommunities = new ArrayList<PresCommunity>();
 		for (Community community : communities) {
-			int communityNo = community.getComNo();
 			PresCommunity presCommunity = new PresCommunity(community);
-			presCommunity.setManager(service.findCommunityManager(communityNo));
-			presCommunity.setMembers(service.findAllCommunityMember(communityNo));
-			presCommunity.setClubs(clubservice.findAllClubs(communityNo));
 			presCommunity.setLoginEmail(loginEmail);
 			presCommunities.add(presCommunity);
 		}
