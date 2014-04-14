@@ -39,12 +39,13 @@ public class CommunityManager {
 
 	public int getCommunityNo() {
 		//
-		return 0;
+		return communityNo;
 	}
 
 	public void setCommunityNo(int communityNo) {
 		this.communityNo = communityNo;
 	}
+	
 	
 	
 

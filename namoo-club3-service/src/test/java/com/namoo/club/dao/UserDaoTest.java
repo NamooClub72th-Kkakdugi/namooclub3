@@ -11,58 +11,50 @@ import com.namoo.club.dao.jdbc.UserDaoJdbc;
 import dom.entity.SocialPerson;
 
 
-public class UserDaoTest {
+public class UserDaoTest extends DbCommonTest{
 	//
 	private UserDao dao;
 	
-	String email = "ekdgml";
-	String password = "abcd";
-	String name = "박상희";
-	
 	@Before
 	public void setUp() throws Exception {
+		//
+		super.setUp();
 		dao = new UserDaoJdbc();
-		dao.deleteUser("ekdgml");
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		dao.deleteUser("ekdgml");
+		//
+		super.tearDown();
 	}
 	@Test
 	public void testReadAllUsers() {
-		int before = dao.readAllUsers().size();
-		createUser();
-		int after = dao.readAllUsers().size();
-		assertEquals(before+1, after);
+		//
+		assertEquals(3, dao.readAllUsers().size());
 	}
 
 	@Test
 	public void testCreateUser() {
-		createUser();
+		//
+		SocialPerson user = new SocialPerson("abcd", "abcd@a.a", "abcd");
+		dao.createUser(user);
 		
 		//검증
-		SocialPerson user = dao.readUser(email);
-		assertEquals(password, user.getPassword());
-		assertEquals(name, user.getName());
-		assertEquals(email, user.getEmail());
-	}
-
-	private void createUser() {
-		SocialPerson user = new SocialPerson(name, email, password);
-		dao.createUser(user);
+		user = dao.readUser("abcd@a.a");
+		assertEquals("abcd", user.getPassword());
+		assertEquals("abcd", user.getName());
+		assertEquals("abcd@a.a", user.getEmail());
 	}
 
 	@Test
 	public void testUpdateUser() {
-		createUser();
-		SocialPerson user = dao.readUser(email);
-		user.setPassword("aaaa");
-		
+		//
+		SocialPerson user = dao.readUser("ekdgml");
+		user.setPassword("asdfasdf");
 		dao.updateUser(user);
-		
-		user = dao.readUser(email);
-		assertEquals("aaaa", user.getPassword());
+		//검증
+		user = dao.readUser("ekdgml");
+		assertEquals("asdfasdf", user.getPassword());
 	}
 
 }

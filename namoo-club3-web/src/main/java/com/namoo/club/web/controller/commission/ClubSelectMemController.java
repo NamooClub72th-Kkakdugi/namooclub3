@@ -15,7 +15,6 @@ import com.namoo.club.web.controller.shared.DefaultController;
 import com.namoo.club.web.controller.shared.LoginRequired;
 
 import dom.entity.ClubKingManager;
-import dom.entity.ClubManager;
 import dom.entity.ClubMember;
 import dom.entity.SocialPerson;
 

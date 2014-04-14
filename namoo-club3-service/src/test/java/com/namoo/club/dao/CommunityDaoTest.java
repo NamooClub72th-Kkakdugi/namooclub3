@@ -10,9 +10,6 @@ import com.namoo.club.dao.jdbc.CommunityDaoJdbc;
 import com.namoo.club.dao.jdbc.MemberDaoJdbc;
 
 import dom.entity.Community;
-import dom.entity.CommunityManager;
-import dom.entity.CommunityMember;
-import dom.entity.SocialPerson;
 
 public class CommunityDaoTest {
 	//
@@ -28,16 +25,14 @@ public class CommunityDaoTest {
 		//
 		memberDao = new MemberDaoJdbc();
 		dao = new CommunityDaoJdbc();
-		PrepareBuilder.createUser();
 	}
 	
 	@After
 	public void tearDown() throws Exception {
 		//
-		memberDao.deleteAllComManager(comNo);
+		memberDao.deleteCommunityManager(comNo);
 		memberDao.deleteAllComMember(comNo);
 		dao.deleteCommunity(comNo);
-		PrepareBuilder.deleteUser();
 	}
 	//-------------------------------------------
 	@Test
@@ -63,17 +58,6 @@ public class CommunityDaoTest {
 
 	private void createCommunity() {
 		//
-		SocialPerson user = PrepareBuilder.readUser();
-		Community community = new Community(comName, comDescription, user);
-		comNo = dao.createCommunity(community);
-		
-		CommunityManager comManager = new CommunityManager(comNo, user);
-		CommunityMember comMember = new CommunityMember(comNo, user);
-		if (memberDao.readAllCommunityMember(comNo).contains(user)) {
-			memberDao.addCommunityManager(comNo, comManager);
-		} else {
-			memberDao.addCommunityMember(comNo, comMember);
-		}
 	}
 
 	@Test
