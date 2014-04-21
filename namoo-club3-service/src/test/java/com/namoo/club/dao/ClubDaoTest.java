@@ -38,6 +38,7 @@ public class ClubDaoTest extends DbCommonTest {
 	public void testReadClub() {
 		//
 		Club club = dao.readClub(1);
+		
 		assertEquals(1, club.getCategoryNo());
 		assertEquals("club1_des", club.getDescription());
 		assertEquals("club1", club.getName());

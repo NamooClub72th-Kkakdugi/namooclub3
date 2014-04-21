@@ -1,6 +1,6 @@
 package com.namoo.club.service.facade;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -57,6 +57,8 @@ public class ClubServiceTest extends DbCommonTest {
 		assertEquals("club1", club.getName());
 		assertEquals("club1_des", club.getDescription());
 		
+		
+		
 	}
 	
 	@Test
@@ -64,7 +66,11 @@ public class ClubServiceTest extends DbCommonTest {
 		//
 		clubService.joinAsMember(4, "wntjd");
 		//
-		clubService.findClubMember(4, "wntjd");
+		ClubMember member = clubService.findClubMember(4, "wntjd");
+		assertNotNull(member);
+		
+		
+		
 	}
 
 	@Test

@@ -29,6 +29,7 @@ public class ClubCreateCheckController extends DefaultController{
 		String name = person.getName();
 		System.out.println(name);
 		int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
+		String categoryName = req.getParameter("categoryName");
 		System.out.println(categoryNo);
 		String clubName = req.getParameter("clubName");
 		System.out.println(clubName);
@@ -36,7 +37,6 @@ public class ClubCreateCheckController extends DefaultController{
 		System.out.println(clubDescription);
 		int comNo = Integer.parseInt(req.getParameter("comNo"));
 		System.out.println(comNo);
-		String categoryName = req.getParameter("categoryName");
 		Club club = new Club(categoryNo, categoryName , comNo, clubName, clubDescription, person);
 		
 		
