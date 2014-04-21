@@ -2,14 +2,13 @@ package com.namoo.club.service.facade;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+import com.namoo.club.service.logic.ClubServiceLogic;
 
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.namoo.club.service.logic.ClubServiceLogic;
 
 import dom.entity.Club;
 import dom.entity.ClubMember;
