@@ -1,6 +1,7 @@
 package com.namoo.club.service.facade;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.junit.Test;
 
 import com.namoo.club.service.facade.CommunityService;
 import com.namoo.club.service.logic.CommunityServiceLogic;
+import com.namoo.club.service.logic.UserServiceLogic;
 
 import dom.entity.ClubCategory;
 import dom.entity.Community;
@@ -19,12 +21,14 @@ import dom.entity.CommunityMember;
 public class CommunityServiceTest extends DbCommonTest{
 	//
 	private CommunityService communityService; 
+	private UserService userService;
 	
 	@Before
 	public void setUp() throws Exception {
 		//
 		super.setUp();
 		communityService = new CommunityServiceLogic();
+		userService = new UserServiceLogic();
 	}
 	
 	@After
@@ -41,9 +45,13 @@ public class CommunityServiceTest extends DbCommonTest{
 		ClubCategory category2 = new ClubCategory(2, 3, "category2"); 
 		categories.add(category1);
 		categories.add(category2);
-		communityService.registCommunity("com3", "com3_des", "ekdgml", categories);
+		Community community = communityService.registCommunity("com3", "com3_des", "ekdgml", categories);
 		
+		//검증
+		community = communityService.findCommunity(community.getComNo());
 		assertEquals(3, communityService.findAllCommunities().size());
+		assertThat(community.getManager().getEmail(), is("ekdgml"));
+		assertThat(community.getMembers().size(), is(1));
 	}
 
 	@Test
@@ -54,6 +62,8 @@ public class CommunityServiceTest extends DbCommonTest{
 		//검증
 		assertEquals("com1", community.getName());
 		assertEquals("com1_des", community.getDescription());
+		assertThat(community.getManager().getEmail(), is("ekdgml"));
+		assertThat(community.getManager().getName(), is("박상희"));
 	}
 
 	@Test
@@ -64,6 +74,8 @@ public class CommunityServiceTest extends DbCommonTest{
 		//검증
 		CommunityMember member = communityService.findCommunityMember(2, "abcdId");
 		assertEquals("abcdId", member.getEmail());
+		assertThat(member.getName(), is("abcd"));
+		assertNotNull(userService.findTowner("abcdId"));
 	}
 
 	@Test
@@ -74,6 +86,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		//검증
 		CommunityMember member = communityService.findCommunityMember(2, "wntjd");
 		assertEquals("wntjd", member.getEmail());
+		assertThat(member.getName(), is("이주성"));
 	}
 
 	@Test
@@ -83,6 +96,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		
 		//검증
 		assertEquals(2, communities.size());
+		assertThat(communities.get(0).getName(), is("com1"));
 	}
 
 	@Test
@@ -92,6 +106,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		
 		List<Community> communities = communityService.findAllCommunities();
 		assertEquals(1, communities.size());
+		assertThat(communities.get(0).getName(), is("com2"));
 	}
 
 	@Test
@@ -101,6 +116,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		
 		//검증
 		assertEquals(1, communities.size());
+		assertThat(communities.get(0).getName(), is("com1"));
 	}
 
 	@Test
@@ -110,6 +126,7 @@ public class CommunityServiceTest extends DbCommonTest{
 		
 		//검증
 		assertEquals(1, communities.size());
+		assertThat(communities.get(0).getName(), is("com1"));
 	}
 
 	@Test
@@ -118,12 +135,15 @@ public class CommunityServiceTest extends DbCommonTest{
 		communityService.withdrawalCommunity(1, "hong");
 		//검증
 		assertEquals(1, communityService.findAllCommunityMember(1).size());
+		assertNull(communityService.findCommunityMember(1, "hong"));
 	}
 
 	@Test
 	public void testFindAllCategories() {
 		//
-		assertEquals(2, communityService.findAllCategories(1).size());
+		List<ClubCategory> categories = communityService.findAllCategories(1);
+		assertEquals(2, categories.size());
+		assertThat(categories.get(0).getCategoryName(), is("category1"));
 	}
 
 }
