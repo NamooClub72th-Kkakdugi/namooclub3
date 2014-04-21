@@ -133,6 +133,7 @@ public class CommunityServiceTest extends DbCommonTest{
 	public void testWithdrawalCommunity() {
 		//
 		communityService.withdrawalCommunity(1, "hong");
+		
 		//검증
 		assertEquals(1, communityService.findAllCommunityMember(1).size());
 		assertNull(communityService.findCommunityMember(1, "hong"));
